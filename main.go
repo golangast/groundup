@@ -17,9 +17,10 @@ package main
 
 import (
 	"gitlab.com/zendrulat123/groundup/cmd"
+	. "gitlab.com/zendrulat123/groundup/frontend"
 )
 
 func main() {
 	cmd.Execute()
-
+	Serv()
 }

@@ -29,7 +29,7 @@ var gfigCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("gfig called")
-		//CreateConfig()
+		//
 
 	},
 }

@@ -15,12 +15,14 @@
             "name": "Launch Package",
             "type": "go",
             "request": "launch",
+           // "debugAdapter": "dlv-dap",
+          //  "mode": "auto",
             "mode": "auto",
             "program": "${workspaceFolder}",
             "env": {},
-            "args": [
-                "go run main.go serv"
-            ],
+            // "args": [
+            //     "go run ."
+            // ],
             "dlvLoadConfig": {
                 "followPointers": true,
                 "maxVariableRecurse": 1,

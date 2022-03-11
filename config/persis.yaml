@@ -1,0 +1,4 @@
+home:
+ path: app
+ file: home.html
+ script: jqeury

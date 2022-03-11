@@ -9,10 +9,13 @@ import (
 	"os"
 	"path/filepath"
 
+	//
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
-	. "gitlab.com/zendrulat123/groundup/frontend/handler/home"
+	"gitlab.com/zendrulat123/groundup/frontend/handler/home"
+	createpage "gitlab.com/zendrulat123/groundup/frontend/handler/put/createpage"
 )
 
 type TemplateRenderer struct {
@@ -97,7 +100,9 @@ func ParseDirectory(dirpath string) (*template.Template, error) {
 	return template.ParseFiles(paths...)
 }
 func Routes(e *echo.Echo) {
-	//e.GET("/", home.Home)     //home
-	e.GET("/home", Home) //form
-	e.GET("/config/:bool", Home)
+	e.GET("/home", home.Home)
+	e.GET("/config/:config", home.Home)
+	e.GET("/server/:server", home.Home)
+	//create page
+	e.POST("/page", createpage.CreatePage)
 }
