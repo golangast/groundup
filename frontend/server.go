@@ -9,11 +9,10 @@ import (
 	"os"
 	"path/filepath"
 
-	//
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
+	. "gitlab.com/zendrulat123/groundup/routes"
 )
 
 type TemplateRenderer struct {

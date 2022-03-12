@@ -4,15 +4,19 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/syndtr/goleveldb/leveldb"
 	ut "gitlab.com/zendrulat123/groundup/cmd/utserver"
-	db "gitlab.com/zendrulat123/groundup/db/get"
 )
 
 var err error
 
 func GetUrlTitle(title string, url string) ([]string, []string) {
-	db.Conn()
+	db, err := leveldb.OpenFile("path/to/db", nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	defer db.Close()
+
 	var counter int
 	counter++
 	s := strconv.Itoa(counter)
