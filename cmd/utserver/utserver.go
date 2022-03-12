@@ -92,13 +92,15 @@ func openbrowser(url string) {
 	}
 
 }
-func GetUrlTitle(prop string) []string {
-	var property []string
-	s := strings.Split(prop, " ")
-	for _, ss := range s {
-		property = append(property, TrimDot(ss))
+func GetUrlTitle(prop []string) ([]string, []string) {
+	var title []string
+	var url []string
+	for _, ss := range prop {
+		title = append(title, TrimColan(ss))
+		url = append(url, TrimColanright(ss))
+
 	}
-	return property
+	return title, url
 }
 func TrimDot(s string) string {
 	if idx := strings.Index(s, "."); idx != -1 {
@@ -106,9 +108,24 @@ func TrimDot(s string) string {
 	}
 	return s
 }
+
 func TrimDotright(s string) string {
 	if idx := strings.Index(s, "."); idx != -1 {
 		return s[idx:]
+	}
+	return s
+}
+func TrimColan(s string) string {
+	if idx := strings.Index(s, ":"); idx != -1 {
+		return s[:idx]
+	}
+	return s
+}
+
+func TrimColanright(s string) string {
+	if idx := strings.Index(s, ":"); idx != -1 {
+		id := strings.Replace(s[idx:], ":", "", 1)
+		return id
 	}
 	return s
 }

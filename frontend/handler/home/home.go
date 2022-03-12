@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	. "gitlab.com/zendrulat123/groundup/cmd/ut"
-	
+
 	. "gitlab.com/zendrulat123/groundup/configutil/createserver"
 )
 

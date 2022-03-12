@@ -17,21 +17,16 @@
         <label for="url">URL:</label><br>
         <input type="text" id="url" name="url" value="/newpage/"><br><br>
         <input type="submit" value="Submit">
-
-
-        {{if .url}}
-
-        {{index .url 0}}
-
+        {{if .urls}}
+        {{range $i, $titles := .titles}}
+        {{$urls := index $.urls $i}}
+        <h3>{{$titles}}</h3><a href="{{$urls}}">{{$urls}}</a>
+        {{end}}
         {{else}}
         no url
         {{end}}
 
-        {{if .title}}
-        {{index .title 0}}
-        {{else}}
-        no title
-        {{end}}
+
     </form>
 </body>
 
