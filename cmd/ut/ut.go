@@ -44,6 +44,19 @@ func CreateConfig() {
 	if isError(err) {
 		fmt.Println("error -", err, mfile)
 	}
+	var Configbase = `
+home:
+ path: "app"
+ file: "app.go"
+ script: "jquery"`
+	/* write to the files */
+	tm := template.Must(template.New("queue").Parse(Configbase))
+	err = tm.Execute(mfile, nil)
+	if err != nil {
+		log.Print("execute: ", err)
+		return
+	}
+
 }
 
 func ConfigAddEnv(f string, E string) {
@@ -509,6 +522,22 @@ func Shellout(command string) (error, string, string) {
 	err := cmd.Run()
 	return err, stdout.String(), stderr.String()
 }
+func Startprogram(command string) (error, string, string, *exec.Cmd) {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/C", command)
+	} else {
+		cmd = exec.Command("bash", "-c", command)
+	}
+
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return err, stdout.String(), stderr.String(), cmd
+}
 
 //creates a slice of slices
 func GetSubslice(s []string) [][]string {
@@ -564,4 +593,39 @@ func SeparateCommaProp(s []string) ([]string, []string) {
 func IsNumeric(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
 	return err == nil
+}
+
+func Watch() *exec.Cmd {
+
+	files, _ := ioutil.ReadDir("/app")
+
+	var newestFile string
+	var newestTime int64 = 0
+	for _, f := range files {
+		fi, err := os.Stat("/app" + f.Name())
+		if err != nil {
+			fmt.Println(err)
+		}
+		currTime := fi.ModTime().Unix()
+		if currTime > newestTime {
+			newestTime = currTime
+			newestFile = f.Name()
+		}
+	}
+	fmt.Println("~~~~~~~~~~~~~~~", newestFile)
+	curr_wd, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	err, out, errout, cmd := Startprogram(`cd app && go run .`)
+	if err != nil {
+		log.Printf("error: %v\n", err)
+	}
+	fmt.Println(filepath.Base(curr_wd))
+	fmt.Println(out)
+	fmt.Println("--- errs ---")
+	fmt.Println(errout)
+	return cmd
 }

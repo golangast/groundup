@@ -1,4 +1,5 @@
+
 home:
- path: app
- file: home.html
- script: jqeury
+ path: "app"
+ file: "app.go"
+ script: "jquery"

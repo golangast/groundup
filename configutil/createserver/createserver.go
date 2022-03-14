@@ -26,7 +26,5 @@ func Createservers() {
 	sp := fmt.Sprintf("%v", p)
 	sf := fmt.Sprintf("%v", f)
 	ss := fmt.Sprintf("%v", s)
-
 	CreateServer(sp, sf, ss)
-
 }

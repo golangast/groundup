@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
-	"runtime"
 	"strings"
 	"text/template"
 
@@ -18,15 +16,15 @@ import (
 func CreateServer(p string, f string, s string) {
 	/* generate code */
 	if err := os.MkdirAll(p, os.ModeSticky|os.ModePerm); err != nil {
-		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
-	} else {
 		fmt.Println("Whoops, could not create directory(ies) because", err)
+
+	} else {
+		fmt.Println("Directory " + p + " successfully created with sticky bits and full permissions")
 	}
 
 	if err := os.MkdirAll(p+"/templates", os.ModeSticky|os.ModePerm); err != nil {
 		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
 	} else {
-		fmt.Println("Whoops, could not create directory(ies) because", err)
 	}
 
 	mfile, err := os.Create(p + "/templates/" + f)
@@ -44,10 +42,6 @@ func CreateServer(p string, f string, s string) {
 		log.Print("execute: ", err)
 		return
 	}
-	// //run the program
-	// mydir, err := os.Getwd()
-
-	// fmt.Println(mydir)
 
 	err, out, errout := ut.Shellout("cd app && go mod init " + p + "&& go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
@@ -57,7 +51,7 @@ func CreateServer(p string, f string, s string) {
 	fmt.Println("--- errs ---")
 	fmt.Println(errout)
 
-	err, outs, errouts := ut.Shellout("cd app && go run main.go")
+	err, outs, errouts := ut.Shellout("cd app && go install github.com/labstack/echo/v4 && go install github.com/labstack/echo/v4/middleware && go get github.com/labstack/gommon/log && go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -65,32 +59,24 @@ func CreateServer(p string, f string, s string) {
 	fmt.Println("--- errs ---")
 	fmt.Println(errouts)
 
-	openbrowser("http://localhost:3000/")
 }
+
+func Reload(){
+	err, outs, errouts := ut.Shellout("cd app && go mod tidy && go mod vendor && go install && go build")
+	if err != nil {
+		log.Printf("error: %v\n", err)
+	}
+	fmt.Println(outs)
+	fmt.Println("--- errs ---")
+	fmt.Println(errouts)
+}
+
 func isError(err error) bool {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
 	return (err != nil)
-}
-func openbrowser(url string) {
-	var err error
-
-	switch runtime.GOOS {
-	case "linux":
-		err = exec.Command("xdg-open", url).Start()
-	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
-	case "darwin":
-		err = exec.Command("open", url).Start()
-	default:
-		err = fmt.Errorf("unsupported platform")
-	}
-	if err != nil {
-		log.Fatal(err)
-	}
-
 }
 func GetUrlTitle(prop []string) ([]string, []string) {
 	var title []string
@@ -128,4 +114,11 @@ func TrimColanright(s string) string {
 		return id
 	}
 	return s
+}
+
+func Createtemplatefile(f string) {
+	mfile, err := os.Create("templates/" + f)
+	if isError(err) {
+		fmt.Println("error -", err, mfile)
+	}
 }

@@ -1,4 +1,5 @@
 
+
 package main
 
 	import (
@@ -9,6 +10,7 @@ package main
 		_ "net/http/pprof"
 		"os"
 		"path/filepath"
+		_"time"
 	
 		"github.com/labstack/echo/v4"
 		"github.com/labstack/echo/v4/middleware"
@@ -69,7 +71,12 @@ package main
 		}))
 		e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(30)))
 		e.Static("/static", "static")
+		// Start server
 		e.Logger.Fatal(e.Start(":3000"))
+		
+	
+		
+		
 	}
 	func GetAllFilePathsInDirectory(dirpath string) ([]string, error) {
 		var paths []string
@@ -109,4 +116,6 @@ func Home(c echo.Context) error {
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{})
 
 }
+
+
 

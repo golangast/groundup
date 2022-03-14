@@ -38,6 +38,7 @@ func Serv() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	renderer := &TemplateRenderer{
 		templates: template.Must(t, err),
 	}
