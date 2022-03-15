@@ -1,5 +1,6 @@
 
 home:
+ app: "app.go"
  path: "app"
- file: "app.go"
+ file: "index.html"
  script: "jquery"

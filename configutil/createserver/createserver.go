@@ -19,12 +19,13 @@ func Createservers() {
 		fmt.Println("fatal error config file: default \n", err)
 		os.Exit(1)
 	}
-
+	g := viper.Get("home.app")
 	p := viper.Get("home.path")
 	f := viper.Get("home.file")
 	s := viper.Get("home.script")
 	sp := fmt.Sprintf("%v", p)
 	sf := fmt.Sprintf("%v", f)
 	ss := fmt.Sprintf("%v", s)
-	CreateServer(sp, sf, ss)
+	sg := fmt.Sprintf("%v", g)
+	CreateServer(sp, sf, ss, sg)
 }

@@ -11,7 +11,8 @@ import (
 )
 
 func Startprod() *exec.Cmd {
-	err, outs, errouts, cmd := ut.Startprogram("cd app && go mod tidy && go mod vendor && go install && go run main.go")
+
+	err, outs, errouts, cmd := ut.Startprogram("cd app && go mod tidy && go mod vendor && go install && go run app.go")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -37,8 +38,6 @@ func Startdev() *exec.Cmd {
 func Stopping(cmd *exec.Cmd) {
 	fmt.Println("....stopping 3000")
 	if runtime.GOOS == "windows" {
-		//os.Exit(0)
-
 		if err := cmd.Process.Kill(); err != nil {
 			log.Fatal("failed to kill process: ", err)
 		}
@@ -77,4 +76,21 @@ func openbrowser(url string) {
 		log.Fatal(err)
 	}
 
+}
+func Reload() {
+	err, outs, errouts := ut.Shellout("cd app && go mod tidy && go mod vendor && go install && go build")
+	if err != nil {
+		log.Printf("error: %v\n", err)
+	}
+	fmt.Println(outs)
+	fmt.Println("--- errs ---")
+	fmt.Println(errouts)
+}
+func KillProcessByName(procname string) int {
+	kill := exec.Command("taskkill", "/im", procname, "/T", "/F")
+	err := kill.Run()
+	if err != nil {
+		return -1
+	}
+	return 0
 }

@@ -18,6 +18,7 @@ func Routes(e *echo.Echo) {
 	e.GET("/startprod/:prodv", home.Home)
 	e.GET("/startdev/:devv", home.Home)
 	e.GET("/stop/:stopv", home.Home)
+	e.GET("/reload/:reloadv", home.Home)
 
 	e.GET("/"+hh, func(c echo.Context) error {
 		Createtemplatefile(hh + ".html")

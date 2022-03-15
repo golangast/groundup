@@ -15,6 +15,8 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+
+	"golang.org/x/sys/windows"
 )
 
 func AppendStringToFile(path, text string) error {
@@ -46,8 +48,9 @@ func CreateConfig() {
 	}
 	var Configbase = `
 home:
+ app: "app.go"
  path: "app"
- file: "app.go"
+ file: "index.html"
  script: "jquery"`
 	/* write to the files */
 	tm := template.Must(template.New("queue").Parse(Configbase))
@@ -628,4 +631,32 @@ func Watch() *exec.Cmd {
 	fmt.Println("--- errs ---")
 	fmt.Println(errout)
 	return cmd
+}
+
+//get list of running processes
+func CheckProcessLife() {
+	const processEntrySize = 568
+	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+	if e != nil {
+		panic(e)
+	}
+	p := windows.ProcessEntry32{Size: processEntrySize}
+	for {
+		e := windows.Process32Next(h, &p)
+		if e != nil {
+			break
+		}
+		s := windows.UTF16ToString(p.ExeFile[:])
+		println(s)
+	}
+}
+
+// kill a process
+func killProcessByName(procname string) int {
+	kill := exec.Command("taskkill", "/im", procname, "/T", "/F")
+	err := kill.Run()
+	if err != nil {
+		return -1
+	}
+	return 0
 }

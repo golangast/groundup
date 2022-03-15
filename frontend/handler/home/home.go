@@ -33,8 +33,16 @@ func Home(c echo.Context) error {
 	stopv := c.Param("stopv")
 	if stopv == "true" {
 		fmt.Println("gonna stop...")
+		KillProcessByName("app.exe")
+		KillProcessByName("app")
 		Stopping(cmd)
 	}
+	reload := c.Param("reloadv")
+
+	if reload == "true" {
+		Reload()
+	}
+
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{})
 
 }

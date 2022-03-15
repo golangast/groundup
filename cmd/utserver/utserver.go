@@ -13,25 +13,26 @@ import (
 
 //p-path f-file s-script
 //tie the viper config vars to params
-func CreateServer(p string, f string, s string) {
+func CreateServer(p string, f string, s string, g string) {
 	/* generate code */
 	if err := os.MkdirAll(p, os.ModeSticky|os.ModePerm); err != nil {
-		fmt.Println("Whoops, could not create directory(ies) because", err)
+		fmt.Println("~~~~could not create"+p, err)
 
 	} else {
 		fmt.Println("Directory " + p + " successfully created with sticky bits and full permissions")
 	}
 
 	if err := os.MkdirAll(p+"/templates", os.ModeSticky|os.ModePerm); err != nil {
-		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
+		fmt.Println("~~~~could not create"+p+"/templates", err)
 	} else {
+		fmt.Println("Directory " + p + "/templates successfully created with sticky bits and full permissions")
 	}
 
 	mfile, err := os.Create(p + "/templates/" + f)
 	if isError(err) {
 		fmt.Println("error -", err, mfile)
 	}
-	sfile, err := os.Create(p + "/main.go")
+	sfile, err := os.Create(p + "/" + g)
 	if isError(err) {
 		fmt.Println("error -", err, sfile)
 	}
@@ -59,16 +60,6 @@ func CreateServer(p string, f string, s string) {
 	fmt.Println("--- errs ---")
 	fmt.Println(errouts)
 
-}
-
-func Reload(){
-	err, outs, errouts := ut.Shellout("cd app && go mod tidy && go mod vendor && go install && go build")
-	if err != nil {
-		log.Printf("error: %v\n", err)
-	}
-	fmt.Println(outs)
-	fmt.Println("--- errs ---")
-	fmt.Println(errouts)
 }
 
 func isError(err error) bool {
