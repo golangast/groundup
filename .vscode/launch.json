@@ -6,19 +6,40 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}",
-            "port": 5002,
+            "program": "${workspaceFolder}/app",
+            "port": 3000,
             "host": "127.0.0.1",
-            "showLog": false
+            "showLog": true
         },
         {
             "name": "Launch Package",
             "type": "go",
             "request": "launch",
-           // "debugAdapter": "dlv-dap",
-          //  "mode": "auto",
+            // "debugAdapter": "dlv-dap",
             "mode": "auto",
             "program": "${workspaceFolder}",
+            "env": {},
+            // "args": [
+            //     "go run ."
+            // ],
+            "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 512,
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+            },
+            "dlvFlags": [
+                "--check-go-version=false"
+            ]
+        }
+        {
+            "name": "Launch gen",
+            "type": "go",
+            "request": "launch",
+            // "debugAdapter": "dlv-dap",
+            "mode": "auto",
+            "program": "${workspaceFolder}/app",
             "env": {},
             // "args": [
             //     "go run ."

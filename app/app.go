@@ -11,6 +11,7 @@ package main
 		"os"
 		"path/filepath"
 		_"time"
+		"strings"
 	
 		"github.com/labstack/echo/v4"
 		"github.com/labstack/echo/v4/middleware"
@@ -108,6 +109,7 @@ package main
 
 func Routes(e *echo.Echo) {
 	e.GET("/", Home)
+	e.GET("/route/:routes", List)
 
 }
 
@@ -117,5 +119,18 @@ func Home(c echo.Context) error {
 
 }
 
+func List(c echo.Context) error {
+	routes := c.Param("routes")
+	nospaceroutes := strings.ReplaceAll(routes, " ", "")
+	noslashroutes := TrimSlashRight(nospaceroutes)
+	return c.Render(http.StatusOK, noslashroutes+".html", map[string]interface{}{})
+
+}
+func TrimSlashRight(s string) string {
+	if idx := strings.Index(s, "/"); idx != -1 {
+		return s[:idx]
+	}
+	return s
+}
 
 

@@ -1,7 +1,7 @@
 # github.com/golang-jwt/jwt v3.2.2+incompatible
 ## explicit
 github.com/golang-jwt/jwt
-# github.com/labstack/echo/v4 v4.7.1
+# github.com/labstack/echo/v4 v4.7.2
 ## explicit; go 1.17
 github.com/labstack/echo/v4
 github.com/labstack/echo/v4/middleware

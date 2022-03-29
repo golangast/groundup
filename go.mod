@@ -7,14 +7,13 @@ require (
 	github.com/labstack/gommon v0.3.1
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.10.1
-	github.com/syndtr/goleveldb v1.0.0
+	go.etcd.io/bbolt v1.3.6
 	golang.org/x/sys v0.0.0-20211210111614-af8b64212486
 )
 
 require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
-	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
