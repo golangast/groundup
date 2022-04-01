@@ -13,6 +13,7 @@ package main
 		"os"
 		"path/filepath"
 		_"time"
+		"strings"
 	
 		"github.com/labstack/echo/v4"
 		"github.com/labstack/echo/v4/middleware"
@@ -121,13 +122,10 @@ func Home(c echo.Context) error {
 }
 
 func List(c echo.Context) error {
-
-	
 	routes := c.Param("routes")
 	nospaceroutes := strings.ReplaceAll(routes, " ", "")
 	noslashroutes := TrimSlashRight(nospaceroutes)
-
-	return c.Render(http.StatusOK, routes+".html", map[string]interface{}{})
+	return c.Render(http.StatusOK, noslashroutes+".html", map[string]interface{}{})
 
 }
 func TrimSlashRight(s string) string {

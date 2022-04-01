@@ -51,7 +51,7 @@ func CreateConfig() {
 home:
  app: "app.go"
  path: "app"
- file: "index.html"
+ file: "home.html"
  script: "jquery"`
 	/* write to the files */
 	tm := template.Must(template.New("queue").Parse(Configbase))

@@ -115,7 +115,7 @@ func Routes(e *echo.Echo) {
 
 func Home(c echo.Context) error {
 
-	return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
+	return c.Render(http.StatusOK, "body.html", map[string]interface{}{})
 
 }
 

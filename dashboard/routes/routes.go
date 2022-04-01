@@ -19,6 +19,7 @@ func Routes(e *echo.Echo) {
 	e.GET("/db/:dbv", home.Home)
 	e.GET("/show/:showv", home.Home)
 	e.GET("/hotload/:hotloadv", home.Home)
+	e.GET("/delete/:deletev/:title", home.Home)
 
 	//create page
 	e.POST("/page", createpage.CreatePage)

@@ -198,3 +198,37 @@ func AddDB(bu string, key string, value string) {
 		log.Fatal(err)
 	}
 }
+
+func DeleteDB(bu string, key string) {
+	fmt.Println("delete...")
+
+	// Open the database.
+	db, err := bolt.Open("db/bolt.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	// Delete the key in a different write transaction.
+	if err := db.Update(func(tx *bolt.Tx) error {
+		return tx.Bucket([]byte(bu)).Delete([]byte(key))
+	}); err != nil {
+		log.Fatal(err)
+	}
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(bu))
+		// we need cursor for iteration
+		c := b.Cursor()
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			fmt.Printf("%s likes %s\n", k, v)
+
+		}
+		// should return nil to complete the transaction
+		return nil
+	})
+
+	// Close database to release the file lock.
+	if err := db.Close(); err != nil {
+		log.Fatal(err)
+	}
+
+}

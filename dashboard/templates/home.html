@@ -29,8 +29,7 @@
         <a class="waves-effect waves-teal btn-flat" href="/reload/true">Reload</a>
     </div>
     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;float: left;">
             <div class="card-body">
                 <form action="/page" method="POST">
                     <label for="title">title:</label><br>
@@ -48,7 +47,8 @@
             {{range $i, $titles := .titles}}
             {{$urls := index $.urls $i}}
             <li class="list-group-item"><span>{{$titles}}-<a href="http://localhost:3000/route{{$urls}}"
-                        target="_blank">{{$urls}}</a></span></li>
+                        target="_blank">{{$urls}}</a></span><a class="waves-effect waves-teal btn-flat"
+                    href="/delete/true/{{$titles}}">Delete</a></li>
             {{end}}
         </ol>
         {{else}}

@@ -2,8 +2,11 @@ package home
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	. "gitlab.com/zendrulat123/groundup/cmd/ut"
@@ -19,6 +22,7 @@ func Home(c echo.Context) error {
 	var urls []string
 	const files = "databaseconfig/dbpersis.fsg"
 	var cmd *exec.Cmd
+	//grab any route params
 	con := c.Param("config")
 	s := c.Param("server")
 	prodv := c.Param("prodv")
@@ -30,55 +34,65 @@ func Home(c echo.Context) error {
 	dbv := c.Param("dbv")
 	showv := c.Param("showv")
 	hotloadv := c.Param("hotloadv")
-
+	deletev := c.Param("deletev")
+	//once params are grabbed then run methods
 	switch {
-	case con == "true":
+	case con == "true": //create config
 		fmt.Println("gonna config...")
 		c.Redirect(http.StatusFound, "/home")
 		CreateConfig()
-	case s == "true":
+	case s == "true": //create server
 		fmt.Println("gonna serv...")
 		c.Redirect(http.StatusFound, "/home")
 		Createservers()
-	case prodv == "true":
+	case prodv == "true": //run production
 		fmt.Println("gonna prod...")
 		c.Redirect(http.StatusFound, "/home")
 		cmd = Startprod()
-	case devv == "true":
+	case devv == "true": //run dev
 		fmt.Println("gonna dev...")
 		c.Redirect(http.StatusFound, "/home")
 		cmd = Startdev()
-	case stopv == "true":
+	case stopv == "true": //stop application
 		fmt.Println("gonna stop...")
 		c.Redirect(http.StatusFound, "/home")
 		KillProcessByName("app.exe")
 		KillProcessByName("app")
 		Stopping(cmd)
-	case reload == "true":
+	case reload == "true": //reload application
 		fmt.Println("gonna reload...")
 		c.Redirect(http.StatusFound, "/home")
 		Reload()
-	case routesconfig == "true":
+	case routesconfig == "true": //create markup language for routes *not used any longer
 		fmt.Println("gonna config...")
 		c.Redirect(http.StatusFound, "/home")
 		utfsg.Make("databaseconfig")
-	case genroutev == "true":
+	case genroutev == "true": //generate routes
 		fmt.Println("gonna gen routes...")
 		c.Redirect(http.StatusFound, "/home")
 		titles, urls = utfsg.GenRoutes()
 		fmt.Println("before-", titles, urls)
-	case dbv == "true":
+	case dbv == "true": //generate database
 		c.Redirect(http.StatusFound, "/home")
 		db.Tempfile()
 		db.CreateBucket("urls", "home", "/home")
-	case showv == "true":
+	case showv == "true": //show routes
 		titles, urls = db.GetAllkv("urls")
 	case hotloadv == "true":
 		c.Redirect(http.StatusFound, "/home")
 		KillProcessByName("app.exe")
 		KillProcessByName("app")
 		Stopping(cmd)
-		cmd = Startprod()
+		cmd = Hotreload()
+	case deletev == "true": //delete routes
+		titlev := c.Param("title")
+		titletrim := strings.ReplaceAll(titlev, " ", "")
+		db.DeleteDB("urls", titlev)
+		err := os.RemoveAll("app/templates/" + titletrim + ".html")
+		if err != nil {
+			log.Fatal(err)
+		}
+		c.Redirect(http.StatusFound, "/home")
 	default:
 		fmt.Println("none were used")
 	}

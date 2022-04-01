@@ -7,8 +7,11 @@ import (
 	"strings"
 	"text/template"
 
-	. "gitlab.com/zendrulat123/groundup/cmd/templates"
 	"gitlab.com/zendrulat123/groundup/cmd/ut"
+	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/body"
+	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/footer"
+	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/header"
+	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/server"
 )
 
 //p-path f-file s-script
@@ -28,17 +31,69 @@ func CreateServer(p string, f string, s string, g string) {
 		fmt.Println("Directory " + p + "/templates successfully created with sticky bits and full permissions")
 	}
 
-	mfile, err := os.Create(p + "/templates/" + f)
+	bfile, err := os.Create(p + "/templates/body.html")
 	if isError(err) {
-		fmt.Println("error -", err, mfile)
+		fmt.Println("error -", err, bfile)
+	}
+	hfile, err := os.Create(p + "/templates/header.html")
+	if isError(err) {
+		fmt.Println("error -", err, hfile)
+	}
+	ffile, err := os.Create(p + "/templates/footer.html")
+	if isError(err) {
+		fmt.Println("error -", err, ffile)
 	}
 	sfile, err := os.Create(p + "/" + g)
 	if isError(err) {
 		fmt.Println("error -", err, sfile)
 	}
-	/* write to the files */
-	tm := template.Must(template.New("queue").Parse(Maintemp))
-	err = tm.Execute(sfile, nil)
+	tms := template.Must(template.New("queue").Parse(Servertemp))
+	err = tms.Execute(sfile, nil)
+	if err != nil {
+		log.Print("execute: ", err)
+		return
+	}
+	/*
+		generate header.html file template
+	*/
+	tmh := template.Must(template.New("queue").Parse(Headertemp))
+	//all of this is needed to parse {{define header}} and {{end}}
+	m := make(map[string]string)
+	header := fmt.Sprintf(`{{define "header"}}%s`, "")
+	end := fmt.Sprintf(`{{end}}%s`, "")
+	m["header"] = header
+	m["end"] = end
+	err = tmh.Execute(hfile, m)
+	if err != nil {
+		log.Print("execute: ", err)
+		return
+	}
+	/*
+		generate footer.html file template
+	*/
+	tmf := template.Must(template.New("queue").Parse(Footertemp))
+	//all of this is needed to parse {{define footer}} and {{end}}
+	mf := make(map[string]string)
+	footer := fmt.Sprintf(`{{define "footer"}}%s`, "")
+	endf := fmt.Sprintf(`{{end}}%s`, "")
+	mf["footer"] = footer
+	mf["end"] = endf
+	err = tmf.Execute(ffile, mf)
+	if err != nil {
+		log.Print("execute: ", err)
+		return
+	}
+	/*
+		generate body.html file template
+	*/
+	tmb := template.Must(template.New("queue").Parse(Bodytemp))
+	//all of this is needed to parse {{template footer .}} and {{template header .}}
+	mb := make(map[string]string)
+	headerb := fmt.Sprintf(`{{template "header" .}}%s`, "")
+	footerb := fmt.Sprintf(`{{template "footer" .}}%s`, "")
+	mb["footer"] = footerb
+	mb["header"] = headerb
+	err = tmb.Execute(bfile, mb)
 	if err != nil {
 		log.Print("execute: ", err)
 		return

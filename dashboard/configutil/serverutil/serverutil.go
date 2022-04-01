@@ -10,6 +10,16 @@ import (
 	"gitlab.com/zendrulat123/groundup/cmd/ut"
 )
 
+func Hotreload() *exec.Cmd {
+	err, outs, errouts, cmd := ut.Startprogram("cd app && go run app.go")
+	if err != nil {
+		log.Printf("error: %v\n", err)
+	}
+	fmt.Println(outs)
+	fmt.Println("--- errs ---")
+	fmt.Println(errouts)
+	return cmd
+}
 func Startprod() *exec.Cmd {
 
 	err, outs, errouts, cmd := ut.Startprogram("cd app && go mod tidy && go mod vendor && go install && go run app.go")
@@ -34,7 +44,6 @@ func Startdev() *exec.Cmd {
 	openbrowser("http://localhost:3000/")
 	return cmd
 }
-
 func Stopping(cmd *exec.Cmd) {
 	fmt.Println("....stopping 3000")
 	if runtime.GOOS == "windows" {

@@ -23,11 +23,7 @@ func CreatePage(c echo.Context) error {
 			fmt.Println("error -", err, mfile)
 		}
 	}
-	//db.GetAllkv("routes")
-	//db.GetAllkv("routes")
-	//fmt.Println("stored ", titles, urls)
-	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
-		//	"titles": titles,
-		//	"urls":   urls,
-	})
+	c.Redirect(http.StatusFound, "/home")
+
+	return c.Render(http.StatusOK, "home.html", map[string]interface{}{})
 }
