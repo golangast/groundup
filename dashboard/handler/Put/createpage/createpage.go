@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	db "gitlab.com/zendrulat123/groundup/dashboard/db"
+	db "github.com/zendrulat123/groundup/dashboard/db"
 )
 
 func CreatePage(c echo.Context) error {

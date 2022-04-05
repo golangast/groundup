@@ -31,7 +31,19 @@
     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div class="card" style="width: 18rem;float: left;">
             <div class="card-body">
-                <form action="/page" method="POST">
+                <h6 for="">Add your 3rd party library</h6>
+                <form class="border border-1" action="/lib" method="POST">
+
+                    <div class="input-field col s6">
+                        <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
+                        <label for="lib">Enter your library</label>
+                    </div>
+                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                </form>
+                <h6 for="">Add your pages</h6>
+
+                <form class="border border-1" action="/page" method="POST">
+
                     <label for="title">title:</label><br>
                     <input type="text" id="title" name="title" value="new page"><br>
                     <label for="url">URL:</label><br>
@@ -40,24 +52,51 @@
                 </form>
             </div>
         </div>
+
         <a class="waves-effect waves-teal btn-flat" href="/show/true">show urls</a>
+        <a class="waves-effect waves-teal btn-flat" href="/showlibs/true">show libraries</a>
         <a class="waves-effect waves-teal btn-flat" href="/hotload/true">reload</a>
-        <ol class="list-group list-group-numbered">
+        <ol class="collection lists list-group list-group-numbered">
+            {{if .libs}}
+            {{range $a, $libs := .libs}}
+            <a class=" waves-effect waves-teal btn-flat" href="/addlib/true/{{$libs}}">Add {{$libs}}</a>
+            {{end}}
+            {{else}}
+            no libraries
+            {{end}}
+        </ol>
+        <ol class="lists collection list-group list-group-numbered">
             {{if .urls}}
             {{range $i, $titles := .titles}}
             {{$urls := index $.urls $i}}
             <li class="list-group-item"><span>{{$titles}}-<a href="http://localhost:3000/route{{$urls}}"
-                        target="_blank">{{$urls}}</a></span><a class="waves-effect waves-teal btn-flat"
-                    href="/delete/true/{{$titles}}">Delete</a></li>
+                        target="_blank">{{$urls}}</a></span>
+                <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$titles}}">Delete</a>
+            </li>
+            {{end}}
+            {{else}}
+            no url
             {{end}}
         </ol>
-        {{else}}
-        no url
-        {{end}}
     </div>
 </div>
 
 <style>
+    h6 {
+        text-align: center;
+        text-decoration: underline;
+        padding-top: 2%;
+    }
+
+    form {
+        padding: 2%;
+        margin: 2%;
+    }
+
+    .lists {
+        z-index: -1;
+    }
+
     .btn-flat {
         text-decoration: none;
     }

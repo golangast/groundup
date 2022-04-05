@@ -2,8 +2,9 @@ package routes
 
 import (
 	"github.com/labstack/echo/v4"
-	"gitlab.com/zendrulat123/groundup/dashboard/handler/Put/createpage"
-	home "gitlab.com/zendrulat123/groundup/dashboard/handler/home"
+	"github.com/zendrulat123/groundup/dashboard/handler/Put/createpage"
+	home "github.com/zendrulat123/groundup/dashboard/handler/home"
+	"github.com/zendrulat123/groundup/dashboard/handler/put/createlib"
 )
 
 func Routes(e *echo.Echo) {
@@ -18,9 +19,12 @@ func Routes(e *echo.Echo) {
 	e.GET("/genroute/:genroutev", home.Home)
 	e.GET("/db/:dbv", home.Home)
 	e.GET("/show/:showv", home.Home)
+	e.GET("/showlibs/:showlibsv", home.Home)
 	e.GET("/hotload/:hotloadv", home.Home)
 	e.GET("/delete/:deletev/:title", home.Home)
 
 	//create page
 	e.POST("/page", createpage.CreatePage)
+	e.POST("/lib", createlib.CreateLib)
+
 }

@@ -3,7 +3,7 @@ package zegmarkuputil
 import (
 	"fmt"
 
-	"gitlab.com/zendrulat123/groundup/zegmarkup/utfsg"
+	"github.com/zendrulat123/groundup/zegmarkup/utfsg"
 )
 
 func Routesconfigator() {

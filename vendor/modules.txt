@@ -1,3 +1,9 @@
+# github.com/boltdb/bolt v1.3.1
+## explicit
+github.com/boltdb/bolt
+# github.com/cpuguy83/go-md2man/v2 v2.0.1
+## explicit; go 1.11
+github.com/cpuguy83/go-md2man/v2/md2man
 # github.com/fsnotify/fsnotify v1.5.1
 ## explicit; go 1.13
 github.com/fsnotify/fsnotify
@@ -19,6 +25,15 @@ github.com/hashicorp/hcl/json/token
 # github.com/inconshreveable/mousetrap v1.0.0
 ## explicit
 github.com/inconshreveable/mousetrap
+# github.com/kval-access-language/kval-boltdb v0.0.0-20170330045345-f3797777c95e
+## explicit
+github.com/kval-access-language/kval-boltdb
+# github.com/kval-access-language/kval-parse v0.0.0-20170504112528-b96aa5a26330
+## explicit
+github.com/kval-access-language/kval-parse
+# github.com/kval-access-language/kval-scanner v0.0.0-20170504112421-4f097cacd289
+## explicit
+github.com/kval-access-language/kval-scanner
 # github.com/labstack/echo/v4 v4.7.0
 ## explicit; go 1.17
 github.com/labstack/echo/v4
@@ -38,12 +53,24 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.14
 ## explicit; go 1.12
 github.com/mattn/go-isatty
+# github.com/mattn/go-runewidth v0.0.9
+## explicit; go 1.9
+github.com/mattn/go-runewidth
 # github.com/mitchellh/mapstructure v1.4.3
 ## explicit; go 1.14
 github.com/mitchellh/mapstructure
+# github.com/olekukonko/tablewriter v0.0.5
+## explicit; go 1.12
+github.com/olekukonko/tablewriter
 # github.com/pelletier/go-toml v1.9.4
 ## explicit; go 1.12
 github.com/pelletier/go-toml
+# github.com/pkg/errors v0.8.1
+## explicit
+github.com/pkg/errors
+# github.com/russross/blackfriday/v2 v2.1.0
+## explicit
+github.com/russross/blackfriday/v2
 # github.com/spf13/afero v1.6.0
 ## explicit; go 1.13
 github.com/spf13/afero
@@ -71,6 +98,9 @@ github.com/spf13/viper/internal/encoding/yaml
 # github.com/subosito/gotenv v1.2.0
 ## explicit
 github.com/subosito/gotenv
+# github.com/urfave/cli v1.22.5
+## explicit; go 1.11
+github.com/urfave/cli
 # github.com/valyala/bytebufferpool v1.0.0
 ## explicit
 github.com/valyala/bytebufferpool

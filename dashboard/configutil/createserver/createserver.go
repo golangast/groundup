@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/viper"
-	. "gitlab.com/zendrulat123/groundup/dashboard/generator/utserver"
+	. "github.com/zendrulat123/groundup/dashboard/generator/utserver"
 )
 
 func Createservers() {

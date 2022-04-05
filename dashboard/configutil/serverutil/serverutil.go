@@ -2,12 +2,17 @@ package serverutil
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"net/http"
+	"net/url"
+	"os"
 	"os/exec"
 	"runtime"
+	"strings"
 	"time"
 
-	"gitlab.com/zendrulat123/groundup/cmd/ut"
+	"github.com/zendrulat123/groundup/cmd/ut"
 )
 
 func Hotreload() *exec.Cmd {
@@ -102,4 +107,66 @@ func KillProcessByName(procname string) int {
 		return -1
 	}
 	return 0
+}
+func Addthirdparty(p string, lib string, templatefile string) string {
+	var pt = ""
+	switch {
+	case p == "local":
+		GetThirdPartyFile(lib)
+	case p == "cdn":
+
+	}
+
+	return pt
+}
+func GetThirdPartyFile(urlthirdparty string) {
+	var fullURLFile = urlthirdparty
+
+	// Build fileName from fullPath
+	fileURL, err := url.Parse(fullURLFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	path := fileURL.Path
+	segments := strings.Split(path, "/")
+	fileName := segments[len(segments)-1]
+	CreateFolder("app/thirdparties")
+	// Create blank file
+	file, err := os.Create("app/thirdparties/" + fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	client := http.Client{
+		CheckRedirect: func(r *http.Request, via []*http.Request) error {
+			r.URL.Opaque = r.URL.Path
+			return nil
+		},
+	}
+	// Put content on file
+	resp, err := client.Get(fullURLFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	size, err := io.Copy(file, resp.Body)
+
+	defer file.Close()
+
+	fmt.Printf("Downloaded a file %s with size %d", fileName, size)
+}
+func CreateFolder(folder string) {
+	if err := os.MkdirAll(folder, os.ModeSticky|os.ModePerm); err != nil {
+		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
+	} else {
+		fmt.Println("Whoops, could not create directory(ies) because", err)
+	}
+
+}
+func isError(err error) bool {
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	return (err != nil)
 }

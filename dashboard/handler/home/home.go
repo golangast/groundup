@@ -9,17 +9,20 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	. "gitlab.com/zendrulat123/groundup/cmd/ut"
-	db "gitlab.com/zendrulat123/groundup/dashboard/db"
-	"gitlab.com/zendrulat123/groundup/zegmarkup/utfsg"
+	. "github.com/zendrulat123/groundup/cmd/ut"
+	db "github.com/zendrulat123/groundup/dashboard/db"
+	kdb "github.com/zendrulat123/groundup/dashboard/db/kval"
+	"github.com/zendrulat123/groundup/zegmarkup/utfsg"
 
-	. "gitlab.com/zendrulat123/groundup/dashboard/configutil/createserver"
-	. "gitlab.com/zendrulat123/groundup/dashboard/configutil/serverutil"
+	. "github.com/zendrulat123/groundup/dashboard/configutil/createserver"
+	. "github.com/zendrulat123/groundup/dashboard/configutil/serverutil"
 )
 
 func Home(c echo.Context) error {
 	var titles []string
 	var urls []string
+	var libs []string
+
 	const files = "databaseconfig/dbpersis.fsg"
 	var cmd *exec.Cmd
 	//grab any route params
@@ -78,6 +81,7 @@ func Home(c echo.Context) error {
 		db.CreateBucket("urls", "home", "/home")
 	case showv == "true": //show routes
 		titles, urls = db.GetAllkv("urls")
+		libs, _ = kdb.Getall("libs")
 	case hotloadv == "true":
 		c.Redirect(http.StatusFound, "/home")
 		KillProcessByName("app.exe")
@@ -93,13 +97,15 @@ func Home(c echo.Context) error {
 			log.Fatal(err)
 		}
 		c.Redirect(http.StatusFound, "/home")
+
 	default:
 		fmt.Println("none were used")
 	}
-
+	fmt.Println(libs)
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
 		"titles": titles,
 		"urls":   urls,
+		"libs":   libs,
 	})
 
 }

@@ -29,7 +29,24 @@ func Tempfile() string {
 	}
 	return f.Name()
 }
-
+func JustBucketCreator(bu string) {
+	fmt.Println("creating buicket...")
+	// Open the database.
+	db, err := bolt.Open("db/bolt.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	if err = db.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucket([]byte(bu))
+		return err
+	}); err != nil {
+		log.Fatal(err)
+	}
+	if err = db.Close(); err != nil {
+		log.Fatal(err)
+	}
+}
 func CreateBucket(bu string, key string, value string) {
 	fmt.Println("creating buicket...")
 	// Open the database.
@@ -231,4 +248,76 @@ func DeleteDB(bu string, key string) {
 		log.Fatal(err)
 	}
 
+}
+
+func EmbeddBucket(originalbucket string, newbucket string) {
+	fmt.Println("embedding...")
+	// Open the database.
+	db, err := bolt.Open("db/bolt.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	// Start the transaction.
+	tx, err := db.Begin(true)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer tx.Rollback()
+	root := tx.Bucket([]byte(originalbucket))
+	// Setup the users bucket.
+
+	if err := db.Update(func(tx *bolt.Tx) error {
+		// Create a bucket.
+		bkt, err := root.CreateBucketIfNotExists([]byte(newbucket))
+		if err != nil {
+			return err
+		}
+
+		// Set the value "bar" for the key "foo".
+		if err := bkt.Put([]byte("jim"), []byte("jannny")); err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		log.Fatal(err)
+	}
+
+	// Read value back in a different read-only transaction.
+	if err := db.View(func(tx *bolt.Tx) error {
+		value := tx.Bucket([]byte(newbucket)).Get([]byte("jim"))
+		fmt.Printf("The value of 'foo' is: %s\n", value)
+		return nil
+	}); err != nil {
+		log.Fatal(err)
+	}
+	// Close database to release the file lock.
+	if err := db.Close(); err != nil {
+		log.Fatal(err)
+	}
+
+}
+func CreateNestedBucketsNew(buckets []string) (err error) {
+	db, err := bolt.Open("db/bolt.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	err = db.Update(func(tx *bolt.Tx) (err error) {
+		var bkt *bolt.Bucket
+
+		for index, bucket := range buckets {
+			if index == 0 {
+				bkt, err = tx.CreateBucketIfNotExists([]byte(bucket))
+			} else {
+				bkt, err = bkt.CreateBucketIfNotExists([]byte(bucket))
+			}
+
+			if err != nil {
+				return fmt.Errorf("Error creating nested bucket [%s]: %v", bucket, err)
+			}
+		}
+		return err
+	})
+	return err
 }

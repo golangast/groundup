@@ -7,11 +7,11 @@ import (
 	"strings"
 	"text/template"
 
-	"gitlab.com/zendrulat123/groundup/cmd/ut"
-	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/body"
-	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/footer"
-	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/header"
-	. "gitlab.com/zendrulat123/groundup/dashboard/generator/templates/server"
+	"github.com/zendrulat123/groundup/cmd/ut"
+	. "github.com/zendrulat123/groundup/dashboard/generator/templates/body"
+	. "github.com/zendrulat123/groundup/dashboard/generator/templates/footer"
+	. "github.com/zendrulat123/groundup/dashboard/generator/templates/header"
+	. "github.com/zendrulat123/groundup/dashboard/generator/templates/server"
 )
 
 //p-path f-file s-script
