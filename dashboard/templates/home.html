@@ -31,15 +31,7 @@
     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div class="card" style="width: 18rem;float: left;">
             <div class="card-body">
-                <h6 for="">Add your 3rd party library</h6>
-                <form class="border border-1" action="/lib" method="POST">
 
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
-                        <label for="lib">Enter your library</label>
-                    </div>
-                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
-                </form>
                 <h6 for="">Add your pages</h6>
 
                 <form class="border border-1" action="/page" method="POST">
@@ -50,29 +42,53 @@
                     <input type="text" id="url" name="url" value="/newpage/"><br><br>
                     <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                 </form>
+                <h6 for="">Add your 3rd party library</h6>
+                <form class="border border-1" action="/lib" method="POST">
+
+                    <div class="input-field col s6">
+                        <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
+                        <label for="lib">Enter your library</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Placeholder" id="libtag" name="libtag" type="text" class="validate">
+                        <label for="lib">Enter your tag</label>
+                    </div>
+                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                </form>
             </div>
         </div>
 
-        <a class="waves-effect waves-teal btn-flat" href="/show/true">show urls</a>
-        <a class="waves-effect waves-teal btn-flat" href="/showlibs/true">show libraries</a>
+        <a class="waves-effect waves-teal btn-flat" href="/show/true">show URLs and Libraries</a>
         <a class="waves-effect waves-teal btn-flat" href="/hotload/true">reload</a>
         <ol class="collection lists list-group list-group-numbered">
-            {{if .libs}}
+            <h6>List of 3rd party libraries.</h6>
+            {{if and .libs .libtag}}
             {{range $a, $libs := .libs}}
-            <a class=" waves-effect waves-teal btn-flat" href="/addlib/true/{{$libs}}">Add {{$libs}}</a>
+            {{$libtag := index $.libtag $a}}
+            <li class=" waves-effect waves-teal btn-flat">{{$libtag}}-{{$libs}}</li>
             {{end}}
             {{else}}
             no libraries
             {{end}}
         </ol>
         <ol class="lists collection list-group list-group-numbered">
-            {{if .urls}}
+            <h6>List of your URLs.</h6>
+            {{if and .urls .libtag }}
             {{range $i, $titles := .titles}}
             {{$urls := index $.urls $i}}
+            {{$libtag := index $.libtag $i}}
+
+
             <li class="list-group-item"><span>{{$titles}}-<a href="http://localhost:3000/route{{$urls}}"
-                        target="_blank">{{$urls}}</a></span>
-                <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$titles}}">Delete</a>
+                        target="_blank">{{$urls}}</a></span><span>
+                    <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$titles}}">Delete</a>
+                    <a class="waves-effect waves-teal btn-flat" href="/addlib/true/{{$libtag}}/{{$titles}}">Add
+                        Library</a>
+
+                </span>
             </li>
+
+
             {{end}}
             {{else}}
             no url
@@ -93,9 +109,7 @@
         margin: 2%;
     }
 
-    .lists {
-        z-index: -1;
-    }
+
 
     .btn-flat {
         text-decoration: none;

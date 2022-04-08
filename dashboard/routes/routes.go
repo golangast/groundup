@@ -21,7 +21,8 @@ func Routes(e *echo.Echo) {
 	e.GET("/show/:showv", home.Home)
 	e.GET("/showlibs/:showlibsv", home.Home)
 	e.GET("/hotload/:hotloadv", home.Home)
-	e.GET("/delete/:deletev/:title", home.Home)
+	e.GET("/delete/:deletev/:titlev", home.Home)
+	e.GET("/addlib/:libtagv/:libtagsv/:titlev", home.Home)
 
 	//create page
 	e.POST("/page", createpage.CreatePage)

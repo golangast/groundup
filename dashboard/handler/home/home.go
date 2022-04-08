@@ -22,8 +22,8 @@ func Home(c echo.Context) error {
 	var titles []string
 	var urls []string
 	var libs []string
+	var libtag []string
 
-	const files = "databaseconfig/dbpersis.fsg"
 	var cmd *exec.Cmd
 	//grab any route params
 	con := c.Param("config")
@@ -38,6 +38,10 @@ func Home(c echo.Context) error {
 	showv := c.Param("showv")
 	hotloadv := c.Param("hotloadv")
 	deletev := c.Param("deletev")
+	libtagv := c.FormValue("libtagv")
+	libtagsv := c.FormValue("libtagsv")
+	title := c.FormValue("titlev")
+
 	//once params are grabbed then run methods
 	switch {
 	case con == "true": //create config
@@ -51,11 +55,11 @@ func Home(c echo.Context) error {
 	case prodv == "true": //run production
 		fmt.Println("gonna prod...")
 		c.Redirect(http.StatusFound, "/home")
-		cmd = Startprod()
+		Startprod()
 	case devv == "true": //run dev
 		fmt.Println("gonna dev...")
 		c.Redirect(http.StatusFound, "/home")
-		cmd = Startdev()
+		Startdev()
 	case stopv == "true": //stop application
 		fmt.Println("gonna stop...")
 		c.Redirect(http.StatusFound, "/home")
@@ -81,23 +85,31 @@ func Home(c echo.Context) error {
 		db.CreateBucket("urls", "home", "/home")
 	case showv == "true": //show routes
 		titles, urls = db.GetAllkv("urls")
-		libs, _ = kdb.Getall("libs")
+		libs, libtag = kdb.Getall("libs")
+
+		
 	case hotloadv == "true":
 		c.Redirect(http.StatusFound, "/home")
 		KillProcessByName("app.exe")
 		KillProcessByName("app")
 		Stopping(cmd)
-		cmd = Hotreload()
+		Hotreload()
 	case deletev == "true": //delete routes
-		titlev := c.Param("title")
-		titletrim := strings.ReplaceAll(titlev, " ", "")
-		db.DeleteDB("urls", titlev)
+		titletrim := strings.ReplaceAll(title, " ", "")
+		db.DeleteDB("urls", title)
 		err := os.RemoveAll("app/templates/" + titletrim + ".html")
 		if err != nil {
 			log.Fatal(err)
 		}
 		c.Redirect(http.StatusFound, "/home")
+	case libtagv == "true": //delete routes
+		//add key/value to bucket
+		kdb.Insertkeyvalue("pagetag", title, libtagsv)
 
+
+
+
+		c.Redirect(http.StatusFound, "/home")
 	default:
 		fmt.Println("none were used")
 	}
@@ -106,6 +118,7 @@ func Home(c echo.Context) error {
 		"titles": titles,
 		"urls":   urls,
 		"libs":   libs,
+		"libtag": libtag,
 	})
 
 }

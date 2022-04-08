@@ -35,7 +35,7 @@ var err error
 
 func Serv() {
 	kdb.Createb("urls")
-
+	kdb.Createb("pagetag")
 	e := echo.New()
 	t, err := ParseDirectory("dashboard/templates/")
 	if err != nil {

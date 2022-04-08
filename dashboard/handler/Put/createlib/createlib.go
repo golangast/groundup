@@ -7,14 +7,12 @@ import (
 	kdb "github.com/zendrulat123/groundup/dashboard/db/kval"
 )
 
-var counter int
-
 func CreateLib(c echo.Context) error {
 	//get form data
 	lib := c.FormValue("lib")
-	//create bucket
-	counter++
-	kdb.Insertkeyvalue("lib", string(counter), lib)
+	libtag := c.FormValue("libtag")
+
+	kdb.Insertkeyvalue("lib", libtag, lib)
 
 	//redirect
 	c.Redirect(http.StatusFound, "/home")
