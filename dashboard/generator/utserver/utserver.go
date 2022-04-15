@@ -31,7 +31,7 @@ func CreateServer(p string, f string, s string, g string) {
 		fmt.Println("Directory " + p + "/templates successfully created with sticky bits and full permissions")
 	}
 
-	bfile, err := os.Create(p + "/templates/body.html")
+	bfile, err := os.Create(p + "/templates/home.html")
 	if isError(err) {
 		fmt.Println("error -", err, bfile)
 	}

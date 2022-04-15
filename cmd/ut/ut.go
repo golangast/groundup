@@ -570,6 +570,19 @@ func Shellout(command string) (error, string, string) {
 	err := cmd.Run()
 	return err, stdout.String(), stderr.String()
 }
+func ShelloutBash(command string) (error, string, string) {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	var cmd *exec.Cmd
+
+	cmd = exec.Command("bash", "-c", command)
+
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return err, stdout.String(), stderr.String()
+}
 func Startprogram(command string) (error, string, string, *exec.Cmd) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer

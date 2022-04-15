@@ -61,39 +61,18 @@
         <a class="waves-effect waves-teal btn-flat" href="/show/true">show URLs and Libraries</a>
         <a class="waves-effect waves-teal btn-flat" href="/hotload/true">reload</a>
         <ol class="collection lists list-group list-group-numbered">
-            <h6>List of 3rd party libraries.</h6>
-            {{if and .libs .libtag}}
-            {{range $a, $libs := .libs}}
-            {{$libtag := index $.libtag $a}}
-            <li class=" waves-effect waves-teal btn-flat">{{$libtag}}-{{$libs}}</li>
-            {{end}}
-            {{else}}
-            no libraries
-            {{end}}
-        </ol>
-        <ol class="lists collection list-group list-group-numbered">
-            <h6>List of your URLs.</h6>
-            {{if and .urls .libtag }}
-            {{range $i, $titles := .titles}}
-            {{$urls := index $.urls $i}}
-            {{$libtag := index $.libtag $i}}
-
-
-            <li class="list-group-item"><span>{{$titles}}-<a href="http://localhost:3000/route{{$urls}}"
-                        target="_blank">{{$urls}}</a></span><span>
-                    <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$titles}}">Delete</a>
-                    <a class="waves-effect waves-teal btn-flat" href="/addlib/true/{{$libtag}}/{{$titles}}">Add
-                        Library</a>
-
-                </span>
-            </li>
-
-
-            {{end}}
-            {{else}}
-            no url
-            {{end}}
-        </ol>
+            <ol class="lists collection list-group list-group-numbered">
+                {{range $i , $Titles := .Titles}}
+                <li class="list-group-item"><span>{{$Titles}}-<a href="http://localhost:3000/route{{index $.Urls $i}}"
+                            target="_blank">{{index $.Urls $i}}</a></span><span>
+                        <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$Titles}}">Delete</a>
+                        <a class="waves-effect waves-teal btn-flat"
+                            href="/addlib/true/{{index $.Libtag }}/{{$Titles}}">Add
+                            Library {{index $.Libtag }}</a>
+                    </span>
+                </li>
+                {{end}}
+            </ol>
     </div>
 </div>
 

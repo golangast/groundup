@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/labstack/echo/v4"
@@ -15,7 +16,7 @@ import (
 	"github.com/zendrulat123/groundup/zegmarkup/utfsg"
 
 	. "github.com/zendrulat123/groundup/dashboard/configutil/createserver"
-	. "github.com/zendrulat123/groundup/dashboard/configutil/serverutil"
+	. "github.com/zendrulat123/groundup/dashboard/handler/home/handlerutil"
 )
 
 func Home(c echo.Context) error {
@@ -38,9 +39,9 @@ func Home(c echo.Context) error {
 	showv := c.Param("showv")
 	hotloadv := c.Param("hotloadv")
 	deletev := c.Param("deletev")
-	libtagv := c.FormValue("libtagv")
-	libtagsv := c.FormValue("libtagsv")
-	title := c.FormValue("titlev")
+	libtagv := c.Param("libtagv")
+	libtagsv := c.Param("libtagsv")
+	title := c.Param("titlev")
 
 	//once params are grabbed then run methods
 	switch {
@@ -78,6 +79,7 @@ func Home(c echo.Context) error {
 		fmt.Println("gonna gen routes...")
 		c.Redirect(http.StatusFound, "/home")
 		titles, urls = utfsg.GenRoutes()
+
 		fmt.Println("before-", titles, urls)
 	case dbv == "true": //generate database
 		c.Redirect(http.StatusFound, "/home")
@@ -86,8 +88,6 @@ func Home(c echo.Context) error {
 	case showv == "true": //show routes
 		titles, urls = db.GetAllkv("urls")
 		libs, libtag = kdb.Getall("libs")
-
-		
 	case hotloadv == "true":
 		c.Redirect(http.StatusFound, "/home")
 		KillProcessByName("app.exe")
@@ -103,22 +103,34 @@ func Home(c echo.Context) error {
 		}
 		c.Redirect(http.StatusFound, "/home")
 	case libtagv == "true": //delete routes
-		//add key/value to bucket
-		kdb.Insertkeyvalue("pagetag", title, libtagsv)
+		//get title
+		titletrim := strings.ReplaceAll(title, " ", "")
+		//get library
+		lib := kdb.GetValue("libs", libtagsv)
+		//add library to html file
 
+		// paths, err := os.Getwd()
+		// if err != nil {
+		// 	log.Println(err)
+		// }
 
-
-
+		path := filepath.FromSlash(`app/templates/` + titletrim + `.html`)
+		pp := strings.Replace(path, "\\", "/", -1)
+		AddLibtoFile(pp, lib)
 		c.Redirect(http.StatusFound, "/home")
 	default:
 		fmt.Println("none were used")
 	}
 	fmt.Println(libs)
-	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
-		"titles": titles,
-		"urls":   urls,
-		"libs":   libs,
-		"libtag": libtag,
-	})
+	type Data struct {
+		Titles []string
+		Urls   []string
+		Libs   []string
+		Libtag []string
+	}
+
+	d := Data{Titles: titles, Urls: urls, Libs: libs, Libtag: libtag}
+
+	return c.Render(http.StatusOK, "home.html", d)
 
 }
