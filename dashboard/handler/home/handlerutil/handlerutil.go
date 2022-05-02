@@ -10,26 +10,29 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"os/signal"
 	"runtime"
+	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/zendrulat123/groundup/cmd/ut"
+	"golang.org/x/sys/windows"
 )
 
-func Hotreload() *exec.Cmd {
-	err, outs, errouts, cmd := ut.Startprogram("cd app && go run app.go")
-	if err != nil {
-		log.Printf("error: %v\n", err)
-	}
-	fmt.Println(outs)
-	fmt.Println("--- errs ---")
-	fmt.Println(errouts)
-	return cmd
+func Kill(pid int) error {
+	kill := exec.Command("TASKKILL", "/T", "/F", "/PID", strconv.Itoa(pid))
+
+	kill.Stderr = os.Stderr
+	kill.Stdout = os.Stdout
+	fmt.Println(kill.Stderr, kill.Stdout)
+	kill.Run()
+	return nil
 }
 func Startprod() *exec.Cmd {
 
-	err, outs, errouts, cmd := ut.Startprogram("cd app && go run app.go")
+	err, outs, errouts, cmd := ut.Startprograms("cd app && go run app.go")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -37,6 +40,18 @@ func Startprod() *exec.Cmd {
 	fmt.Println("--- errs ---")
 	fmt.Println(errouts)
 	openbrowser("http://localhost:3000/")
+	return cmd
+}
+func Startapp() *exec.Cmd {
+
+	err, outs, errouts, cmd := ut.Startprograms("cd app && go run app.go")
+	if err != nil {
+		log.Printf("error: %v\n", err)
+	}
+	fmt.Println(outs)
+	fmt.Println("--- errs ---")
+	fmt.Println(errouts)
+	//openbrowser("http://localhost:3000/")
 	return cmd
 }
 func Startdev() *exec.Cmd {
@@ -103,11 +118,25 @@ func Reload() {
 	fmt.Println(errouts)
 }
 func KillProcessByName(procname string) int {
-	kill := exec.Command("taskkill", "/im", procname, "/T", "/F")
-	err := kill.Run()
+	pid, err := ProcessID(procname)
 	if err != nil {
-		return -1
+		fmt.Println(err)
 	}
+	kill := exec.Command("taskkill", "/im", procname, "/T", "/F")
+	err = kill.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	proc, err := os.FindProcess(int(pid))
+	if err != nil {
+		log.Println(err)
+	}
+	// Kill the process
+	proc.Kill()
+
+	exec.Command("taskkill", "/f", "/t", "/pid", strconv.Itoa(int(pid))).Run()
+
 	return 0
 }
 func Addthirdparty(p string, lib string, templatefile string) string {
@@ -165,13 +194,7 @@ func CreateFolder(folder string) {
 	}
 
 }
-func isError(err error) bool {
-	if err != nil {
-		fmt.Println(err.Error())
-	}
 
-	return (err != nil)
-}
 func AddLibtoFile(path, lib string) {
 
 	o := "<!-- ### -->"
@@ -199,4 +222,115 @@ func AddLibtoFile(path, lib string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+}
+
+func CheckExeExists(exepath string, appexe string) (string, string, string) {
+	path, err := exec.LookPath(exepath)
+	if err != nil {
+		fmt.Printf("didn't find '%s' executable\n", exepath)
+	}
+
+	pid, errs := ProcessID(appexe)
+	if errs != nil {
+		fmt.Println("cant find pid for app.exe", errs)
+	}
+
+	spid := fmt.Sprint(pid)
+	return exepath, path, spid
+}
+
+func GetProcData(exepath string, appexe string) (string, string, string, string, string, string, string, error) {
+	path, err := exec.LookPath(exepath)
+	if err != nil {
+		fmt.Printf("didn't find '%s' executable\n", exepath)
+	}
+	pid, size, parent, threads, usage, e := processInfo(appexe)
+	if e != nil {
+		fmt.Println(e)
+	}
+	return exepath, path, pid, size, parent, threads, usage, nil
+}
+func WatchSignals() {
+	signalChannel := make(chan os.Signal, 2)
+	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		sig := <-signalChannel
+		switch sig {
+		case os.Interrupt:
+			//handle SIGINT
+			fmt.Println("interrupt:", os.Interrupt)
+		case syscall.SIGTERM:
+			//handle SIGTERM
+			fmt.Println("syscall.SIGTERM:", syscall.SIGTERM)
+		}
+	}()
+}
+func logSignal(p *os.Process, sig os.Signal) error {
+	log.Printf("sending signal %s to PID %d", sig, p.Pid)
+	err := p.Signal(sig)
+	if err != nil {
+		log.Print(err)
+	}
+	return err
+}
+
+const processEntrySize = 568
+
+func processInfo(name string) (string, string, string, string, string, error) {
+	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+	if e != nil {
+		fmt.Println(e)
+	}
+	p := windows.ProcessEntry32{Size: processEntrySize}
+	for {
+		e := windows.Process32Next(h, &p)
+		if e != nil {
+			fmt.Println("didnt find it ", e)
+			return "", "", "", "", "", nil
+		}
+
+		if windows.UTF16ToString(p.ExeFile[:]) == name {
+			spid := fmt.Sprint(p.ProcessID)
+			ssize := fmt.Sprint(p.Size)
+			sparent := fmt.Sprint(p.ParentProcessID)
+			sthreads := fmt.Sprint(p.Threads)
+			susage := fmt.Sprint(p.Usage)
+			return spid, ssize, sparent, sthreads, susage, nil
+		}
+
+	}
+
+}
+func ProcessID(name string) (uint32, error) {
+	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+	if e != nil {
+		return 0, e
+	}
+	p := windows.ProcessEntry32{Size: processEntrySize}
+	for {
+		e := windows.Process32Next(h, &p)
+		if e != nil {
+			return 0, e
+		}
+		if windows.UTF16ToString(p.ExeFile[:]) == name {
+			return p.ProcessID, nil
+
+		}
+	}
+
+}
+
+func Observe() (string, string, string, string, string, string, string, string, string, string, string) {
+	exepath, path, pid, size, parent, threads, usage, err := GetProcData("app", "app.exe")
+	if err != nil {
+		fmt.Println(err)
+	}
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	Alloc := fmt.Sprint(m.Alloc)
+	TotalAlloc := fmt.Sprint(m.TotalAlloc)
+	Sys := fmt.Sprint(m.Sys)
+	NumGC := fmt.Sprint(m.NumGC)
+	WatchSignals()
+	return exepath, path, pid, size, parent, threads, usage, Alloc, TotalAlloc, Sys, NumGC
 }

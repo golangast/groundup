@@ -19,6 +19,9 @@ github.com/hashicorp/hcl/hcl/token
 github.com/hashicorp/hcl/json/parser
 github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
+# github.com/inconshreveable/mousetrap v1.0.0
+## explicit
+github.com/inconshreveable/mousetrap
 # github.com/kval-access-language/kval-boltdb v0.0.0-20170330045345-f3797777c95e
 ## explicit
 github.com/kval-access-language/kval-boltdb
@@ -59,6 +62,9 @@ github.com/spf13/afero/mem
 # github.com/spf13/cast v1.4.1
 ## explicit
 github.com/spf13/cast
+# github.com/spf13/cobra v1.4.0
+## explicit; go 1.15
+github.com/spf13/cobra
 # github.com/spf13/jwalterweatherman v1.1.0
 ## explicit
 github.com/spf13/jwalterweatherman
@@ -79,9 +85,6 @@ github.com/subosito/gotenv
 # github.com/urfave/cli v1.22.5
 ## explicit; go 1.11
 github.com/urfave/cli
-# go.etcd.io/bbolt v1.3.6
-## explicit; go 1.12
-go.etcd.io/bbolt
 # golang.org/x/sys v0.0.0-20220403020550-483a9cbc67c0
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader

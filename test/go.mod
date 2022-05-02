@@ -5,9 +5,9 @@ go 1.18
 require (
 	github.com/kval-access-language/kval-boltdb v0.0.0-20170330045345-f3797777c95e
 	github.com/olekukonko/tablewriter v0.0.5
+	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.10.1
 	github.com/urfave/cli v1.22.5
-	go.etcd.io/bbolt v1.3.6
 	golang.org/x/sys v0.0.0-20220403020550-483a9cbc67c0
 )
 
@@ -16,6 +16,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/kval-access-language/kval-parse v0.0.0-20170504112528-b96aa5a26330 // indirect
 	github.com/kval-access-language/kval-scanner v0.0.0-20170504112421-4f097cacd289 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect

@@ -76,6 +76,28 @@
             "dlvFlags": [
                 "--check-go-version=false"
             ]
+        },
+        {
+            "name": "Launch watcher",
+            "type": "go",
+            "request": "launch",
+            // "debugAdapter": "dlv-dap",
+            "mode": "auto",
+            "program": "${workspaceFolder}/watcher/watcher.go",
+            "env": {},
+            "args": [
+                "watcher"
+            ],
+            "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 512,
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+            },
+            "dlvFlags": [
+                "--check-go-version=false"
+            ]
         }
     ]
 }

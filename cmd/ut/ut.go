@@ -583,7 +583,7 @@ func ShelloutBash(command string) (error, string, string) {
 	err := cmd.Run()
 	return err, stdout.String(), stderr.String()
 }
-func Startprogram(command string) (error, string, string, *exec.Cmd) {
+func Startprograms(command string) (error, string, string, *exec.Cmd) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 
@@ -680,7 +680,7 @@ func Watch() *exec.Cmd {
 		os.Exit(1)
 	}
 
-	err, out, errout, cmd := Startprogram(`cd app && go run .`)
+	err, out, errout, cmd := Startprograms(`cd app && go run .`)
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}

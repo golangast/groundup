@@ -13,7 +13,7 @@ func Routes(e *echo.Echo) {
 	e.GET("/server/:server", home.Home)
 	e.GET("/startprod/:prodv", home.Home)
 	e.GET("/startdev/:devv", home.Home)
-	e.GET("/stop/:stopv", home.Home)
+	// e.GET("/stop/:stopv", home.Home)
 	e.GET("/reload/:reloadv", home.Home)
 	e.GET("/routesconfig/:routesconfigv", home.Home)
 	e.GET("/genroute/:genroutev", home.Home)
@@ -22,6 +22,10 @@ func Routes(e *echo.Echo) {
 	e.GET("/showlibs/:showlibsv", home.Home)
 	e.GET("/hotload/:hotloadv", home.Home)
 	e.GET("/delete/:deletev/:titlev", home.Home)
+	e.GET("/stopapp/:stopv", home.Home)
+	e.GET("/stopwatcher/:killwv", home.Home)
+	e.GET("/observe/:obsv", home.Home)
+
 	e.GET("/addlib/:libtagv/:libtagsv/:titlev", home.Home)
 
 	//create page

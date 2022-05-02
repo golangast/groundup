@@ -5,10 +5,7 @@
         <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
             aria-controls="home" aria-selected="true">Generate</button>
     </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-            role="tab" aria-controls="profile" aria-selected="false">Server</button>
-    </li>
+
     <li class="nav-item active" role="presentation">
         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
             role="tab" aria-controls="contact" aria-selected="false">Show</button>
@@ -18,14 +15,13 @@
     <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
         <a class="waves-effect waves-teal btn-flat" href="/config/true">create config</a>
         <a class="waves-effect waves-teal btn-flat" href="/server/true">create server</a>
-        <a class="waves-effect waves-teal btn-flat" href="/routesconfig/true">create routes
-            config</a>
+        <a class="waves-effect waves-teal btn-flat" href="/routesconfig/true">create routes config</a>
         <a class="waves-effect waves-teal btn-flat" href="/db/true">create database</a>
     </div>
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <a class="waves-effect waves-teal btn-flat" href="/startprod/true">Start production</a>
-        <a class="waves-effect waves-teal btn-flat" href="/startdev/true">Start dev</a>
-        <a class="waves-effect waves-teal btn-flat" href="/stop/true">Stop</a>
+
+
+
         <a class="waves-effect waves-teal btn-flat" href="/reload/true">Reload</a>
     </div>
     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -59,7 +55,10 @@
         </div>
 
         <a class="waves-effect waves-teal btn-flat" href="/show/true">show URLs and Libraries</a>
+        <a class="waves-effect waves-teal btn-flat" href="/observe/true">Observe</a>
         <a class="waves-effect waves-teal btn-flat" href="/hotload/true">reload</a>
+        <a class="badge bg-success" href="/startprod/true">Start App</a>
+        <a class="badge bg-success" href="/startdev/true">Start Watcher</a>
         <ol class="collection lists list-group list-group-numbered">
             <ol class="lists collection list-group list-group-numbered">
                 {{range $i , $Titles := .Titles}}
@@ -76,6 +75,79 @@
     </div>
 </div>
 
+{{ if $.S.Appexe}}
+<table class="table table-sm" style="width: 73%;">
+    <thead>
+        <tr>
+            <th scope=" col">Title</th>
+            <th scope=" col">Name</th>
+            <th scope="col">Path</th>
+            <th scope="col">Pid</th>
+            <th scope="col">Size</th>
+            <th scope="col">ParentPid</th>
+            <th scope="col">Threads</th>
+            <th scope="col">Usage</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Your App</th>
+            <td>
+                <div class="badge bg-info text-dark">{{$.S.Appexe}}</div>
+            </td>
+            <td>
+                <div class="badge bg-primary">{{$.S.Apppath}}</div>
+            </td>
+            <td>
+                <div class="badge bg-dark">{{$.S.Apppid}}</div>
+            </td>
+            <td>
+                <div class="badge bg-dark">{{$.S.Appsize}}Mib</div>
+            </td>
+            <td>
+                <div class="badge bg-dark">{{$.S.Appparent}}</div>
+            </td>
+            <td>
+                <div class="badge bg-dark">{{$.S.Appthreads}}</div>
+            </td>
+            <td>
+                <div class="badge bg-dark">{{$.S.Appusage}}</div>
+            </td>
+            <td> <a class="badge bg-success" href="/startprod/true">Start</a></td>
+            <td><a class="badge bg-danger" href="/stopapp/true">Stop</a></td>
+        </tr>
+
+    </tbody>
+
+    <thead>
+        <tr>
+            <th scope="col">Memory</th>
+            <th scope="col">Total Allocations</th>
+            <th scope="col">System</th>
+            <th scope="col">NumGC</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>{{$.S.Alloc}}Mib</td>
+            <td>{{$.S.Totalalloc}}Mib</td>
+            <td>{{$.S.Sys}}Mib</td>
+            <td>{{$.S.Numgc}}Mib</td>
+
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+{{end}}
+<!-- https://go.dev/play/p/_N963_qF5v6 -->
 <style>
     h6 {
         text-align: center;
