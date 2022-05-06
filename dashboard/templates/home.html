@@ -60,18 +60,28 @@
         <a class="badge bg-success" href="/startprod/true">Start App</a>
         <a class="badge bg-success" href="/startdev/true">Start Watcher</a>
         <ol class="collection lists list-group list-group-numbered">
+
             <ol class="lists collection list-group list-group-numbered">
-                {{range $i , $Titles := .Titles}}
-                <li class="list-group-item"><span>{{$Titles}}-<a href="http://localhost:3000/route{{index $.Urls $i}}"
-                            target="_blank">{{index $.Urls $i}}</a></span><span>
-                        <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$Titles}}">Delete</a>
+                {{range $i , $urls := .Urls}}
+                <li class="list-group-item">
+                    <span>{{$urls.Titles}}-<a href="http://localhost:3000/route{{index $urls.Urls $i}}" target="_blank">
+                            {{index $urls.Urls $i}}</a></span>
+                    <span>
+                        <a class="waves-effect waves-teal btn-flat" href="/delete/true/{{$urls.Urls}}">Delete</a>
                         <a class="waves-effect waves-teal btn-flat"
-                            href="/addlib/true/{{index $.Libtag }}/{{$Titles}}">Add
-                            Library {{index $.Libtag }}</a>
+                            href="/addlib/true/{{index $urls.Libtag}}/{{$urls.Titles}}">Add Library {{index
+                            $urls.Libtag}}</a>
                     </span>
                 </li>
                 {{end}}
+                <li class="list-group-item"><span>
+                        <div>Footer</div>
+                    </span>
+                    <span><a class="waves-effect waves-teal btn-flat" href="/addlib/true/footer">Delete</a></span>
+                </li>
             </ol>
+
+
     </div>
 </div>
 
@@ -118,9 +128,7 @@
             <td> <a class="badge bg-success" href="/startprod/true">Start</a></td>
             <td><a class="badge bg-danger" href="/stopapp/true">Stop</a></td>
         </tr>
-
     </tbody>
-
     <thead>
         <tr>
             <th scope="col">Memory</th>

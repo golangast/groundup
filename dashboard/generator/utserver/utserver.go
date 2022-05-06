@@ -7,11 +7,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/zendrulat123/groundup/cmd/ut"
-	. "github.com/zendrulat123/groundup/dashboard/generator/templates/body"
-	. "github.com/zendrulat123/groundup/dashboard/generator/templates/footer"
-	. "github.com/zendrulat123/groundup/dashboard/generator/templates/header"
-	. "github.com/zendrulat123/groundup/dashboard/generator/templates/server"
+	"github.com/golangast/groundup/cmd/ut"
+	. "github.com/golangast/groundup/dashboard/generator/templates/body"
+	. "github.com/golangast/groundup/dashboard/generator/templates/footer"
+	. "github.com/golangast/groundup/dashboard/generator/templates/header"
+	. "github.com/golangast/groundup/dashboard/generator/templates/server"
 )
 
 //p-path f-file s-script
@@ -114,7 +114,10 @@ func CreateServer(p string, f string, s string, g string) {
 	fmt.Println(outs)
 	fmt.Println("--- errs ---")
 	fmt.Println(errouts)
-
+	bfile.Close()
+	hfile.Close()
+	ffile.Close()
+	sfile.Close()
 }
 
 func isError(err error) bool {

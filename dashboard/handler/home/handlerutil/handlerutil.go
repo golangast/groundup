@@ -17,7 +17,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/zendrulat123/groundup/cmd/ut"
+	"github.com/golangast/groundup/cmd/ut"
 	"golang.org/x/sys/windows"
 )
 

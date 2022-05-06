@@ -9,11 +9,10 @@ import (
 	"os"
 	"path/filepath"
 
+	. "github.com/golangast/groundup/dashboard/routes"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
-	kdb "github.com/zendrulat123/groundup/dashboard/db/kval"
-	. "github.com/zendrulat123/groundup/dashboard/routes"
 )
 
 type TemplateRenderer struct {
@@ -34,8 +33,6 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 var err error
 
 func Serv() {
-	kdb.Createb("urls")
-	kdb.Createb("pagetag")
 	e := echo.New()
 	t, err := ParseDirectory("dashboard/templates/")
 	if err != nil {

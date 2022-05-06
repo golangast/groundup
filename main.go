@@ -16,8 +16,8 @@ limitations under the License.
 package main
 
 import (
-	"github.com/zendrulat123/groundup/cmd"
-	. "github.com/zendrulat123/groundup/dashboard"
+	"github.com/golangast/groundup/cmd"
+	. "github.com/golangast/groundup/dashboard"
 )
 
 func main() {

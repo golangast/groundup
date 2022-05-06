@@ -60,7 +60,7 @@ home:
 		log.Print("execute: ", err)
 		return
 	}
-
+	defer mfile.Close()
 }
 
 func DBcreate() {

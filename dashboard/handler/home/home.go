@@ -8,16 +8,17 @@ import (
 	"path/filepath"
 	"strings"
 
+	. "github.com/golangast/groundup/cmd/ut"
+	. "github.com/golangast/groundup/cmd/watcherut"
 	"github.com/labstack/echo/v4"
-	. "github.com/zendrulat123/groundup/cmd/ut"
-	. "github.com/zendrulat123/groundup/cmd/watcherut"
 
-	db "github.com/zendrulat123/groundup/dashboard/db"
-	kdb "github.com/zendrulat123/groundup/dashboard/db/kval"
-	"github.com/zendrulat123/groundup/zegmarkup/utfsg"
+	db "github.com/golangast/groundup/dashboard/db"
+	kdb "github.com/golangast/groundup/dashboard/db/kval"
+	. "github.com/golangast/groundup/dashboard/dbsql/getallurls"
+	"github.com/golangast/groundup/zegmarkup/utfsg"
 
-	. "github.com/zendrulat123/groundup/dashboard/configutil/createserver"
-	. "github.com/zendrulat123/groundup/dashboard/handler/home/handlerutil"
+	. "github.com/golangast/groundup/dashboard/configutil/createserver"
+	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 )
 
 type Stats struct {
@@ -35,8 +36,7 @@ type Stats struct {
 }
 
 func Home(c echo.Context) error {
-	var titles []string
-	var urls []string
+	var U []Urls
 	var libs []string
 	var libtag []string
 	var Stat Stats
@@ -117,8 +117,8 @@ func Home(c echo.Context) error {
 		 */
 		fmt.Println("gonna gen routes...")
 		c.Redirect(http.StatusFound, "/home")
-		titles, urls = utfsg.GenRoutes()
-		fmt.Println("before-", titles, urls)
+		U = GetUrls()
+		fmt.Println("before-", U)
 	case dbv == "true": //generate database
 		/*
 		*	generate database
@@ -130,19 +130,21 @@ func Home(c echo.Context) error {
 		/*
 		*	show routes
 		 */
-		titles, urls = db.GetAllkv("urls")
-		libs, libtag = kdb.Getall("libs")
+		U = GetUrls()
+		fmt.Println("before-", U)
 	case deletev == "true": //delete routes
 		/*
 		*	Delete route
 		 */
+		c.Redirect(http.StatusFound, "/home")
 		titletrim := strings.ReplaceAll(title, " ", "")
-		db.DeleteDB("urls", title)
-		err := os.RemoveAll("app/templates/" + titletrim + ".html")
+		err := os.Remove("app/templates/" + titletrim + ".html")
 		if err != nil {
 			log.Fatal(err)
 		}
-		c.Redirect(http.StatusFound, "/home")
+
+		db.DeleteDB("urls", title)
+
 	case libtagv == "true": //add lib
 		/*
 		*	add library
@@ -165,14 +167,20 @@ func Home(c echo.Context) error {
 	default:
 		fmt.Println("none were used")
 	}
+	// type Data struct {
+	// 	Titles []string
+	// 	Urls   []string
+	// 	Libs   []string
+	// 	Libtag []string
+	// 	S      Stats
+	// }
 	type Data struct {
-		Titles []string
-		Urls   []string
+		Urls   []Urls
 		Libs   []string
 		Libtag []string
 		S      Stats
 	}
+	d := Data{Urls: U, Libs: libs, Libtag: libtag, S: Stat}
 
-	d := Data{Titles: titles, Urls: urls, Libs: libs, Libtag: libtag, S: Stat}
 	return c.Render(http.StatusOK, "home.html", d)
 }

@@ -1,10 +1,10 @@
 package routes
 
 import (
+	"github.com/golangast/groundup/dashboard/handler/Put/createpage"
+	home "github.com/golangast/groundup/dashboard/handler/home"
+	"github.com/golangast/groundup/dashboard/handler/put/createlib"
 	"github.com/labstack/echo/v4"
-	"github.com/zendrulat123/groundup/dashboard/handler/Put/createpage"
-	home "github.com/zendrulat123/groundup/dashboard/handler/home"
-	"github.com/zendrulat123/groundup/dashboard/handler/put/createlib"
 )
 
 func Routes(e *echo.Echo) {

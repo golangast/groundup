@@ -9,8 +9,8 @@ import (
 	"strings"
 	"text/template"
 
+	db "github.com/golangast/groundup/dashboard/db"
 	"github.com/labstack/echo/v4"
-	db "github.com/zendrulat123/groundup/dashboard/db"
 )
 
 func CreatePage(c echo.Context) error {
@@ -41,6 +41,7 @@ func CreatePage(c echo.Context) error {
 		if err != nil {
 			log.Print("execute: ", err)
 		}
+		mfile.Close()
 	}
 
 	c.Redirect(http.StatusFound, "/home")

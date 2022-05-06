@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	. "github.com/golangast/groundup/dashboard/generator/utserver"
 	"github.com/spf13/viper"
-	. "github.com/zendrulat123/groundup/dashboard/generator/utserver"
 )
 
 func Createservers() {
