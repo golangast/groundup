@@ -16,7 +16,6 @@ func Routes(e *echo.Echo) {
 	// e.GET("/stop/:stopv", home.Home)
 	e.GET("/reload/:reloadv", home.Home)
 	e.GET("/routesconfig/:routesconfigv", home.Home)
-	e.GET("/genroute/:genroutev", home.Home)
 	e.GET("/db/:dbv", home.Home)
 	e.GET("/show/:showv", home.Home)
 	e.GET("/showlibs/:showlibsv", home.Home)

@@ -20,7 +20,7 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-func AppendStringToFile(path, text string) error {
+func AppendStringToFiles(path, text string) error {
 	f, err := os.OpenFile(path, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		return err
@@ -138,11 +138,14 @@ func ConfigAddFile(f string, E string) {
 	defer file.Close()
 
 	// Write some text line-by-line to file.
-	err = AppendStringToFile(f, E)
+	err = AppendStringToFiles(f, E)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = AppendStringToFile(f, " \n")
+	err = AppendStringToFiles(f, " \n")
+	if err != nil {
+		log.Fatal(err)
+	}
 	// Save file changes.
 	err = file.Sync()
 	if err != nil {

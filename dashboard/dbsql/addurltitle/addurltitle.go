@@ -7,7 +7,7 @@ import (
 	. "github.com/golangast/groundup/dashboard/dbsql/conn"
 )
 
-func Addlibtag(u Urls) {
+func AddUrlTitle(u Urls) {
 
 	data, err := DbConnection() //create db instance
 	var exists bool             //used for checking

@@ -9,14 +9,16 @@ import (
 	"strings"
 	"text/template"
 
-	db "github.com/golangast/groundup/dashboard/db"
+	. "github.com/golangast/groundup/dashboard/dbsql/addurltitle"
 	"github.com/labstack/echo/v4"
 )
 
 func CreatePage(c echo.Context) error {
 	url := c.FormValue("url")
 	title := c.FormValue("title")
-	db.PutDB("urls", title, url)
+	u := Urls{Urls: url, Titles: title}
+	AddUrlTitle(u)
+
 	urltrim := strings.ReplaceAll(url, " ", "")
 	urltrimslash := strings.ReplaceAll(urltrim, "/", "")
 	if _, err := os.Stat("app/templates/" + urltrimslash + ".html"); errors.Is(err, os.ErrNotExist) {

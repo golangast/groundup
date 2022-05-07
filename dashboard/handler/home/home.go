@@ -9,15 +9,18 @@ import (
 	"strings"
 
 	. "github.com/golangast/groundup/cmd/ut"
-	. "github.com/golangast/groundup/cmd/watcherut"
 	"github.com/labstack/echo/v4"
 
-	db "github.com/golangast/groundup/dashboard/db"
-	kdb "github.com/golangast/groundup/dashboard/db/kval"
+	. "github.com/golangast/groundup/dashboard/configutil/createconfig"
+	geturls "github.com/golangast/groundup/dashboard/dbsql/getallurls"
+	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
+	. "github.com/golangast/groundup/dashboard/watcher"
+
+	. "github.com/golangast/groundup/dashboard/dbsql/deletebytitle"
 	. "github.com/golangast/groundup/dashboard/dbsql/getallurls"
-	"github.com/golangast/groundup/zegmarkup/utfsg"
 
 	. "github.com/golangast/groundup/dashboard/configutil/createserver"
+	. "github.com/golangast/groundup/dashboard/generator/utdatabase"
 	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 )
 
@@ -36,9 +39,10 @@ type Stats struct {
 }
 
 func Home(c echo.Context) error {
-	var U []Urls
+	var U []geturls.Urls
 	var libs []string
 	var libtag []string
+
 	var Stat Stats
 	//grab any route params
 	con := c.Param("config")
@@ -47,7 +51,6 @@ func Home(c echo.Context) error {
 	devv := c.Param("devv")
 	stopv := c.Param("stopv")
 	reload := c.Param("reloadv")
-	genroutev := c.Param("genroutev")
 	routesconfig := c.Param("routesconfigv")
 	dbv := c.Param("dbv")
 	showv := c.Param("showv")
@@ -110,22 +113,16 @@ func Home(c echo.Context) error {
 		 */
 		fmt.Println("gonna config...")
 		c.Redirect(http.StatusFound, "/home")
-		utfsg.Make("databaseconfig")
-	case genroutev == "true": //generate routes
-		/*
-		*	generate routes
-		 */
-		fmt.Println("gonna gen routes...")
-		c.Redirect(http.StatusFound, "/home")
-		U = GetUrls()
-		fmt.Println("before-", U)
+		Make("databaseconfig")
+
 	case dbv == "true": //generate database
 		/*
 		*	generate database
 		 */
 		c.Redirect(http.StatusFound, "/home")
-		db.Tempfile()
-		db.CreateBucket("urls", "home", "/home")
+		Createdbfile()
+
+		GenerateTable("home", "/home")
 	case showv == "true": //show routes
 		/*
 		*	show routes
@@ -143,7 +140,7 @@ func Home(c echo.Context) error {
 			log.Fatal(err)
 		}
 
-		db.DeleteDB("urls", title)
+		Deletebytitle(title)
 
 	case libtagv == "true": //add lib
 		/*
@@ -152,7 +149,9 @@ func Home(c echo.Context) error {
 		//get title
 		titletrim := strings.ReplaceAll(title, " ", "")
 		//get library
-		lib := kdb.GetValue("libs", libtagsv)
+
+		lib := GetLib(libtagsv)
+
 		path := filepath.FromSlash(`app/templates/` + titletrim + `.html`)
 		pp := strings.Replace(path, "\\", "/", -1)
 		AddLibtoFile(pp, lib)
@@ -167,20 +166,15 @@ func Home(c echo.Context) error {
 	default:
 		fmt.Println("none were used")
 	}
-	// type Data struct {
-	// 	Titles []string
-	// 	Urls   []string
-	// 	Libs   []string
-	// 	Libtag []string
-	// 	S      Stats
-	// }
-	type Data struct {
-		Urls   []Urls
-		Libs   []string
-		Libtag []string
-		S      Stats
-	}
+
 	d := Data{Urls: U, Libs: libs, Libtag: libtag, S: Stat}
 
 	return c.Render(http.StatusOK, "home.html", d)
+}
+
+type Data struct {
+	Urls   []geturls.Urls
+	Libs   []string
+	Libtag []string
+	S      Stats
 }
