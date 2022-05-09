@@ -44,6 +44,38 @@ func GetPage() ([]string, []string) {
 
 }
 
+func GetPageFile(title string) string {
+
+	data, err := DbConnection() //create db instance
+	ErrorCheck(err)
+
+	//variables used to store data from the query
+	var (
+		filename string
+	)
+	i := 0 //used to get how many scans
+
+	//get from database
+	rows, err := data.Query("select filename from urls where titles ==" + title + ";")
+	ErrorCheck(err)
+
+	//cycle through the rows to collect all the data
+	for rows.Next() {
+		err := rows.Scan(&filename)
+		ErrorCheck(err)
+		i++
+		fmt.Println("scan ", i)
+
+		//store into memory
+		defer rows.Close()
+		defer data.Close()
+		return filename
+
+	}
+	//close everything
+	return filename
+}
+
 type Urls struct {
 	ID       string `param:"id" query:"id" form:"id"`
 	Urls     string `param:"urls" query:"urls" form:"urls"`

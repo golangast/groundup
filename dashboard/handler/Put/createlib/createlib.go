@@ -11,8 +11,7 @@ func CreateLib(c echo.Context) error {
 	//get form data
 	lib := c.FormValue("lib")
 	libtag := c.FormValue("libtag")
-	u := Urls{Lib: lib, Libtag: libtag}
-	Addlib(u)
+	Addlib(lib, libtag)
 
 	//redirect
 	c.Redirect(http.StatusFound, "/home")

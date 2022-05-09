@@ -28,4 +28,11 @@ CREATE TABLE "urls" (
 	"filename"	TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+CREATE TABLE "library" (
+	"id"	INTEGER,
+	"lib"	TEXT,
+	"tag"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
 CREATE TABLE `urls`.`urls` ( `id` INT NOT NULL AUTO_INCREMENT , `urls` TEXT NOT NULL , `titles` TEXT NOT NULL , `lib` TEXT NOT NULL , `libtag` TEXT NOT NULL , `css` TEXT NOT NULL , `csstag` TEXT NOT NULL , `filename` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

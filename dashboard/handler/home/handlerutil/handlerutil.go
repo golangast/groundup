@@ -18,6 +18,9 @@ import (
 	"time"
 
 	"github.com/golangast/groundup/cmd/ut"
+	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
+	. "github.com/golangast/groundup/dashboard/dbsql/getpage"
+
 	"golang.org/x/sys/windows"
 )
 
@@ -151,10 +154,8 @@ func Addthirdparty(p string, lib string, templatefile string) string {
 	return pt
 }
 func GetThirdPartyFile(urlthirdparty string) {
-	var fullURLFile = urlthirdparty
-
 	// Build fileName from fullPath
-	fileURL, err := url.Parse(fullURLFile)
+	fileURL, err := url.Parse(urlthirdparty)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -174,7 +175,7 @@ func GetThirdPartyFile(urlthirdparty string) {
 		},
 	}
 	// Put content on file
-	resp, err := client.Get(fullURLFile)
+	resp, err := client.Get(urlthirdparty)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -197,17 +198,14 @@ func CreateFolder(folder string) {
 
 func AddLibtoFile(path, lib string) {
 
+	l := GetLib(lib)
+
 	o := "<!-- ### -->"
 
-	var n = `<script scr="` + lib + `" ></script> ` + "\n" + o
+	var n = `<script scr="` + l + `" ></script> ` + "\n" + o
 
 	fmt.Println(path, o, n)
 
-	err, ss, tt := ut.Shellout("cd")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(ss, tt)
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
 		fmt.Println(err)
@@ -333,4 +331,40 @@ func Observe() (string, string, string, string, string, string, string, string, 
 	NumGC := fmt.Sprint(m.NumGC)
 	WatchSignals()
 	return exepath, path, pid, size, parent, threads, usage, Alloc, TotalAlloc, Sys, NumGC
+}
+
+func AddLibtoFilebyTitle(lib, title string) {
+	var path, filename string
+
+	if title == "footer" {
+		path = "app/templates/footer.html"
+	} else {
+		filename = GetPageFile(title)
+		path = "app/templates/" + filename
+	}
+
+	o := "<!-- ### -->"
+
+	var n = `<script scr="` + lib + `" ></script> ` + "\n" + o
+
+	fmt.Println("app/templates/", o, n)
+
+	err, ss, tt := ut.Shellout("cd")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(ss, tt)
+
+	input, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	output := bytes.Replace(input, []byte(o), []byte(n), -1)
+	fmt.Println("file: ", path, " old: ", o, " new: ", n)
+	if err = ioutil.WriteFile(path, output, 0666); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }

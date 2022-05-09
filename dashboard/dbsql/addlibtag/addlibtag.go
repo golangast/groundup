@@ -8,7 +8,7 @@ import (
 	. "github.com/golangast/groundup/dashboard/dbsql/conn"
 )
 
-func UpdateUrls(u Urls) {
+func UpdateUrls(lib, tag, titles string) {
 	//opening database
 	data, err := DbConnection() //create db instance
 	ErrorCheck(err)
@@ -18,30 +18,31 @@ func UpdateUrls(u Urls) {
 	ErrorCheck(err)
 
 	//execute qeury
-	res, err := stmt.Exec(u.Lib, u.Libtag, u.Titles)
+	res, err := stmt.Exec(lib, tag, titles)
 	ErrorCheck(err)
 
 	//used to print rows
 	a, err := res.RowsAffected()
 	ErrorCheck(err)
-	fmt.Println(a, u.Lib)
+	fmt.Println(a, lib)
 
 }
-func Addlib(u Urls) {
+
+func Addlib(lib, libtag string) {
 	//opening database
 	data, err := DbConnection() //create db instance
 	ErrorCheck(err)
 	var exists bool
-	stmts := data.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM urls WHERE lib=?)", u.Lib)
+	stmts := data.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM library WHERE lib=?)", lib)
 	err = stmts.Scan(&exists)
 	ErrorCheck(err)
 
 	//prepare the statement to ensure no sql injection
-	stmt, err := data.Prepare("INSERT INTO urls(lib, libtag) VALUES(?, ?)")
+	stmt, err := data.Prepare("INSERT INTO library(lib, libtag) VALUES(?, ?)")
 	ErrorCheck(err)
 
 	//actually make the execution of the query
-	res, err := stmt.Exec(u.Lib, u.Libtag)
+	res, err := stmt.Exec(lib, libtag)
 	ErrorCheck(err)
 
 	//get last id to double check
@@ -53,7 +54,7 @@ func Addlib(u Urls) {
 	ErrorCheck(err)
 
 	//print out what you actually did
-	log.Printf("lastid = %d, affected = %d, titles = %d\n", lastId, rowCnt, u.Lib)
+	log.Printf("lastid = %d, affected = %d, titles = %d\n", lastId, rowCnt, lib)
 	defer data.Close()
 
 }
