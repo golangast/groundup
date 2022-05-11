@@ -11,7 +11,6 @@ import (
 
 const file string = "./db/urls.db"
 
-//you do need gcc installed
 func DbConnection() (*sql.DB, error) {
 	//db urls   conn to db      database used
 	db, err := sql.Open("sqlite", file)

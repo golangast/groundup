@@ -7,30 +7,37 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/golangast/groundup/cmd/ut"
 	. "github.com/golangast/groundup/dashboard/generator/templates/body"
+	. "github.com/golangast/groundup/dashboard/generator/templates/db/dbconn"
 	. "github.com/golangast/groundup/dashboard/generator/templates/footer"
 	. "github.com/golangast/groundup/dashboard/generator/templates/header"
 	. "github.com/golangast/groundup/dashboard/generator/templates/server"
+
+	"github.com/golangast/groundup/dashboard/ut"
 )
 
 //p-path f-file s-script
 //tie the viper config vars to params
 func CreateServer(p string, f string, s string, g string) {
-	/* generate code */
+
+	/* create folders*/
 	if err := os.MkdirAll(p, os.ModeSticky|os.ModePerm); err != nil {
 		fmt.Println("~~~~could not create"+p, err)
-
 	} else {
 		fmt.Println("Directory " + p + " successfully created with sticky bits and full permissions")
 	}
-
 	if err := os.MkdirAll(p+"/templates", os.ModeSticky|os.ModePerm); err != nil {
 		fmt.Println("~~~~could not create"+p+"/templates", err)
 	} else {
 		fmt.Println("Directory " + p + "/templates successfully created with sticky bits and full permissions")
 	}
+	if err := os.MkdirAll("db", os.ModeSticky|os.ModePerm); err != nil {
+		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
+	} else {
+		fmt.Println("Whoops, could not create directory(ies) because", err)
+	}
 
+	/* create files*/
 	bfile, err := os.Create(p + "/templates/home.html")
 	if isError(err) {
 		fmt.Println("error -", err, bfile)
@@ -47,15 +54,18 @@ func CreateServer(p string, f string, s string, g string) {
 	if isError(err) {
 		fmt.Println("error -", err, sfile)
 	}
+	fdb, err := os.Create("db/database.db")
+	if isError(err) {
+		fmt.Println("error -", err, fdb)
+	}
+
+	/* generate code in files*/
 	tms := template.Must(template.New("queue").Parse(Servertemp))
 	err = tms.Execute(sfile, nil)
 	if err != nil {
 		log.Print("execute: ", err)
 		return
 	}
-	/*
-		generate header.html file template
-	*/
 	tmh := template.Must(template.New("queue").Parse(Headertemp))
 	//all of this is needed to parse {{define header}} and {{end}}
 	m := make(map[string]string)
@@ -68,9 +78,6 @@ func CreateServer(p string, f string, s string, g string) {
 		log.Print("execute: ", err)
 		return
 	}
-	/*
-		generate footer.html file template
-	*/
 	tmf := template.Must(template.New("queue").Parse(Footertemp))
 	//all of this is needed to parse {{define footer}} and {{end}}
 	mf := make(map[string]string)
@@ -83,9 +90,6 @@ func CreateServer(p string, f string, s string, g string) {
 		log.Print("execute: ", err)
 		return
 	}
-	/*
-		generate body.html file template
-	*/
 	tmb := template.Must(template.New("queue").Parse(Bodytemp))
 	//all of this is needed to parse {{template footer .}} and {{template header .}}
 	mb := make(map[string]string)
@@ -98,7 +102,12 @@ func CreateServer(p string, f string, s string, g string) {
 		log.Print("execute: ", err)
 		return
 	}
-
+	dbmb := template.Must(template.New("queue").Parse(Dbconntemp))
+	err = dbmb.Execute(fdb, mb)
+	if err != nil {
+		log.Print("execute: ", err)
+		return
+	}
 	err, out, errout := ut.Shellout("cd app && go mod init " + p + "&& go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)

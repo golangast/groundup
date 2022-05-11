@@ -18,7 +18,7 @@ func GetLib(Libtag string) string {
 	)
 	i := 0 //used to get how many scans
 
-	rows, err := data.Query("SELECT lib FROM library WHERE tag = ?", Libtag)
+	rows, err := data.Query("SELECT lib FROM library WHERE libtag = ?", Libtag)
 
 	if err != nil {
 		log.Fatal(err)

@@ -1,11 +1,9 @@
 {{ template "header" . }}
-
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
             aria-controls="home" aria-selected="true">Generate</button>
     </li>
-
     <li class="nav-item active" role="presentation">
         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
             role="tab" aria-controls="contact" aria-selected="false">Show</button>
@@ -15,100 +13,207 @@
     <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
         <a class="waves-effect waves-teal btn-flat" href="/config">create config</a>
         <a class="waves-effect waves-teal btn-flat" href="/server">create server</a>
-        <a class="waves-effect waves-teal btn-flat" href="/routesconfig">create routes config</a>
         <a class="waves-effect waves-teal btn-flat" href="/db">create database</a>
+        <a class="waves-effect waves-teal btn-flat" href="/hotload">reload</a>
     </div>
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-
-
         <a class="waves-effect waves-teal btn-flat" href="/reload">Reload</a>
     </div>
     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div class="card" style="width: 18rem;float: left;">
             <div class="card-body">
-
                 <h6 for="">Add your pages</h6>
-
                 <form class="border border-1" action="/page" method="POST">
-
                     <label for="title">title:</label><br>
                     <input type="text" id="title" name="title" value="new page"><br>
                     <label for="url">URL:</label><br>
                     <input type="text" id="url" name="url" value="/newpage/"><br><br>
                     <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                 </form>
-                <h6 for="">Add your 3rd party library</h6>
-                <form class="border border-1" action="/lib" method="POST">
 
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
-                        <label for="lib">Enter your library</label>
+                <ul class="nav nav-tabs" id="addlib" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="js-tab" data-bs-toggle="tab" data-bs-target="#js"
+                            type="button" role="tab" aria-controls="js" aria-selected="true">Add JS</button>
+                    </li>
+                    <li class="nav-item active" role="presentation">
+                        <button class="nav-link" id="css-tab" data-bs-toggle="tab" data-bs-target="#css" type="button"
+                            role="tab" aria-controls="css" aria-selected="false">Add CSS</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="addlibContent">
+                    <div class="tab-pane fade show active" id="js" role="tabpanel" aria-labelledby="js-tab">
+                        <h6 for="">Add your 3rd party library</h6>
+                        <form class="border border-1" action="/lib" method="POST">
+
+                            <div class="input-field col s6">
+                                <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
+                                <label for="lib">Enter your library</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="Placeholder" id="libtag" name="libtag" type="text" class="validate">
+                                <label for="lib">Enter your tag</label>
+                            </div>
+
+                            <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                        </form>
                     </div>
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder" id="libtag" name="libtag" type="text" class="validate">
-                        <label for="lib">Enter your tag</label>
+                    <div class="tab-pane fade " id="css" role="tabpanel" aria-labelledby="css-tab">
+                        <h6 for="">Add your css library</h6>
+                        <form class="border border-1" action="/libcss" method="POST">
+
+                            <div class="input-field col s6">
+                                <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
+                                <label for="lib">Enter your library</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="Placeholder" id="libtag" name="libtag" type="text" class="validate">
+                                <label for="lib">Enter your tag</label>
+                            </div>
+
+                            <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+
+
+                <ul class="nav nav-tabs" id="addlibtopage" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="footer-tab" data-bs-toggle="tab" data-bs-target="#footer"
+                            type="button" role="tab" aria-controls="footer" aria-selected="true">Footer</button>
+                    </li>
+                    <li class="nav-item active" role="presentation">
+                        <button class="nav-link" id="header-tab" data-bs-toggle="tab" data-bs-target="#header"
+                            type="button" role="tab" aria-controls="header" aria-selected="false">Header</button>
+                    </li>
+                    <li class="nav-item active" role="presentation">
+                        <button class="nav-link" id="addjspage-tab" data-bs-toggle="tab" data-bs-target="#addjspage"
+                            type="button" role="tab" aria-controls="addjspage" aria-selected="false">Add JS</button>
+                    </li>
+                    <li class="nav-item active" role="presentation">
+                        <button class="nav-link" id="addcsspage-tab" data-bs-toggle="tab" data-bs-target="#addcsspage"
+                            type="button" role="tab" aria-controls="addcsspage" aria-selected="false">Add CSS</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="addlibContent">
+
+
+                    <div class="tab-pane fade show active" id="footer" role="tabpanel" aria-labelledby="footer-tab">
+                        <label for="libtag">Select the Lib to add to the Footer file</label>
+                        <form class="" action="/addfooterlib" method="POST" style="padding: 0;margin: 0;">
+                            <div class=" col s6">
+                                <select class="form-select" id="libtag" name="libtag">
+                                    {{ if .L}}
+                                    {{range $i , $L := .L}}
+                                    <option value="{{index $L.Tag}}">{{index $L.Tag}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                            </div>
+                            <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                        </form>
                     </div>
 
-                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
-                </form>
-                <h6 for="">Add library to a page.</h6>
-                <form class="border border-1" action="/chooselib" method="POST">
 
-                    <div class=" col s6">
-                        <select class="form-select" id="libtag" name="libtag">
-                            {{ if .L}}
-                            {{range $i , $L := .L}}
-                            <option value="{{index $L.Tag}}">{{index $L.Tag}}</option>
-                            {{end}}
-                            {{end}}
-                        </select>
-                        <label for="libtag">Select the Lib tag</label>
 
+
+                    <div class="tab-pane fade " id="header" role="tabpanel" aria-labelledby="header-tab">
+                        <label for="libtag">Select the Lib to add to the header file</label>
+                        <form class="" action="/addfooterlib" method="POST" style="padding: 0;margin: 0;">
+                            <div class=" col s6">
+                                <select class="form-select" id="libtag" name="libtag">
+                                    {{ if .C}}
+                                    {{range $i , $C := .C}}
+                                    <option value="{{index $C.Css}}">{{index $C.Csstag}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                            </div>
+                            <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                        </form>
                     </div>
-                    <div class=" col s6">
-                        <select class="form-select" id="titles" name="titles">
-                            {{ if .U}}
-                            {{range $i , $U := .U}}
-                            <option value="{{$U.Titles}}">{{$U.Titles}}</option>
-                            {{end}}
-                            {{end}}
-                        </select>
-                        <label for="titles">Select the Title</label>
-                    </div>
+                    <div class="tab-pane fade " id="addjspage" role="tabpanel" aria-labelledby="addjspage-tab">
+                        <h6 for="">Add library to a page.</h6>
+                        <form class="border border-1" action="/chooselib" method="POST">
+                            <label for="libtag">Select the Lib tag</label>
+                            <div class=" col s6">
+                                <select class="form-select" id="libtag" name="libtag" type="text">
+                                    {{ if .L}}
+                                    {{range $i , $L := .L}}
+                                    <option value="{{index $L.Tag}}">{{index $L.Tag}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                            </div>
+                            <label for="titles">Select the Title</label>
 
-                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
-                </form>
+                            <div class=" col s6">
+                                <select class="form-select" id="titles" name="titles" type="text">
+                                    {{ if .U}}
+                                    {{range $i , $U := .U}}
+                                    <option value="{{$U.Titles}}">{{$U.Titles}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                            </div>
+
+                            <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                        </form>
+                    </div>
+                    <div class="tab-pane fade " id="addcsspage" role="tabpanel" aria-labelledby="addcsspage-tab">
+                        <h6 for="">Add CSS to a page.</h6>
+                        <form class="border border-1" action="/chooselib" method="POST">
+                            <label for="libtag">Select the Lib tag</label>
+                            <div class=" col s6">
+                                <select class="form-select" id="libtag" name="libtag" type="text">
+                                    {{ if .C}}
+                                    {{range $i , $C:= .C}}
+                                    <option value="{{index $C.Css}}">{{index $C.Csstag}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                            </div>
+                            <label for="titles">Select the Title</label>
+                            <div class=" col s6">
+                                <select class="form-select" id="titles" name="titles" type="text">
+                                    {{ if .U}}
+                                    {{range $i , $U := .U}}
+                                    <option value="{{$U.Titles}}">{{$U.Titles}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                            </div>
+                            <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <a class="waves-effect waves-teal btn-flat" href="/show">show URLs and Libraries</a>
         <a class="waves-effect waves-teal btn-flat" href="/observe">Observe</a>
-        <a class="waves-effect waves-teal btn-flat" href="/hotload">reload</a>
         <a class="badge bg-success" href="/production">Start App</a>
         <a class="badge bg-success" href="/dev">Start Watcher</a>
         <ol class="lists collection list-group list-group-numbered">
+
             {{ if .U}}
             {{range $i , $U := .U}}
             <li class="list-group-item">
                 <span>{{$U.Titles}}-<a href="http://localhost:3000/route/{{index $U.Urls}}" target="_blank">
                         {{index $U.Urls}}</a></span>
                 <span>
-                    <a class="waves-effect waves-teal btn-flat" href="/delete/{{index $U.Urls}}">Delete</a>
+                    <a class="waves-effect waves-teal btn-flat" href="/d/delete{{index $U.Urls}}">Delete</a>
                 </span>
                 <span class="alert-success">Library-{{index $U.Libtag}}</span>
             </li>
             {{end}}
             {{end}}
-            <li class="list-group-item"><span>
-                    <div>Footer</div>
-                </span>
-                <span><a class="waves-effect waves-teal btn-flat" href="/lib/{{ if .L}}{{.L}}{{end}}/footer">Add
-                        Library</a></span>
-            </li>
+
         </ol>
     </div>
 </div>
-
+</span>
 {{ if $.S.Appexe}}
 <table class="table table-sm" style="width: 73%;">
     <thead>
@@ -172,12 +277,6 @@
         </tr>
     </tbody>
 </table>
-
-
-
-
-
-
 {{end}}
 <!-- https://go.dev/play/p/_N963_qF5v6 -->
 <style>

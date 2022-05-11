@@ -1,29 +1,30 @@
 package deletebytitle
 
 import (
-	"fmt"
+	"errors"
 
 	. "github.com/golangast/groundup/dashboard/dbsql/conn"
 )
 
-func Deletebytitle(titles string) {
+func Deletebytitle(titles string) error {
 	data, err := DbConnection() //create db instance
-	ErrorChecked(err)
-
-	stmt, err := data.Prepare("delete from urls where titles=?")
-	ErrorChecked(err)
-
-	res, err := stmt.Exec(titles)
-	ErrorChecked(err)
-
-	// affected rows
-	a, err := res.RowsAffected()
-	ErrorChecked(err)
-
-	fmt.Println(a)
-}
-func ErrorChecked(err error) {
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
+	var ErrDeleteFailed = errors.New("delete failed")
+	res, err := data.Exec("DELETE FROM urls WHERE titles = ?", titles)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return ErrDeleteFailed
+	}
+
+	return err
 }

@@ -42,13 +42,13 @@ func Watching() {
 			if e != nil {
 				fmt.Println("cant find pid", e)
 				run = false
-			}
-			kill(int(pid))
-			if run {
-				time.Sleep(2 * time.Second)
-				Startapp()
 			} else {
-
+				kill(int(pid))
+				run = true
+				if run {
+					time.Sleep(2 * time.Second)
+					Startapp()
+				}
 			}
 
 		}

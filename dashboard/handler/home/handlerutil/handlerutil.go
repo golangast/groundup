@@ -17,9 +17,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/golangast/groundup/cmd/ut"
 	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
 	. "github.com/golangast/groundup/dashboard/dbsql/getpage"
+	"github.com/golangast/groundup/dashboard/ut"
 
 	"golang.org/x/sys/windows"
 )
@@ -46,6 +46,7 @@ func Startprod() *exec.Cmd {
 	return cmd
 }
 func Startapp() *exec.Cmd {
+	fmt.Println("restarting app")
 
 	err, outs, errouts, cmd := ut.Startprograms("cd app && go run app.go")
 	if err != nil {
@@ -120,7 +121,7 @@ func Reload() {
 	fmt.Println("--- errs ---")
 	fmt.Println(errouts)
 }
-func KillProcessByName(procname string) int {
+func KillProcessByName(procname string) {
 	pid, err := ProcessID(procname)
 	if err != nil {
 		fmt.Println(err)
@@ -136,11 +137,12 @@ func KillProcessByName(procname string) int {
 		log.Println(err)
 	}
 	// Kill the process
-	proc.Kill()
+	if proc != nil {
+		proc.Kill()
+		exec.Command("taskkill", "/f", "/t", "/pid", strconv.Itoa(int(pid))).Run()
 
-	exec.Command("taskkill", "/f", "/t", "/pid", strconv.Itoa(int(pid))).Run()
+	}
 
-	return 0
 }
 func Addthirdparty(p string, lib string, templatefile string) string {
 	var pt = ""

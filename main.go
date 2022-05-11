@@ -16,11 +16,9 @@ limitations under the License.
 package main
 
 import (
-	"github.com/golangast/groundup/cmd"
 	. "github.com/golangast/groundup/dashboard"
 )
 
 func main() {
-	cmd.Execute()
 	Serv()
 }

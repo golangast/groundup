@@ -2,6 +2,7 @@ package getpage
 
 import (
 	"fmt"
+	"log"
 
 	. "github.com/golangast/groundup/dashboard/dbsql/conn"
 )
@@ -9,7 +10,7 @@ import (
 func GetPage() ([]string, []string) {
 
 	data, err := DbConnection() //create db instance
-	ErrorCheck(err)
+	ErrorCheckss(err)
 
 	//variables used to store data from the query
 	var (
@@ -22,12 +23,12 @@ func GetPage() ([]string, []string) {
 
 	//get from database
 	rows, err := data.Query("select * from urls")
-	ErrorCheck(err)
+	ErrorCheckss(err)
 
 	//cycle through the rows to collect all the data
 	for rows.Next() {
 		err := rows.Scan(&url, &title)
-		ErrorCheck(err)
+		ErrorCheckss(err)
 
 		i++
 		fmt.Println("scan ", i)
@@ -47,7 +48,7 @@ func GetPage() ([]string, []string) {
 func GetPageFile(title string) string {
 
 	data, err := DbConnection() //create db instance
-	ErrorCheck(err)
+	ErrorCheckss(err)
 
 	//variables used to store data from the query
 	var (
@@ -57,12 +58,12 @@ func GetPageFile(title string) string {
 
 	//get from database
 	rows, err := data.Query("select filename from urls where titles ==" + title + ";")
-	ErrorCheck(err)
+	ErrorCheckss(err)
 
 	//cycle through the rows to collect all the data
 	for rows.Next() {
 		err := rows.Scan(&filename)
-		ErrorCheck(err)
+		ErrorCheckss(err)
 		i++
 		fmt.Println("scan ", i)
 
@@ -75,20 +76,42 @@ func GetPageFile(title string) string {
 	//close everything
 	return filename
 }
+func GetPagetitle(urls string) string {
 
-type Urls struct {
-	ID       string `param:"id" query:"id" form:"id"`
-	Urls     string `param:"urls" query:"urls" form:"urls"`
-	Titles   string `param:"titles" query:"titles" form:"titles"`
-	Lib      string `param:"lib" query:"lib" form:"lib"`
-	Libtag   string `param:"libtag" query:"libtag" form:"libtag"`
-	Css      string `param:"css" query:"css" form:"css"`
-	Csstag   string `param:"csstag" query:"csstag" form:"csstag"`
-	Filename string `param:"filename" query:"filename" form:"filename"`
+	data, err := DbConnection() //create db instance
+	ErrorCheckss(err)
+
+	//variables used to store data from the query
+	var (
+		titles string
+	)
+	i := 0 //used to get how many scans
+
+	//get from database
+	rows, err := data.Query("SELECT titles FROM urls WHERE urls = ?", urls)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//cycle through the rows to collect all the data
+	for rows.Next() {
+		err := rows.Scan(&titles)
+		ErrorCheckss(err)
+		i++
+		fmt.Println("scan ", i)
+
+		//store into memory
+		defer rows.Close()
+		defer data.Close()
+		return titles
+
+	}
+	//close everything
+	return titles
 }
 
-func ErrorCheck(err error) {
+func ErrorCheckss(err error) {
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 }
