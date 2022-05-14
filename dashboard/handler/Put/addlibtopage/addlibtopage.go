@@ -22,12 +22,10 @@ func AddLibFile(c echo.Context) error {
 	path := filepath.FromSlash(`app/templates/` + titletrim + `.html`)
 	pp := strings.Replace(path, "\\", "/", -1)
 	//add lib to file
-	AddLibtoFile(pp, libtag)
+	AddLibtoFile(pp, libtag, titletrim)
 	l := GetLib(libtag)
 	//update database
 	UpdateUrls(l, libtag, titles)
-
-	
 	//redirect
 	c.Redirect(http.StatusFound, "/home")
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{})

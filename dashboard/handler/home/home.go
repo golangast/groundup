@@ -1,6 +1,7 @@
 package home
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -9,6 +10,9 @@ import (
 	. "github.com/golangast/groundup/dashboard/configutil/createconfig"
 	. "github.com/golangast/groundup/dashboard/configutil/createserver"
 	. "github.com/golangast/groundup/dashboard/dbsql/deletebytitle"
+
+	. "github.com/golangast/groundup/dashboard/dbsql/deletebyurl"
+
 	. "github.com/golangast/groundup/dashboard/dbsql/getallcss"
 	. "github.com/golangast/groundup/dashboard/dbsql/getpage"
 	. "github.com/golangast/groundup/dashboard/ut"
@@ -66,7 +70,7 @@ func Home(c echo.Context) error {
 		lib := GetLib(libtagsv)
 		path := filepath.FromSlash(`app/templates/` + titletrim + `.html`)
 		pp := strings.Replace(path, "\\", "/", -1)
-		AddLibtoFile(pp, lib)
+		AddLibtoFile(pp, lib, titletrim)
 		if footer == "footer" {
 			AddLibtoFilebyTitle(lib, footer)
 		}
@@ -79,6 +83,8 @@ func Home(c echo.Context) error {
 	css := Getallcss()
 	l := GetAllLib()
 	u := GetUrls()
+
+	file_db_referentialintegrity(u)
 	d := Data{U: u, L: l, C: css, S: Stat}
 	return c.Render(http.StatusOK, "home.html", d)
 }
@@ -102,4 +108,25 @@ type Stats struct {
 	Totalalloc string
 	Sys        string
 	Numgc      string
+}
+
+func file_db_referentialintegrity(u []Urls) {
+	for _, urls := range u {
+		urlstrim := strings.ReplaceAll(urls.Urls, "/", "")
+		fmt.Println(urlstrim)
+		b := isDirectory(urlstrim + ".html")
+		if !b {
+			Deletebyurl(urlstrim)
+		}
+	}
+
+
+	
+}
+func isDirectory(file string) bool {
+	info, err := os.Stat("app/templates/" + file)
+	if err != nil {
+		return false
+	}
+	return !info.IsDir()
 }

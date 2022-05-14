@@ -17,7 +17,9 @@ import (
 	"syscall"
 	"time"
 
+	. "github.com/golangast/groundup/dashboard/dbsql/deletebyurl"
 	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
+
 	. "github.com/golangast/groundup/dashboard/dbsql/getpage"
 	"github.com/golangast/groundup/dashboard/ut"
 
@@ -198,7 +200,7 @@ func CreateFolder(folder string) {
 
 }
 
-func AddLibtoFile(path, lib string) {
+func AddLibtoFile(path, lib, title string) {
 
 	l := GetLib(lib)
 
@@ -210,8 +212,17 @@ func AddLibtoFile(path, lib string) {
 
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		fmt.Println(err, "file not found ", path)
+		//if not found then print list of files and delete in database
+		files, err := ioutil.ReadDir("app")
+		if err != nil {
+			fmt.Println(err)
+		}
+		for _, file := range files {
+			fmt.Println(file.Name(), file.IsDir())
+		}
+		Deletebyurl(title)
+		return
 	}
 
 	output := bytes.Replace(input, []byte(o), []byte(n), -1)
