@@ -1,19 +1,19 @@
-package addLibFile
+package addlibtoppage
 
 import (
 	"net/http"
 	"path/filepath"
 	"strings"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/addlibtag"
-	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/addlibtag"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getlib"
 
 	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 
 	"github.com/labstack/echo/v4"
 )
 
-func AddLibFile(c echo.Context) error {
+func Addlibtoppage(c echo.Context) error {
 	//get form data
 	titles := c.FormValue("titles")
 	libtag := c.FormValue("libtag")

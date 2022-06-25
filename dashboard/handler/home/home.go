@@ -7,29 +7,23 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/golangast/groundup/dashboard/configutil/createconfig"
-	. "github.com/golangast/groundup/dashboard/configutil/createserver"
-	. "github.com/golangast/groundup/dashboard/dbsql/deletebytitle"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebytitle"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebyurl"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getallcss"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getallurls"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getlib"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getpage"
+	. "github.com/golangast/groundup/dashboard/generator/gen/genconfig"
+	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/createdatabase"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/deletebyurl"
-
-	. "github.com/golangast/groundup/dashboard/dbsql/getallcss"
-	. "github.com/golangast/groundup/dashboard/dbsql/getpage"
-	. "github.com/golangast/groundup/dashboard/ut"
-
-	. "github.com/golangast/groundup/dashboard/dbsql/getallurls"
-
-	. "github.com/golangast/groundup/dashboard/dbsql/dbutil"
-	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
-
+	. "github.com/golangast/groundup/dashboard/generator/gen/genserver"
 	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
+	. "github.com/golangast/groundup/dashboard/ut"
 	. "github.com/golangast/groundup/dashboard/watcher"
 	"github.com/labstack/echo/v4"
 )
 
 func Home(c echo.Context) error {
-	//var u []geturls.Urls
-	//var lib string
 	var Stat Stats
 	var err error
 	//grab any route params
@@ -55,7 +49,7 @@ func Home(c echo.Context) error {
 	case "routesconfig": //*create config
 		Make("databaseconfig")
 	case "db": //*generate database tables
-		GenerateTable()
+		Gendatabase("app/db")
 	case "show": //*show routes
 	case "delete": //*delete routes
 		titletrim := strings.ReplaceAll(title, " ", "")
@@ -74,10 +68,10 @@ func Home(c echo.Context) error {
 		if footer == "footer" {
 			AddLibtoFilebyTitle(lib, footer)
 		}
-
 	case "observe": //*observe app process
 		exe, path, pid, size, parent, threads, usage, alloc, totalAlloc, sys, numGC := Observe()
 		Stat = Stats{Appexe: exe, Apppath: path, Apppid: pid, Appsize: size, Appparent: parent, Appthreads: threads, Appusage: usage, Alloc: alloc, Totalalloc: totalAlloc, Sys: sys, Numgc: numGC}
+
 	}
 	//load all the data.
 	css := Getallcss()
@@ -93,6 +87,7 @@ type Data struct {
 	U []Urls
 	L []Library
 	C []CSS
+
 	S Stats
 }
 
@@ -120,8 +115,6 @@ func file_db_referentialintegrity(u []Urls) {
 		}
 	}
 
-
-	
 }
 func isDirectory(file string) bool {
 	info, err := os.Stat("app/templates/" + file)
@@ -129,4 +122,9 @@ func isDirectory(file string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+func ErrorCheck(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }

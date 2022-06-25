@@ -22,4 +22,29 @@ Well this project is attempting to solve that.  It creates pages, adds js libs, 
 with the ability to shutdown either the app or the dashboard and reconnect.  You can make a binary of your app and delete the dashboard and it will
 not affect the app.  You can redownload this dashboard and reconnect the app even.  You can change 90% of the code of your app and it will still work this way.
 
+My walkthrough of the project - https://www.youtube.com/watch?v=1Ue5ffwENvY
+
+This project has not been tested on linux yet but i am presuming it would just be a change in shellout only which would be a few seconds.
+
+Special thanks to the following groups/people.
+-
+Go Team because they are gods. 
+-
+gods - https://github.com/golang/go/graphs/contributors
+-
+Creator of go echo - https://github.com/labstack/echo/v4
+-
+members https://github.com/labstack/echo/graphs/contributors
+-
+Creator of go Viper - https://github.com/spf13/viper 
+-
+members https://github.com/spf13/viper/graphs/contributors
+-
+Creator of sqlite and the go sqlite - https://modernc.org/sqlite 
+-
+members - https://gitlab.com/cznic/sqlite/-/project_members
+
+
+
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W8CGXQS)

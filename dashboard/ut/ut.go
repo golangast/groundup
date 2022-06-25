@@ -284,6 +284,39 @@ func ReadFile(p string) string {
 	s := string(text)
 	return s
 }
+func FindText(p, str string) bool {
+	// Open file for reading.
+	var file, err = os.OpenFile(p, os.O_RDWR, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	// Read file, line by line
+	var text = make([]byte, 1024)
+	for {
+		_, err = file.Read(text)
+
+		if strings.Contains(string(text), str) {
+			return true
+		}
+		// Break if finally arrived at end of file
+		if err == io.EOF {
+			break
+		}
+
+		// Break if error occured
+		if err != nil && err != io.EOF {
+			fmt.Println(err)
+
+		}
+	}
+
+	fmt.Println("Reading from file.")
+	fmt.Println(string(text))
+
+	return false
+}
 func WriteFile(f string) {
 	// Open file using READ & WRITE permission.
 	var file, err = os.OpenFile(f, os.O_RDWR, 0644)

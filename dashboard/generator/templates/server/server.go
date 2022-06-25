@@ -6,6 +6,7 @@ package main
 
 	import (
 		"fmt"
+		"context"
 		"html/template"
 		"io"
 		"net/http"
@@ -14,10 +15,11 @@ package main
 		"path/filepath"
 		_"time"
 		"strings"
-	
+		//#import
 		"github.com/labstack/echo/v4"
 		"github.com/labstack/echo/v4/middleware"
 		"github.com/labstack/gommon/log"
+
 	)
 	
 	type TemplateRenderer struct {
@@ -38,6 +40,7 @@ package main
 	var err error
 	
 	func main() {
+		//#createdb
 		e := echo.New()
 		t, err := ParseDirectory("templates/")
 		if err != nil {
@@ -112,7 +115,7 @@ package main
 func Routes(e *echo.Echo) {
 	e.GET("/", Home)
 	e.GET("/route/:routes", List)
-
+	
 }
 
 func Home(c echo.Context) error {
@@ -125,7 +128,10 @@ func List(c echo.Context) error {
 	routes := c.Param("routes")
 	nospaceroutes := strings.ReplaceAll(routes, " ", "")
 	nospaceroutesnoslash := strings.ReplaceAll(nospaceroutes, "/", "")
-	return c.Render(http.StatusOK, nospaceroutesnoslash+".html", map[string]interface{}{})
+	//#databaseconn
+	return c.Render(http.StatusOK, nospaceroutesnoslash+".html", map[string]interface{}{
+		"data":data,
+	})
 
 }
 

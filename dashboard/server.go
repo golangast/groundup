@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/dbutil"
+	. "github.com/golangast/groundup/dashboard/dbsql/createdb"
 	. "github.com/golangast/groundup/dashboard/routes"
 
 	"github.com/labstack/echo/v4"
@@ -34,23 +34,10 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 
 var err error
 
+//dashboard server runs
 func Serv() {
-	exists, err := Exists("db/urls.db")
-	if err != nil {
-		fmt.Println(err)
-	}
-	if !exists {
-		if err := os.MkdirAll("db", os.ModeSticky|os.ModePerm); err != nil {
-			fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
-		} else {
-			fmt.Println("Whoops, could not create directory(ies) because", err)
-		}
-		_, err := os.Create("db/database.db")
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	GenerateTable()
+	//generate tables
+	CreateDB()
 	e := echo.New()
 	t, err := ParseDirectory("dashboard/templates/")
 	if err != nil {

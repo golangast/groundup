@@ -29,6 +29,23 @@ CREATE TABLE "urls" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
+CREATE TABLE "nav" (
+	"id"	INTEGER,
+	"a"	TEXT,
+	"b"	TEXT,
+	"c"	TEXT,
+	"d"	TEXT,
+	"e"	TEXT,
+	"f"	TEXT,
+	"g"	TEXT,
+	"h"	TEXT,
+	"i"	TEXT,
+	"j"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
+
+
 CREATE TABLE "library" (
 	"id"	INTEGER,
 	"lib"	TEXT,
@@ -36,3 +53,5 @@ CREATE TABLE "library" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE `urls`.`urls` ( `id` INT NOT NULL AUTO_INCREMENT , `urls` TEXT NOT NULL , `titles` TEXT NOT NULL , `lib` TEXT NOT NULL , `libtag` TEXT NOT NULL , `css` TEXT NOT NULL , `csstag` TEXT NOT NULL , `filename` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+//CREATE TABLE IF NOT EXISTS user (id integer NOT NULL primary KEY AUTOINCREMENT,  sdfa int  NOT NULL,   sfda  bool  NOT NULL );

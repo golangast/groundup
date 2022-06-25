@@ -8,6 +8,11 @@
         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
             role="tab" aria-controls="contact" aria-selected="false">Show</button>
     </li>
+    <li class="nav-item active" role="presentation">
+        <button class="nav-link" id="gendatabase-tab" data-bs-toggle="tab" data-bs-target="#gendatabase" type="button"
+            role="tab" aria-controls="gendatabase" aria-selected="false">Database</button>
+    </li>
+
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -30,7 +35,6 @@
                     <input type="text" id="url" name="url" value="/newpage/"><br><br>
                     <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                 </form>
-
                 <ul class="nav nav-tabs" id="addlib" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="js-tab" data-bs-toggle="tab" data-bs-target="#js"
@@ -41,12 +45,10 @@
                             role="tab" aria-controls="css" aria-selected="false">Add CSS</button>
                     </li>
                 </ul>
-
                 <div class="tab-content" id="addlibContent">
                     <div class="tab-pane fade show active" id="js" role="tabpanel" aria-labelledby="js-tab">
                         <h6 for="">Add your 3rd party library</h6>
                         <form class="border border-1" action="/lib" method="POST">
-
                             <div class="input-field col s6">
                                 <input placeholder="Placeholder" id="lib" name="lib" type="text" class="validate">
                                 <label for="lib">Enter your library</label>
@@ -55,7 +57,6 @@
                                 <input placeholder="Placeholder" id="libtag" name="libtag" type="text" class="validate">
                                 <label for="lib">Enter your tag</label>
                             </div>
-
                             <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                         </form>
                     </div>
@@ -71,13 +72,10 @@
                                 <input placeholder="Placeholder" id="libtag" name="libtag" type="text" class="validate">
                                 <label for="lib">Enter your tag</label>
                             </div>
-
                             <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                         </form>
                     </div>
                 </div>
-
-
                 <ul class="nav nav-tabs" id="addlibtopage" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="footer-tab" data-bs-toggle="tab" data-bs-target="#footer"
@@ -96,10 +94,7 @@
                             type="button" role="tab" aria-controls="addcsspage" aria-selected="false">Add CSS</button>
                     </li>
                 </ul>
-
                 <div class="tab-content" id="addlibContent">
-
-
                     <div class="tab-pane fade show active" id="footer" role="tabpanel" aria-labelledby="footer-tab">
                         <label for="libtag">Select the Lib to add to the Footer file</label>
                         <form class="" action="/addfooterlib" method="POST" style="padding: 0;margin: 0;">
@@ -115,10 +110,6 @@
                             <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                         </form>
                     </div>
-
-
-
-
                     <div class="tab-pane fade " id="header" role="tabpanel" aria-labelledby="header-tab">
                         <label for="libtag">Select the Lib to add to the header file</label>
                         <form class="" action="/addfooterlib" method="POST" style="padding: 0;margin: 0;">
@@ -148,7 +139,6 @@
                                 </select>
                             </div>
                             <label for="titles">Select the Title</label>
-
                             <div class=" col s6">
                                 <select class="form-select" id="titles" name="titles" type="text">
                                     {{ if .U}}
@@ -158,7 +148,6 @@
                                     {{end}}
                                 </select>
                             </div>
-
                             <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
                         </form>
                     </div>
@@ -196,7 +185,6 @@
         <a class="badge bg-success" href="/production">Start App</a>
         <a class="badge bg-success" href="/dev">Start Watcher</a>
         <ol class="lists collection list-group list-group-numbered">
-
             {{ if .U}}
             {{range $i , $U := .U}}
             <li class="list-group-item">
@@ -209,9 +197,96 @@
             </li>
             {{end}}
             {{end}}
-
         </ol>
     </div>
+
+    <!-- form gendatabase-tab -->
+    <div class="tab-pane fade " id="gendatabase" role="tabpanel" aria-labelledby="gendatabase-tab">
+        <div class="table">
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link " id="showeditor-tab" data-bs-toggle="tab" data-bs-target="#showeditor"
+                        type="button" role="tab" aria-controls="showeditor" aria-selected="true">Show Editor</button>
+                </li>
+                <!-- ! need to show tables still -->
+                <li class="nav-item" role="presentation">
+                    <a class="waves-effect waves-teal btn-flat" href="/showtables">Show Tables</a>
+                </li>
+            </ul>
+            <!-- ! need to show tables still -->
+
+
+
+        </div>
+        <!-- what fields did you want? -->
+        <div class="tab-pane fade " id="showeditor" role="tabpanel" aria-labelledby="showeditor-tab">
+            <div class="fields">
+                <label for="fields">Fields:</label><br>
+                <input type="text" id="fa" name="fa" value="2"><br>
+                <button class="createform">Show fields</button>
+            </div>
+            <div class="row">
+                <form class="col s12" action="/dbdata" method="POST">
+                    <label for="table">Table:</label><br>
+                    <input type="text" id="table" name="table" value="user"><br><br><br>
+                    <div class="choosekind row"></div>
+                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+                </form>
+
+            </div>
+            <script>
+                $(".createform").click(function () {
+                    //get value of fields
+                    var value = $("#fa").val();
+                    //if value is used then show next
+                    if (value > 0) {
+                        $(".fields").hide();
+                        $(".table").hide();
+                        $(".choosekind").show();
+                    }
+                    if (value > 10) {
+                        alert("cant be over 11!")
+                    }
+                    var i;
+                    for (i = 0; i < value; i++) {
+                        $(".choosekind").append(`<div class="input-field col s6">
+        <input  class="f` + i + `" name="f` + i + `" id="f` + i + `" type="text">
+        <label for="f` + i + `">Field</label><div class="input-field col s6">
+        <input  class="t` + i + `" name="t` + i + `" id="t` + i + `" type="text">
+        <label for="t` + i + `">Type</label>
+      </div>
+     
+    `);
+                    }
+                    //https://www.javatpoint.com/html-form-input-types
+                });
+
+            </script>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 </span>
 {{ if $.S.Appexe}}

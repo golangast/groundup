@@ -1,0 +1,6 @@
+package navgo
+
+var tempnavgo = `
+
+
+`

@@ -17,10 +17,10 @@ import (
 	"syscall"
 	"time"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/deletebyurl"
-	. "github.com/golangast/groundup/dashboard/dbsql/getlib"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebyurl"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getlib"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/getpage"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getpage"
 	"github.com/golangast/groundup/dashboard/ut"
 
 	"golang.org/x/sys/windows"
@@ -115,7 +115,7 @@ func openbrowser(url string) {
 
 }
 func Reload() {
-	err, outs, errouts := ut.Shellout("cd app && go mod tidy && go mod vendor && go install && go build")
+	err, outs, errouts := ut.Shellout("pwd && cd app && go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -361,12 +361,6 @@ func AddLibtoFilebyTitle(lib, title string) {
 	var n = `<script scr="` + lib + `" ></script> ` + "\n" + o
 
 	fmt.Println("app/templates/", o, n)
-
-	err, ss, tt := ut.Shellout("cd")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(ss, tt)
 
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

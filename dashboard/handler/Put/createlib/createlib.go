@@ -3,7 +3,7 @@ package createlib
 import (
 	"net/http"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/addlibtag"
+	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/addlibtag"
 	"github.com/labstack/echo/v4"
 )
 

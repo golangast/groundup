@@ -1,7 +1,0 @@
-package chooselibtitle
-
-func Chooselibtitle() {
-
-	
-
-}
