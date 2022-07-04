@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	. "github.com/golangast/groundup/dashboard/dbsql/gettabledata"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebytitle"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebyurl"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getallcss"
@@ -26,6 +27,7 @@ import (
 func Home(c echo.Context) error {
 	var Stat Stats
 	var err error
+	var DBFields []DBFields
 	//grab any route params
 	m := c.Param("m")
 	footer := c.Param("footer")
@@ -72,14 +74,17 @@ func Home(c echo.Context) error {
 		exe, path, pid, size, parent, threads, usage, alloc, totalAlloc, sys, numGC := Observe()
 		Stat = Stats{Appexe: exe, Apppath: path, Apppid: pid, Appsize: size, Appparent: parent, Appthreads: threads, Appusage: usage, Alloc: alloc, Totalalloc: totalAlloc, Sys: sys, Numgc: numGC}
 
+	case "showtable": //*show routes
+		DBFields = Gettabledata()
 	}
+
 	//load all the data.
 	css := Getallcss()
 	l := GetAllLib()
 	u := GetUrls()
 
 	file_db_referentialintegrity(u)
-	d := Data{U: u, L: l, C: css, S: Stat}
+	d := Data{U: u, L: l, C: css, F: DBFields, S: Stat}
 	return c.Render(http.StatusOK, "home.html", d)
 }
 
@@ -87,7 +92,7 @@ type Data struct {
 	U []Urls
 	L []Library
 	C []CSS
-
+	F []DBFields
 	S Stats
 }
 

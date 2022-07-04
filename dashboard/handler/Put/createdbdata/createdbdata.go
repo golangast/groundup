@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/commanddatasave"
+	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/createtable"
 	"github.com/labstack/echo/v4"
 )
 

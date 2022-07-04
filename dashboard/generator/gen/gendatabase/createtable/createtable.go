@@ -1,4 +1,4 @@
-package commanddatasave
+package createtable
 
 import (
 	"fmt"
