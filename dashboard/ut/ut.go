@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/spf13/viper"
-	"golang.org/x/sys/windows"
 )
 
 func AppendStringToFiles(path, text string) error {
@@ -728,22 +727,22 @@ func Watch() *exec.Cmd {
 }
 
 //get list of running processes
-func CheckProcessLife() {
-	const processEntrySize = 568
-	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
-	if e != nil {
-		panic(e)
-	}
-	p := windows.ProcessEntry32{Size: processEntrySize}
-	for {
-		e := windows.Process32Next(h, &p)
-		if e != nil {
-			break
-		}
-		s := windows.UTF16ToString(p.ExeFile[:])
-		println(s)
-	}
-}
+// func CheckProcessLife() {
+// 	const processEntrySize = 568
+// 	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+// 	if e != nil {
+// 		panic(e)
+// 	}
+// 	p := windows.ProcessEntry32{Size: processEntrySize}
+// 	for {
+// 		e := windows.Process32Next(h, &p)
+// 		if e != nil {
+// 			break
+// 		}
+// 		s := windows.UTF16ToString(p.ExeFile[:])
+// 		println(s)
+// 	}
+// }
 
 // kill a process
 func killProcessByName(procname string) int {

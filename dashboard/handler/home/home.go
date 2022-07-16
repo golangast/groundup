@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	. "github.com/golangast/groundup/dashboard/dbsql/gettabledata"
@@ -16,15 +17,15 @@ import (
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getpage"
 	. "github.com/golangast/groundup/dashboard/generator/gen/genconfig"
 	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/createdatabase"
-
 	. "github.com/golangast/groundup/dashboard/generator/gen/genserver"
-	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 	. "github.com/golangast/groundup/dashboard/ut"
-	. "github.com/golangast/groundup/dashboard/watcher"
 	"github.com/labstack/echo/v4"
+
+	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 )
 
 func Home(c echo.Context) error {
+
 	var Stat Stats
 	var err error
 	var DBFields []DBFields
@@ -41,10 +42,13 @@ func Home(c echo.Context) error {
 		Createservers()
 	case "production": //*run production
 		Startprod()
-	case "dev": //*run watcher
-		Watching()
+
 	case "stop": //*stop app
-		KillProcessByName("app.exe")
+		if runtime.GOOS == "windows" {
+			KillProcessByName("app.exe")
+		} else {
+			KillProcessByName("app")
+		}
 		c.Redirect(http.StatusFound, "/show")
 	case "reload": //*reload application
 		Reload()
@@ -71,18 +75,27 @@ func Home(c echo.Context) error {
 			AddLibtoFilebyTitle(lib, footer)
 		}
 	case "observe": //*observe app process
-		exe, path, pid, size, parent, threads, usage, alloc, totalAlloc, sys, numGC := Observe()
-		Stat = Stats{Appexe: exe, Apppath: path, Apppid: pid, Appsize: size, Appparent: parent, Appthreads: threads, Appusage: usage, Alloc: alloc, Totalalloc: totalAlloc, Sys: sys, Numgc: numGC}
-
+		// exe, path, pid, size, parent, threads, usage, alloc, totalAlloc, sys, numGC := Observe()
+		// Stat = Stats{Appexe: exe, Apppath: path, Apppid: pid, Appsize: size, Appparent: parent, Appthreads: threads, Appusage: usage, Alloc: alloc, Totalalloc: totalAlloc, Sys: sys, Numgc: numGC}
+		var exe string
+		var pid string
+		var ppid string
+		if runtime.GOOS == "windows" {
+			exe, pid, ppid, err = Getpidstring("app.exe")
+			ErrorCheck(err)
+			Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid}
+		} else {
+			exe, pid, ppid, err = Getpidstring("app")
+			ErrorCheck(err)
+			Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid}
+		}
 	case "showtable": //*show routes
 		DBFields = Gettabledata()
 	}
-
 	//load all the data.
 	css := Getallcss()
 	l := GetAllLib()
 	u := GetUrls()
-
 	file_db_referentialintegrity(u)
 	d := Data{U: u, L: l, C: css, F: DBFields, S: Stat}
 	return c.Render(http.StatusOK, "home.html", d)
@@ -97,17 +110,9 @@ type Data struct {
 }
 
 type Stats struct {
-	Appexe     string
-	Apppath    string
-	Apppid     string
-	Appsize    string
-	Appparent  string
-	Appthreads string
-	Appusage   string
-	Alloc      string
-	Totalalloc string
-	Sys        string
-	Numgc      string
+	Exe  string
+	Pid  string
+	Ppid string
 }
 
 func file_db_referentialintegrity(u []Urls) {

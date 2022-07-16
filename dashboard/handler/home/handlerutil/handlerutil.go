@@ -23,7 +23,8 @@ import (
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getpage"
 	"github.com/golangast/groundup/dashboard/ut"
 
-	"golang.org/x/sys/windows"
+	//"golang.org/x/sys/windows"
+	ps "github.com/mitchellh/go-ps"
 )
 
 func Kill(pid int) error {
@@ -124,7 +125,7 @@ func Reload() {
 	fmt.Println(errouts)
 }
 func KillProcessByName(procname string) {
-	pid, err := ProcessID(procname)
+	_, pid, _, err := ProcessID(procname)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -241,7 +242,7 @@ func CheckExeExists(exepath string, appexe string) (string, string, string) {
 		fmt.Printf("didn't find '%s' executable\n", exepath)
 	}
 
-	pid, errs := ProcessID(appexe)
+	pid, errs := Getpid(appexe)
 	if errs != nil {
 		fmt.Println("cant find pid for app.exe", errs)
 	}
@@ -250,17 +251,17 @@ func CheckExeExists(exepath string, appexe string) (string, string, string) {
 	return exepath, path, spid
 }
 
-func GetProcData(exepath string, appexe string) (string, string, string, string, string, string, string, error) {
-	path, err := exec.LookPath(exepath)
-	if err != nil {
-		fmt.Printf("didn't find '%s' executable\n", exepath)
-	}
-	pid, size, parent, threads, usage, e := processInfo(appexe)
-	if e != nil {
-		fmt.Println(e)
-	}
-	return exepath, path, pid, size, parent, threads, usage, nil
-}
+// func GetProcData(exepath string, appexe string) (string, string, string, string, string, string, string, error) {
+// 	path, err := exec.LookPath(exepath)
+// 	if err != nil {
+// 		fmt.Printf("didn't find '%s' executable\n", exepath)
+// 	}
+// 	pid, size, parent, threads, usage, e := processInfo(appexe)
+// 	if e != nil {
+// 		fmt.Println(e)
+// 	}
+// 	return exepath, path, pid, size, parent, threads, usage, nil
+// }
 func WatchSignals() {
 	signalChannel := make(chan os.Signal, 2)
 	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
@@ -285,66 +286,114 @@ func logSignal(p *os.Process, sig os.Signal) error {
 	return err
 }
 
-const processEntrySize = 568
+// const processEntrySize = 568
 
-func processInfo(name string) (string, string, string, string, string, error) {
-	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
-	if e != nil {
-		fmt.Println(e)
-	}
-	p := windows.ProcessEntry32{Size: processEntrySize}
-	for {
-		e := windows.Process32Next(h, &p)
-		if e != nil {
-			fmt.Println("didnt find it ", e)
-			return "", "", "", "", "", nil
-		}
+// func processInfo(name string) (string, string, string, string, string, error) {
+// 	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+// 	if e != nil {
+// 		fmt.Println(e)
+// 	}
+// 	p := windows.ProcessEntry32{Size: processEntrySize}
+// 	for {
+// 		e := windows.Process32Next(h, &p)
+// 		if e != nil {
+// 			fmt.Println("didnt find it ", e)
+// 			return "", "", "", "", "", nil
+// 		}
 
-		if windows.UTF16ToString(p.ExeFile[:]) == name {
-			spid := fmt.Sprint(p.ProcessID)
-			ssize := fmt.Sprint(p.Size)
-			sparent := fmt.Sprint(p.ParentProcessID)
-			sthreads := fmt.Sprint(p.Threads)
-			susage := fmt.Sprint(p.Usage)
-			return spid, ssize, sparent, sthreads, susage, nil
-		}
+// 		if windows.UTF16ToString(p.ExeFile[:]) == name {
+// 			spid := fmt.Sprint(p.ProcessID)
+// 			ssize := fmt.Sprint(p.Size)
+// 			sparent := fmt.Sprint(p.ParentProcessID)
+// 			sthreads := fmt.Sprint(p.Threads)
+// 			susage := fmt.Sprint(p.Usage)
+// 			return spid, ssize, sparent, sthreads, susage, nil
+// 		}
 
-	}
+// 	}
 
-}
-func ProcessID(name string) (uint32, error) {
-	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
-	if e != nil {
-		return 0, e
-	}
-	p := windows.ProcessEntry32{Size: processEntrySize}
-	for {
-		e := windows.Process32Next(h, &p)
-		if e != nil {
-			return 0, e
-		}
-		if windows.UTF16ToString(p.ExeFile[:]) == name {
-			return p.ProcessID, nil
+// }
 
-		}
-	}
+// func ProcessID(name string) (uint32, error) {
+// 	h, e := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+// 	if e != nil {
+// 		return 0, e
+// 	}
+// 	p := windows.ProcessEntry32{Size: processEntrySize}
+// 	for {
+// 		e := windows.Process32Next(h, &p)
+// 		if e != nil {
+// 			return 0, e
+// 		}
+// 		if windows.UTF16ToString(p.ExeFile[:]) == name {
+// 			return p.ProcessID, nil
 
-}
+// 		}
+// 	}
 
-func Observe() (string, string, string, string, string, string, string, string, string, string, string) {
-	exepath, path, pid, size, parent, threads, usage, err := GetProcData("app", "app.exe")
+// }
+
+func Getpid(name string) (string, error) {
+	list, err := ps.Processes()
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-	var m runtime.MemStats
-	runtime.ReadMemStats(&m)
-	Alloc := fmt.Sprint(m.Alloc)
-	TotalAlloc := fmt.Sprint(m.TotalAlloc)
-	Sys := fmt.Sprint(m.Sys)
-	NumGC := fmt.Sprint(m.NumGC)
-	WatchSignals()
-	return exepath, path, pid, size, parent, threads, usage, Alloc, TotalAlloc, Sys, NumGC
+	for _, p := range list {
+		log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
+
+		if p.Executable() == name {
+			return strconv.Itoa(p.Pid()), err
+		}
+	}
+	return "", err
 }
+
+func ProcessID(name string) (string, uint32, uint32, error) {
+	list, err := ps.Processes()
+	if err != nil {
+		panic(err)
+	}
+	for _, p := range list {
+		log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
+
+		if p.Executable() == name {
+			return p.Executable(), uint32(p.Pid()), uint32(p.Pid()), err
+		}
+	}
+	return "", 0, 0, err
+
+}
+
+func Getpidstring(name string) (string, string, string, error) {
+	list, err := ps.Processes()
+	if err != nil {
+		panic(err)
+	}
+	for _, p := range list {
+		log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
+
+		if p.Executable() == name {
+			return p.Executable(), strconv.Itoa(p.Pid()), strconv.Itoa(p.Pid()), err
+		}
+	}
+	return "", "", "", err
+
+}
+
+// func Observe() (string, string, string, string, string, string, string, string, string, string, string) {
+// 	exepath, path, pid, size, parent, threads, usage, err := GetProcData("app", "app.exe")
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	var m runtime.MemStats
+// 	runtime.ReadMemStats(&m)
+// 	Alloc := fmt.Sprint(m.Alloc)
+// 	TotalAlloc := fmt.Sprint(m.TotalAlloc)
+// 	Sys := fmt.Sprint(m.Sys)
+// 	NumGC := fmt.Sprint(m.NumGC)
+// 	WatchSignals()
+// 	return exepath, path, pid, size, parent, threads, usage, Alloc, TotalAlloc, Sys, NumGC
+// }
 
 func AddLibtoFilebyTitle(lib, title string) {
 	var path, filename string

@@ -290,18 +290,14 @@
 
 </div>
 </span>
-{{ if $.S.Appexe}}
+{{ if $.S.Exe}}
 <table class="table table-sm" style="width: 73%;">
     <thead>
         <tr>
             <th scope=" col">Title</th>
             <th scope=" col">Name</th>
-            <th scope="col">Path</th>
             <th scope="col">Pid</th>
-            <th scope="col">Size</th>
             <th scope="col">ParentPid</th>
-            <th scope="col">Threads</th>
-            <th scope="col">Usage</th>
             <th scope="col">Start</th>
             <th scope="col">End</th>
         </tr>
@@ -310,48 +306,23 @@
         <tr>
             <th scope="row">Your App</th>
             <td>
-                <div class="badge bg-info text-dark">{{$.S.Appexe}}</div>
+                <div class="badge bg-info text-dark">{{$.S.Exe}}</div>
             </td>
+
             <td>
-                <div class="badge bg-primary">{{$.S.Apppath}}</div>
+                <div class="badge bg-dark">{{$.S.Pid}}</div>
             </td>
+
             <td>
-                <div class="badge bg-dark">{{$.S.Apppid}}</div>
+                <div class="badge bg-dark">{{$.S.Ppid}}</div>
             </td>
-            <td>
-                <div class="badge bg-dark">{{$.S.Appsize}}Mib</div>
-            </td>
-            <td>
-                <div class="badge bg-dark">{{$.S.Appparent}}</div>
-            </td>
-            <td>
-                <div class="badge bg-dark">{{$.S.Appthreads}}</div>
-            </td>
-            <td>
-                <div class="badge bg-dark">{{$.S.Appusage}}</div>
-            </td>
+
+
             <td> <a class="badge bg-success" href="/production">Start</a></td>
             <td><a class="badge bg-danger" href="/stop">Stop</a></td>
         </tr>
     </tbody>
-    <thead>
-        <tr>
-            <th scope="col">Memory</th>
-            <th scope="col">Total Allocations</th>
-            <th scope="col">System</th>
-            <th scope="col">NumGC</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-
-            <td>{{$.S.Alloc}}Mib</td>
-            <td>{{$.S.Totalalloc}}Mib</td>
-            <td>{{$.S.Sys}}Mib</td>
-            <td>{{$.S.Numgc}}Mib</td>
-
-        </tr>
-    </tbody>
+   
 </table>
 {{end}}
 <!-- https://go.dev/play/p/_N963_qF5v6 -->
