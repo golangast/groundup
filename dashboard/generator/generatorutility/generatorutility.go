@@ -103,7 +103,6 @@ func WritetemplateData(temp string, f *os.File, d Data) {
 				} else {
 					Items = append(Items, str[i]+" NOT NULL, ")
 				}
-
 			}
 
 			return Items

@@ -18,10 +18,9 @@ import (
 	. "github.com/golangast/groundup/dashboard/generator/gen/genconfig"
 	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/createdatabase"
 	. "github.com/golangast/groundup/dashboard/generator/gen/genserver"
+	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 	. "github.com/golangast/groundup/dashboard/ut"
 	"github.com/labstack/echo/v4"
-
-	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
 )
 
 func Home(c echo.Context) error {
@@ -75,8 +74,7 @@ func Home(c echo.Context) error {
 			AddLibtoFilebyTitle(lib, footer)
 		}
 	case "observe": //*observe app process
-		// exe, path, pid, size, parent, threads, usage, alloc, totalAlloc, sys, numGC := Observe()
-		// Stat = Stats{Appexe: exe, Apppath: path, Apppid: pid, Appsize: size, Appparent: parent, Appthreads: threads, Appusage: usage, Alloc: alloc, Totalalloc: totalAlloc, Sys: sys, Numgc: numGC}
+
 		var exe string
 		var pid string
 		var ppid string
@@ -89,14 +87,16 @@ func Home(c echo.Context) error {
 			ErrorCheck(err)
 			Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid}
 		}
-	case "showtable": //*show routes
-		DBFields = Gettabledata()
+
 	}
+
 	//load all the data.
 	css := Getallcss()
 	l := GetAllLib()
 	u := GetUrls()
 	file_db_referentialintegrity(u)
+	DBFields = Gettabledata()
+
 	d := Data{U: u, L: l, C: css, F: DBFields, S: Stat}
 	return c.Render(http.StatusOK, "home.html", d)
 }

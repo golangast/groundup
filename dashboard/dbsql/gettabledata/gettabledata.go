@@ -12,6 +12,7 @@ func Gettabledata() []DBFields {
 
 	//variables used to store data from the query
 	var (
+		id        int
 		stable    string
 		f0        string
 		f1        string
@@ -47,14 +48,14 @@ func Gettabledata() []DBFields {
 
 	//cycle through the rows to collect all the data
 	for rows.Next() {
-		err := rows.Scan(&stable, &f0, &f1, &f2, &f3, &f4, &f5, &f6, &f7, &f8, &f9, &f10, &f11, &t0, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8, &t9, &t10, &t11)
+		err := rows.Scan(&id, &stable, &f0, &f1, &f2, &f3, &f4, &f5, &f6, &f7, &f8, &f9, &f10, &f11, &t0, &t1, &t2, &t3, &t4, &t5, &t6, &t7, &t8, &t9, &t10, &t11)
 		ErrorCheck(err)
 
 		i++
 		fmt.Println("scan ", i)
 
 		//store into memory
-		u := DBFields{Stable: stable, F0: f0, F1: f1, F2: f2, F3: f3, F4: f4, F5: f5, F6: f6, F7: f7, F8: f8, F9: f9, F10: f10, F11: f11, T0: t0, T1: t1, T2: t2, T3: t3, T4: t4, T5: t5, T6: t6, T7: t7, T8: t8, T9: t9, T10: t10, T11: t11}
+		u := DBFields{ID: id, Stable: stable, F0: f0, F1: f1, F2: f2, F3: f3, F4: f4, F5: f5, F6: f6, F7: f7, F8: f8, F9: f9, F10: f10, F11: f11, T0: t0, T1: t1, T2: t2, T3: t3, T4: t4, T5: t5, T6: t6, T7: t7, T8: t8, T9: t9, T10: t10, T11: t11}
 		DBFieldss = append(DBFieldss, u)
 
 	}
@@ -66,20 +67,20 @@ func Gettabledata() []DBFields {
 }
 
 type DBFields struct {
-	Stable string `param:"table" query:"table" header:"table" form:"table" json:"table" xml:"table"`
-
-	F0  string `param:"f0" query:"f0" header:"f0" form:"f0" json:"f0" xml:"f0"`
-	F1  string `param:"f1" query:"f1" header:"f1" form:"f1" json:"f1" xml:"f1"`
-	F2  string `param:"f2" query:"f2" header:"f2" form:"f2" json:"f2" xml:"f2"`
-	F3  string `param:"f3" query:"f3" header:"f3" form:"f3" json:"f3" xml:"f3"`
-	F4  string `param:"f4" query:"f4" header:"f4" form:"f4" json:"f4" xml:"f4"`
-	F5  string `param:"f5" query:"f5" header:"f5" form:"f5" json:"f5" xml:"f5"`
-	F6  string `param:"f6" query:"f6" header:"f6" form:"f6" json:"f6" xml:"f6"`
-	F7  string `param:"f7" query:"f7" header:"f7" form:"f7" json:"f7" xml:"f7"`
-	F8  string `param:"f8" query:"f8" header:"f8" form:"f8" json:"f8" xml:"f8"`
-	F9  string `param:"f9" query:"f9" header:"f9" form:"f9" json:"f9" xml:"f9"`
-	F10 string `param:"f10" query:"f10" header:"f10" form:"f10" json:"f10" xml:"f10"`
-	F11 string `param:"f11" query:"f11" header:"f11" form:"f11" json:"f11" xml:"f11"`
+	ID     int    `param:"id" query:"id" header:"id" form:"id" json:"id" xml:"id"`
+	Stable string `param:"stable" query:"stable" header:"stable" form:"stable" json:"stable" xml:"stable"`
+	F0     string `param:"f0" query:"f0" header:"f0" form:"f0" json:"f0" xml:"f0"`
+	F1     string `param:"f1" query:"f1" header:"f1" form:"f1" json:"f1" xml:"f1"`
+	F2     string `param:"f2" query:"f2" header:"f2" form:"f2" json:"f2" xml:"f2"`
+	F3     string `param:"f3" query:"f3" header:"f3" form:"f3" json:"f3" xml:"f3"`
+	F4     string `param:"f4" query:"f4" header:"f4" form:"f4" json:"f4" xml:"f4"`
+	F5     string `param:"f5" query:"f5" header:"f5" form:"f5" json:"f5" xml:"f5"`
+	F6     string `param:"f6" query:"f6" header:"f6" form:"f6" json:"f6" xml:"f6"`
+	F7     string `param:"f7" query:"f7" header:"f7" form:"f7" json:"f7" xml:"f7"`
+	F8     string `param:"f8" query:"f8" header:"f8" form:"f8" json:"f8" xml:"f8"`
+	F9     string `param:"f9" query:"f9" header:"f9" form:"f9" json:"f9" xml:"f9"`
+	F10    string `param:"f10" query:"f10" header:"f10" form:"f10" json:"f10" xml:"f10"`
+	F11    string `param:"f11" query:"f11" header:"f11" form:"f11" json:"f11" xml:"f11"`
 
 	T0  string `param:"t0" query:"t0" header:"t0" form:"t0" json:"t0" xml:"t0"`
 	T1  string `param:"t1" query:"t1" header:"t1" form:"t1" json:"t1" xml:"t1"`
