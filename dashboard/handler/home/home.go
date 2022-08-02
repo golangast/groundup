@@ -8,8 +8,10 @@ import (
 	"runtime"
 	"strings"
 
+	. "github.com/golangast/groundup/dashboard/dbsql/deletetable"
 	. "github.com/golangast/groundup/dashboard/dbsql/gettabledata"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebytitle"
+
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebyurl"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getallcss"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getallurls"
@@ -33,6 +35,8 @@ func Home(c echo.Context) error {
 	footer := c.Param("footer")
 	libtagsv := c.Param("libtagsv")
 	title := c.Param("titlev")
+	table := c.Param("table")
+
 	//once params are grabbed then run methods
 	switch m {
 	case "config": //*generate config
@@ -86,6 +90,11 @@ func Home(c echo.Context) error {
 			exe, pid, ppid, err = Getpidstring("app")
 			ErrorCheck(err)
 			Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid}
+		}
+	case "removetable": //*remove table process
+		err := Deletetable(table)
+		if err != nil {
+			fmt.Println(err)
 		}
 
 	}

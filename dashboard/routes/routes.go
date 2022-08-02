@@ -19,6 +19,8 @@ func Routes(e *echo.Echo) {
 	e.GET("/:m", home.Home)
 	e.GET("/:m/:titlev", home.Home)
 	e.GET("/:m/:libtagsv/:titlev", home.Home)
+	e.GET("/:m/remove/:table", home.Home)
+
 	e.GET("/d/:m/:titlev", home.Home)
 
 	// 	//create page
