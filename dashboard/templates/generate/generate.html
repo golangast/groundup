@@ -21,8 +21,6 @@
       <button class="nav-link " id="showedata-tab" data-bs-toggle="tab" data-bs-target="#showedata" type="button" role="tab" aria-controls="showedata" aria-selected="true">Show DB Data</button>
     </li>
   </ul>
-
-
   <div class="tab-content" id="myTabContent">
 
     <!-- show editor -->
@@ -36,7 +34,7 @@
       <div class="row">
         <form class="col s12" action="/dbdata" method="POST">
           <label for="table">Table:</label><br>
-          <input type="text" id="table" name="table" value="user"><br><br><br>
+          <input type="text" id="stable" name="stable" value="user"><br><br><br>
           <div class="choosekind row"></div>
           <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
         </form>
@@ -129,13 +127,53 @@
       {{end}}
     </div>
 
-    <div class="tab-pane fade" id="showetable" role="tabpanel" aria-labelledby="showetable-tab" tabindex="0">
+    <div class="tab-pane fade" id="showedata" role="tabpanel" aria-labelledby="showedata-tab" tabindex="0">
+
+<!-- what table do you want to edit -->
+{{if $.F}}
+      {{range $i , $FF := .F}}
+      
+        <button>Table {{index $FF.Stable}} </button>
+    
+<!-- what data do you want to add? -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">{{$FF.ID}}</th>
+      <th scope="col">{{$FF.F0}}-{{$FF.T0}}</th>
+      <th scope="col">{{$FF.F1}}-{{$FF.T1}}</th>
+      <th scope="col">{{$FF.F2}}-{{$FF.T2}}</th>
+      <th scope="col">{{$FF.F3}}-{{$FF.T3}}</th>
+      <th scope="col">{{$FF.F4}}-{{$FF.T4}}</th>
+      <th scope="col">{{$FF.F5}}-{{$FF.T5}}</th>
+      <th scope="col">{{$FF.F6}}-{{$FF.T6}}</th>
+      <th scope="col">{{$FF.F7}}-{{$FF.T7}}</th>
+      <th scope="col">{{$FF.F8}}-{{$FF.T8}}</th>
+      <th scope="col">{{$FF.F9}}-{{$FF.T9}}</th>
+      <th scope="col">{{$FF.F10}}-{{$FF.T10}}</th>
+      <th scope="col">{{$FF.F11}}-{{$FF.T11}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      
+    </tr>
+  </tbody>
+</table>
+{{end}}
+{{end}}
+
+
+
+
+
+
 
 
     </div>
-
-
-
   </div>
 
 

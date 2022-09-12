@@ -4,8 +4,6 @@ import (
 	"context"
 	"log"
 
-	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/dashcreatetable"
-
 	. "github.com/golangast/groundup/dashboard/dbsql/conn"
 )
 

@@ -1,7 +1,7 @@
 package createdb
 
 var DBcreate = `
-package createtable
+package create{{.Table}}
 
 import (
 
@@ -9,7 +9,7 @@ import (
 	"fmt"
 )
 
-func Createdb(){
+func Create{{.Table}}(){
 data, err := DbConnection() //create db instance
 if err != nil {
 	fmt.Println(err)

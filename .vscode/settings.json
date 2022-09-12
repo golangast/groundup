@@ -1,4 +1,13 @@
 {
     "go.inferGopath": false,
-    "code-runner.enableAppInsights": false
+    "code-runner.enableAppInsights": false,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "new",
+            "database": "${workspaceFolder:groundup}/app/db/database.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }

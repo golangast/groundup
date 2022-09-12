@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	. "github.com/golangast/groundup/dashboard/dbsql/conn"
 	. "github.com/golangast/groundup/dashboard/dbsql/datacreation/savedbtables"
 	. "github.com/golangast/groundup/dashboard/generator/gen/gendatabase/dashcreatetable"
 
@@ -19,8 +20,7 @@ func Createdbdata(c echo.Context) error {
 	}
 
 	Savedbtables(f)
-	Gendatasave(f)
-
+	Generatedatabasefields(f, f.Stable)
 	c.Redirect(http.StatusFound, "/home")
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
 		"data": f,

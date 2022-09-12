@@ -15,6 +15,9 @@ import (
 	_ "time"
 
 	. "app/db/createtable"
+
+	. "app/db/createcusts"
+
 	//#import
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -40,6 +43,8 @@ var err error
 
 func main() {
 	Createdb()
+
+	Custs()
 	//#dbcall
 	e := echo.New()
 	t, err := ParseDirectory("templates/")

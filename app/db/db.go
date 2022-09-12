@@ -30,3 +30,9 @@ func DbConnection() (*sql.DB, error) {
 	log.Printf("Connected to DB %s successfully\n", file)
 	return db, nil
 } //end of connect
+
+func ErrorCheck(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}

@@ -1,3 +1,12 @@
+/*
+The home handler basically has the first param in a
+switch statement and that param is what is used
+to call different functions of the program.
+Instead of one handler per func, it is just the first param.
+I did it this way because these functions need to run
+on the same home.html file.
+*/
+
 package home
 
 import (
@@ -8,6 +17,8 @@ import (
 	"runtime"
 	"strings"
 
+	. "github.com/golangast/groundup/dashboard/dbsql/appdata/getapptablenames"
+	"github.com/golangast/groundup/dashboard/dbsql/conn"
 	. "github.com/golangast/groundup/dashboard/dbsql/deletetable"
 	. "github.com/golangast/groundup/dashboard/dbsql/gettabledata"
 	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebytitle"
@@ -29,7 +40,7 @@ func Home(c echo.Context) error {
 
 	var Stat Stats
 	var err error
-	var DBFields []DBFields
+	var DBFields []conn.DBFields
 	//grab any route params
 	m := c.Param("m")
 	footer := c.Param("footer")
@@ -99,23 +110,28 @@ func Home(c echo.Context) error {
 
 	}
 
-	//load all the data.
+	/*
+		This loads the data from the database
+		like when you want to see all the js libs on the pages etc..
+	*/
+	tablenames := Getapptabledata()
 	css := Getallcss()
 	l := GetAllLib()
 	u := GetUrls()
 	file_db_referentialintegrity(u)
 	DBFields = Gettabledata()
-
-	d := Data{U: u, L: l, C: css, F: DBFields, S: Stat}
+	//this is just to package the data and send it to the template
+	d := Data{U: u, L: l, C: css, F: DBFields, S: Stat, tnames: tablenames}
 	return c.Render(http.StatusOK, "home.html", d)
 }
 
 type Data struct {
-	U []Urls
-	L []Library
-	C []CSS
-	F []DBFields
-	S Stats
+	U      []Urls          //urls
+	L      []Library       //js libs
+	C      []CSS           //css
+	F      []conn.DBFields //table fields
+	S      Stats           //pids for the program
+	tnames []string
 }
 
 type Stats struct {
