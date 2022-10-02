@@ -3,8 +3,8 @@ package addlibtofooter
 import (
 	"net/http"
 
+	. "github.com/golangast/groundup/internal/dbsql/pagecreation/getlib"
 	. "github.com/golangast/groundup/pkg/uility/handler"
-	. "github.com/golangast/groundup/services/dbsql/pagecreation/getlib"
 
 	"github.com/labstack/echo/v4"
 )

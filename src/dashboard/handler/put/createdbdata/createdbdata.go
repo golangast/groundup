@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	//. "github.com/golangast/groundup/services/dbsql/appdata/getappdata"
-	. "github.com/golangast/groundup/services/dbsql/conn"
+	//. "github.com/golangast/groundup/internal/dbsql/appdata/getappdata"
+	. "github.com/golangast/groundup/internal/dbsql/conn"
 
 	//. "github.com/golangast/groundup/pkg/generateutility"
 
-	. "github.com/golangast/groundup/services/dbsql/datacreation/savedbtables"
-	. "github.com/golangast/groundup/services/generate/generators/gendatabase/dashcreatetable"
+	. "github.com/golangast/groundup/internal/dbsql/datacreation/savedbtables"
+	. "github.com/golangast/groundup/internal/generate/generators/gendatabase/dashcreatetable"
 
 	"github.com/labstack/echo/v4"
 )

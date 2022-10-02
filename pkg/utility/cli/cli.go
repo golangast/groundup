@@ -9,17 +9,17 @@ import (
 	"runtime"
 	"text/template"
 
+	. "github.com/golangast/groundup/internal/dbsql/conn"
+	. "github.com/golangast/groundup/internal/generate/templates/body"
+	. "github.com/golangast/groundup/internal/generate/templates/footer"
+	. "github.com/golangast/groundup/internal/generate/templates/header"
+	. "github.com/golangast/groundup/internal/generate/templates/server"
 	ut "github.com/golangast/groundup/pkg/utility/general"
 	. "github.com/golangast/groundup/pkg/utility/generate"
-	. "github.com/golangast/groundup/services/dbsql/conn"
-	. "github.com/golangast/groundup/services/generate/templates/body"
-	. "github.com/golangast/groundup/services/generate/templates/footer"
-	. "github.com/golangast/groundup/services/generate/templates/header"
-	. "github.com/golangast/groundup/services/generate/templates/server"
 	"github.com/spf13/viper"
 
-	. "github.com/golangast/groundup/services/generate/templates/db/dbconn"
-	. "github.com/golangast/groundup/services/generate/templates/db/getdata"
+	. "github.com/golangast/groundup/internal/generate/templates/db/dbconn"
+	. "github.com/golangast/groundup/internal/generate/templates/db/getdata"
 )
 
 func isError(err error) bool {

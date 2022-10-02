@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/golangast/groundup/services/dbsql/pagecreation/addlibtag"
-	. "github.com/golangast/groundup/services/dbsql/pagecreation/getlib"
+	. "github.com/golangast/groundup/internal/dbsql/pagecreation/addlibtag"
+	. "github.com/golangast/groundup/internal/dbsql/pagecreation/getlib"
 
 	. "github.com/golangast/groundup/pkg/uility/handler"
 
