@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 func GetPage() ([]string, []string) {

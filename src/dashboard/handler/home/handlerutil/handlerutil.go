@@ -17,11 +17,11 @@ import (
 	"syscall"
 	"time"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/deletebyurl"
-	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getlib"
-	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getpage"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/pagecreation/deletebyurl"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/pagecreation/getlib"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/pagecreation/getpage"
 
-	"github.com/golangast/groundup/dashboard/ut"
+	"github.com/golangast/groundup/src/dashboard/ut"
 
 	//"golang.org/x/sys/windows"
 	ps "github.com/mitchellh/go-ps"

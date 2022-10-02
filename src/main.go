@@ -16,9 +16,10 @@ limitations under the License.
 package main
 
 import (
-	. "github.com/golangast/groundup/dashboard"
+	. "github.com/golangast/groundup/src/dashboard"
 )
 
 func main() {
 	Serv()
+
 }

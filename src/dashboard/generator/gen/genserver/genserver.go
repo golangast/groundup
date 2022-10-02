@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
-	. "github.com/golangast/groundup/dashboard/generator/generatorutility"
-	. "github.com/golangast/groundup/dashboard/generator/templates/body"
-	. "github.com/golangast/groundup/dashboard/generator/templates/footer"
-	. "github.com/golangast/groundup/dashboard/generator/templates/header"
-	. "github.com/golangast/groundup/dashboard/generator/templates/server"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/generator/generatorutility"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/body"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/footer"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/header"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/server"
 	"github.com/spf13/viper"
 )
 

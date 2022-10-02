@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	. "github.com/golangast/groundup/dashboard/generator/generatorutility"
+	. "github.com/golangast/groundup/src/dashboard/generator/generatorutility"
 
 	_ "modernc.org/sqlite"
 )

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	//. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	//. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 
 	"github.com/labstack/echo/v4"
 )

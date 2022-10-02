@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 func AddUrlTitle(u Urls) {
@@ -50,5 +50,3 @@ type Urls struct {
 	Csstag   string `param:"csstag" query:"csstag" form:"csstag"`
 	Filename string `param:"filename" query:"filename" form:"filename"`
 }
-
-

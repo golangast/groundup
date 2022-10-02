@@ -3,7 +3,7 @@ package getapptables
 import (
 	"fmt"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 type TableData struct {

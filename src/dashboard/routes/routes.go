@@ -1,17 +1,17 @@
 package routes
 
 import (
-	add "github.com/golangast/groundup/dashboard/handler/put/addlibtofooter"
-	"github.com/golangast/groundup/dashboard/handler/put/createlib"
+	add "github.com/golangast/groundup/src/dashboard/handler/put/addlibtofooter"
+	"github.com/golangast/groundup/src/dashboard/handler/put/createlib"
 
-	adds "github.com/golangast/groundup/dashboard/handler/put/addlibtopage"
-	"github.com/golangast/groundup/dashboard/handler/put/createcsslib"
-	. "github.com/golangast/groundup/dashboard/handler/put/updateappdb"
+	adds "github.com/golangast/groundup/src/dashboard/handler/put/addlibtopage"
+	"github.com/golangast/groundup/src/dashboard/handler/put/createcsslib"
+	. "github.com/golangast/groundup/src/dashboard/handler/put/updateappdb"
 
-	. "github.com/golangast/groundup/dashboard/handler/put/createdbdata"
-	"github.com/golangast/groundup/dashboard/handler/put/createpage"
+	. "github.com/golangast/groundup/src/dashboard/handler/put/createdbdata"
+	"github.com/golangast/groundup/src/dashboard/handler/put/createpage"
 
-	home "github.com/golangast/groundup/dashboard/handler/home"
+	home "github.com/golangast/groundup/src/dashboard/handler/home"
 	"github.com/labstack/echo/v4"
 )
 

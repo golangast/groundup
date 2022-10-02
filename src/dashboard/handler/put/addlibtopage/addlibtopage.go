@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/addlibtag"
-	. "github.com/golangast/groundup/dashboard/dbsql/pagecreation/getlib"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/pagecreation/addlibtag"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/pagecreation/getlib"
 
-	. "github.com/golangast/groundup/dashboard/handler/home/handlerutil"
+	. "github.com/golangast/groundup/src/dashboard/handler/home/handlerutil"
 
 	"github.com/labstack/echo/v4"
 )

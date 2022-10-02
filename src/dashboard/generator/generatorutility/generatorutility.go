@@ -9,9 +9,9 @@ import (
 	"strings"
 	"text/template"
 
-	//. "github.com/golangast/groundup/dashboard/dbsql/appdata/getapptables"
-	. "github.com/golangast/groundup/dashboard/ut"
-	//. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	//. "github.com/golangast/groundup/src/dashboard/dbsql/appdata/getapptables"
+	. "github.com/golangast/groundup/src/dashboard/ut"
+	//. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 //pulls down dependencies + installs echo

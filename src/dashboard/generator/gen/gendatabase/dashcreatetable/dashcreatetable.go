@@ -4,10 +4,10 @@ import (
 	"os"
 	"reflect"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
-	. "github.com/golangast/groundup/dashboard/generator/generatorutility"
-	. "github.com/golangast/groundup/dashboard/generator/templates/db/createdb"
-	. "github.com/golangast/groundup/dashboard/ut"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/generator/generatorutility"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/db/createdb"
+	. "github.com/golangast/groundup/src/dashboard/ut"
 )
 
 //creates database and files in the app

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 func UpdateUrls(lib, tag, titles string) {
@@ -99,5 +99,3 @@ type Urls struct {
 	Csstag   string `param:"csstag" query:"csstag" form:"csstag"`
 	Filename string `param:"filename" query:"filename" form:"filename"`
 }
-
-

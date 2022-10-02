@@ -9,8 +9,8 @@ import (
 	"os"
 	"path/filepath"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/createdb"
-	. "github.com/golangast/groundup/dashboard/routes"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/createdb"
+	. "github.com/golangast/groundup/src/dashboard/routes"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

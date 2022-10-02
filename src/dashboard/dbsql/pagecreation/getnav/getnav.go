@@ -3,7 +3,7 @@ package getnav
 import (
 	"fmt"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 func Getnav() []Nav {
@@ -60,4 +60,3 @@ type Nav struct {
 	I  string `param:"i" query:"i" form:"i"`
 	J  string `param:"j" query:"j" form:"j"`
 }
-

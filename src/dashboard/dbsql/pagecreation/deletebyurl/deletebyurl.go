@@ -3,7 +3,7 @@ package deletebyurl
 import (
 	"errors"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 func Deletebyurl(urls string) error {

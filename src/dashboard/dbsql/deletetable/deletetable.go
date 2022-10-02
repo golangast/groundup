@@ -3,7 +3,7 @@ package deletetable
 import (
 	"fmt"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 func Deletetable(table string) error {

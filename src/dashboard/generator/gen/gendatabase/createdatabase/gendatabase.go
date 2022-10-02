@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 
-	. "github.com/golangast/groundup/dashboard/generator/generatorutility"
-	. "github.com/golangast/groundup/dashboard/ut"
+	. "github.com/golangast/groundup/src/dashboard/generator/generatorutility"
+	. "github.com/golangast/groundup/src/dashboard/ut"
 
-	. "github.com/golangast/groundup/dashboard/generator/templates/db/dbconn"
-	. "github.com/golangast/groundup/dashboard/generator/templates/db/getdata"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/db/dbconn"
+	. "github.com/golangast/groundup/src/dashboard/generator/templates/db/getdata"
 )
 
 func Gendatabase(p string) {

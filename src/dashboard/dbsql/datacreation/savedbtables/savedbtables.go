@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	. "github.com/golangast/groundup/dashboard/dbsql/conn"
+	. "github.com/golangast/groundup/src/dashboard/dbsql/conn"
 )
 
 //saves the table in the dashboard only
