@@ -17,9 +17,9 @@ import (
 	"syscall"
 	"time"
 
-	. "github.com/golangast/groundup/internal/dbsql/pagecreation/deletebyurl"
-	. "github.com/golangast/groundup/internal/dbsql/pagecreation/getlib"
-	. "github.com/golangast/groundup/internal/dbsql/pagecreation/getpage"
+	. "github.com/golangast/groundup/services/dbsql/pagecreation/deletebyurl"
+	. "github.com/golangast/groundup/services/dbsql/pagecreation/getlib"
+	. "github.com/golangast/groundup/services/dbsql/pagecreation/getpage"
 
 	ut "github.com/golangast/groundup/pkg/utility/general"
 

@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	. "github.com/golangast/groundup/internal/dbsql/createdb"
+	. "github.com/golangast/groundup/services/dbsql/createdb"
 	. "github.com/golangast/groundup/src/dashboard/routes"
 
 	"github.com/labstack/echo/v4"

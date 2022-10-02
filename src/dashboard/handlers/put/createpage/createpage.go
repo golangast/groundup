@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/template"
 
-	. "github.com/golangast/groundup/internal/dbsql/pagecreation/addurltitle"
+	. "github.com/golangast/groundup/services/dbsql/pagecreation/addurltitle"
 	"github.com/labstack/echo/v4"
 )
 
