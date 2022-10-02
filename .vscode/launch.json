@@ -17,11 +17,33 @@
             "request": "launch",
             // "debugAdapter": "dlv-dap",
             "mode": "auto",
-            "program": "${workspaceFolder}",
+            "program": "${workspaceFolder}/src",
             "env": {},
             // "args": [
             //     "go run ."
             // ],
+            "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 512,
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+            },
+            "dlvFlags": [
+                "--check-go-version=false"
+            ]
+        },
+        {
+            "name": "gen server",
+            "type": "go",
+            "request": "launch",
+            // "debugAdapter": "dlv-dap",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cli.go",
+            "env": {},
+            "args": [
+                "db"
+            ],
             "dlvLoadConfig": {
                 "followPointers": true,
                 "maxVariableRecurse": 1,
