@@ -11,7 +11,7 @@ import (
 	. "github.com/golangast/groundup/src/dashboard/handler/put/createdbdata"
 	"github.com/golangast/groundup/src/dashboard/handler/put/createpage"
 
-	home "github.com/golangast/groundup/src/dashboard/handler/home"
+	home "github.com/golangast/groundup/src/dashboard/handler/get/home"
 	"github.com/labstack/echo/v4"
 )
 

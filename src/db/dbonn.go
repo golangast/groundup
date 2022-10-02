@@ -1,4 +1,3 @@
-
 package dbconn
 
 import (
@@ -10,7 +9,7 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-const file string = "./db/database.db"
+const file string = "./src/db/database.db"
 
 func DbConnection() (*sql.DB, error) {
 	//db urls   conn to db      database used

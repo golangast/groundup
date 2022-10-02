@@ -8,7 +8,7 @@ import (
 	. "github.com/golangast/groundup/internal/dbsql/pagecreation/addlibtag"
 	. "github.com/golangast/groundup/internal/dbsql/pagecreation/getlib"
 
-	. "github.com/golangast/groundup/pkg/uility/handler"
+	. "github.com/golangast/groundup/pkg/utility/handler"
 
 	"github.com/labstack/echo/v4"
 )

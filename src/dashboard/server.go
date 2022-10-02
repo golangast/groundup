@@ -39,7 +39,7 @@ func Serv() {
 	//generate tables
 	CreateDB()
 	e := echo.New()
-	t, err := ParseDirectory("dashboard/templates/")
+	t, err := ParseDirectory("src/dashboard/templates/")
 	if err != nil {
 		fmt.Println(err)
 	}
