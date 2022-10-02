@@ -7,7 +7,7 @@ package cmd
 import (
 	"fmt"
 
-	. "github.com/golangast/groundup/src/dashboard/generator/gen/genserver"
+	. "github.com/golangast/groundup/pkg/utility/cli"
 
 	"github.com/spf13/cobra"
 )

@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	. "github.com/golangast/groundup/src/cliutility"
+	. "github.com/golangast/groundup/pkg/utility/cli"
 )
 
 // configCmd represents the config command

@@ -7,7 +7,7 @@ package cmd
 import (
 	"fmt"
 
-	. "github.com/golangast/groundup/src/cliutility"
+	. "github.com/golangast/groundup/pkg/utility/cli"
 
 	"github.com/spf13/cobra"
 )

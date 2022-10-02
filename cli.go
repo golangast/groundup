@@ -1,6 +1,6 @@
 package main
 
-import "groundup/cmd"
+import "github.com/golangast/groundup/cmd"
 
 func main() {
 	cmd.Execute()
