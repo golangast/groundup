@@ -1,0 +1,79 @@
+{{ template "header" . }}
+<ul class="nav nav-tabs" id="toptab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link " id="generate-tab" data-bs-toggle="tab" data-bs-target="#generate" type="button" role="tab"
+      aria-controls="generate" aria-selected="false">Generate</button>
+  </li>
+  <li class="nav-item active" role="presentation">
+    <button class="nav-link" id="show-tab" data-bs-toggle="tab" data-bs-target="#show" type="button" role="tab"
+      aria-controls="show" aria-selected="false">Show</button>
+  </li>
+  <li class="nav-item active" role="presentation">
+    <button class="nav-link" id="show-tab" data-bs-toggle="tab" data-bs-target="#database" type="button" role="tab"
+      aria-controls="database" aria-selected="true">Database</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+
+
+  {{ template "generate" . }}
+  {{ template "database" . }}
+  {{ template "show" . }}
+
+
+</div>
+
+<style>
+  h6 {
+    text-align: center;
+    text-decoration: underline;
+    padding-top: 2%;
+  }
+
+  form {
+    padding: 2%;
+    margin: 2%;
+  }
+
+
+
+  .btn-flat {
+    text-decoration: none;
+  }
+
+  .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+  }
+
+  .box img {
+    width: 100px;
+    height: 114px;
+    -webkit-box-shadow: 1px 3px 15px -3px #000000;
+    box-shadow: 1px 3px 15px -3px #000000;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .flex-item {
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    line-height: 150px;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+  }
+</style>
+
+{{ template "footer" . }}

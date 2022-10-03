@@ -12,7 +12,7 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-const file string = "./src/db/urls.db"
+const file string = "../src/db/urls.db"
 
 func DbConnection() (*sql.DB, error) {
 	//db urls   conn to db      database used

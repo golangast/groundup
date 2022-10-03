@@ -116,7 +116,7 @@ func openbrowser(url string) {
 
 }
 func Reload() {
-	err, outs, errouts := ut.Shellout("pwd && cd app && go mod tidy && go mod vendor && go install && go build")
+	err, outs, errouts := ut.Shellout("pwd && cd ../app && go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}

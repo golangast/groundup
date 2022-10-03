@@ -69,7 +69,7 @@ func Home(c echo.Context) error {
 	case "routesconfig": //*create config
 		Make("databaseconfig")
 	case "db": //*generate database tables
-		Gendatabase("app/db")
+		Gendatabase("../app/db")
 	case "show": //*show routes
 	case "delete": //*delete routes
 		titletrim := strings.ReplaceAll(title, " ", "")
@@ -77,12 +77,12 @@ func Home(c echo.Context) error {
 		err = Deletebytitle(titles)
 		ErrorCheck(err)
 		titletrimslash := strings.ReplaceAll(titletrim, "/", "")
-		err := os.Remove("app/templates/" + titletrimslash + ".html")
+		err := os.Remove("../app/templates/" + titletrimslash + ".html")
 		ErrorCheck(err)
 	case "lib": //*add lib
 		titletrim := strings.ReplaceAll(title, " ", "")
 		lib := GetLib(libtagsv)
-		path := filepath.FromSlash(`app/templates/` + titletrim + `.html`)
+		path := filepath.FromSlash(`../app/templates/` + titletrim + `.html`)
 		pp := strings.Replace(path, "\\", "/", -1)
 		AddLibtoFile(pp, lib, titletrim)
 		if footer == "footer" {

@@ -14,7 +14,9 @@ import (
 	"strings"
 	_ "time"
 
-	//#import
+	. "app/db/createusertest"
+. "app/db/createuserttt"
+//#import
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"

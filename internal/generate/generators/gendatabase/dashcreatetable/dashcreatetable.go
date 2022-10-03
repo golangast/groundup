@@ -58,17 +58,17 @@ func Gendatasave(icb *DBFields) {
 func Generatedatabasefields(icb *DBFields, name string) {
 	//update the app's files with db connection
 
-	if !FindText("app/app.go", "Create"+name+"()") {
-		UpdateText("app/app.go", "//#dbcall", "Create"+name+`() `+"\n"+`//#dbcall`)
+	if !FindText("../app/app.go", "Create"+name+"()") {
+		UpdateText("../app/app.go", "//#dbcall", "Create"+name+`() `+"\n"+`//#dbcall`)
 	}
-	if !FindText("app/app.go", "app/db/create"+name) {
-		UpdateText("app/app.go", "//#import", `. "app/db/create`+name+`"`+"\n"+`//#import`)
+	if !FindText("../app/app.go", "app/db/create"+name) {
+		UpdateText("../app/app.go", "//#import", `. "app/db/create`+name+`"`+"\n"+`//#import`)
 	}
 	var ct *os.File
 	//make the files and folders
-	if _, err := os.Stat("app/db/create" + name); os.IsNotExist(err) {
-		Makefolder("app/db/create" + name)
-		ct = Makefile("app/db/create" + name + "/create" + name + ".go")
+	if _, err := os.Stat("../app/db/create" + name); os.IsNotExist(err) {
+		Makefolder("../app/db/create" + name)
+		ct = Makefile("../app/db/create" + name + "/create" + name + ".go")
 	}
 
 	//https://go.dev/play/p/0HrA-jrPZqG

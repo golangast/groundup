@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	//. "github.com/golangast/groundup/internal/dbsql/appdata/getappdata"
 	. "github.com/golangast/groundup/internal/dbsql/conn"
-
-	//. "github.com/golangast/groundup/pkg/generateutility"
+	. "github.com/golangast/groundup/pkg/utility/handler"
 
 	. "github.com/golangast/groundup/internal/dbsql/datacreation/savedbtables"
 	. "github.com/golangast/groundup/internal/generate/generators/gendatabase/dashcreatetable"
@@ -27,6 +25,9 @@ func Createdbdata(c echo.Context) error {
 	Generatedatabasefields(f, f.Stable)
 
 	//Getappdata(f.Stable)
+
+	Reload()
+	Startprod()
 
 	//Generatestruct(*f, f.Stable)
 	c.Redirect(http.StatusFound, "/home")
