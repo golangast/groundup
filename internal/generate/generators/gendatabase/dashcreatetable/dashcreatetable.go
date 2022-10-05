@@ -13,11 +13,11 @@ import (
 //creates database and files in the app
 func Gendatasave(icb *DBFields) {
 	//update the app's files with db connection
-	if !FindText("app/app.go", "Createdb()") {
-		UpdateText("app/app.go", "//#dbcall", `Createdb() `+"\n"+`//#dbcall`)
+	if !FindText("../app/app.go", "Createdb()") {
+		UpdateText("../app/app.go", "//#createdb", `Createdb() `+"\n"+`//#createdb`)
 	}
-	if !FindText("app/app.go", "app/db/createtable") {
-		UpdateText("app/app.go", "//#import", `. "app/db/createtable" `+"\n"+`//#import`)
+	if !FindText("../app/app.go", "app/db/createtable") {
+		UpdateText("../app/app.go", "//#import", `. "app/db/createtable" `+"\n"+`//#import`)
 	}
 	var ct *os.File
 	//make the files and folders
@@ -59,7 +59,7 @@ func Generatedatabasefields(icb *DBFields, name string) {
 	//update the app's files with db connection
 
 	if !FindText("../app/app.go", "Create"+name+"()") {
-		UpdateText("../app/app.go", "//#dbcall", "Create"+name+`() `+"\n"+`//#dbcall`)
+		UpdateText("../app/app.go", "//#createdb", "Create"+name+`() `+"\n"+`//#createdb`)
 	}
 	if !FindText("../app/app.go", "app/db/create"+name) {
 		UpdateText("../app/app.go", "//#import", `. "app/db/create`+name+`"`+"\n"+`//#import`)

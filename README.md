@@ -24,8 +24,6 @@ not affect the app.  You can redownload this dashboard and reconnect the app eve
 
 My walkthrough of the project - https://www.youtube.com/watch?v=1Ue5ffwENvY
 
-This project has not been tested on linux yet but i am presuming it would just be a change in shellout only which would be a few seconds.
-
 Special thanks to the following groups/people.
 -
 Go Team because they are gods. 

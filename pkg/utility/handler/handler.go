@@ -24,6 +24,7 @@ import (
 	ut "github.com/golangast/groundup/pkg/utility/general"
 
 	//"golang.org/x/sys/windows"
+
 	ps "github.com/mitchellh/go-ps"
 )
 
@@ -38,7 +39,7 @@ func Kill(pid int) error {
 }
 func Startprod() *exec.Cmd {
 
-	err, outs, errouts, cmd := ut.Startprograms("cd app && go run app.go")
+	err, outs, errouts, cmd := ut.Startprograms("cd ../app && go run app.go")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -373,7 +374,10 @@ func Getpidstring(name string) (string, string, string, error) {
 		log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
 
 		if p.Executable() == name {
-			return p.Executable(), strconv.Itoa(p.Pid()), strconv.Itoa(p.Pid()), err
+			name := p.Executable()
+			pid := strconv.Itoa(p.Pid())
+			ppid := strconv.Itoa(p.PPid())
+			return name, pid, ppid, err
 		}
 	}
 	return "", "", "", err

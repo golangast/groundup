@@ -14,9 +14,8 @@ import (
 	"strings"
 	_ "time"
 
-	. "app/db/createusertest"
-. "app/db/createuserttt"
-//#import
+	. "app/db/createusersss"
+	//#import
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -40,6 +39,7 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 var err error
 
 func main() {
+	Createusersss()
 	//#createdb
 	e := echo.New()
 	t, err := ParseDirectory("templates/")
