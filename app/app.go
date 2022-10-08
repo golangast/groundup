@@ -15,7 +15,8 @@ import (
 	_ "time"
 
 	. "app/db/createusersss"
-	//#import
+	. "app/db/creategg"
+//#import
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -40,7 +41,8 @@ var err error
 
 func main() {
 	Createusersss()
-	//#createdb
+	Creategg() 
+//#createdb
 	e := echo.New()
 	t, err := ParseDirectory("templates/")
 	if err != nil {
