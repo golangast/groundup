@@ -27,11 +27,10 @@ func Getapptables() []TableData {
 		// tbl_name string
 		// rootpage string
 		// sql      string
-		TD  TableData
+
 		TDS []TableData
 	)
-	TD = TableData{}
-	fmt.Print(TD)
+
 	//SELECT type FROM sqlite_master where type='table'  AND name='urls
 	//get from database SELECT * FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';
 	rows, err := data.Query("SELECT type, name FROM sqlite_master where type='table'")
@@ -52,6 +51,7 @@ func Getapptables() []TableData {
 	}
 
 	for _, table := range tables {
+		TD := TableData{}
 		rows, _ := data.Query("SELECT * FROM " + table + ";")
 		columns, _ := rows.Columns()
 		count := len(columns)
@@ -86,11 +86,17 @@ func Getapptables() []TableData {
 				TD.Values = append(TD.Values, fmt.Sprint(v))
 
 			}
-			TD.Name = append(TD.Name, table)
+
 		}
+		TD.Name = append(TD.Name, table)
+		if values[0] == nil {
+
+			TD.Columns = append(TD.Columns, columns...)
+		}
+		TDS = append(TDS, TD)
 
 	}
-	TDS = append(TDS, TD)
+
 	//close everything
 	defer rows.Close()
 	defer data.Close()

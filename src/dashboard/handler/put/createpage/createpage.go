@@ -21,8 +21,8 @@ func CreatePage(c echo.Context) error {
 
 	urltrim := strings.ReplaceAll(url, " ", "")
 	urltrimslash := strings.ReplaceAll(urltrim, "/", "")
-	if _, err := os.Stat("app/templates/" + urltrimslash + ".html"); errors.Is(err, os.ErrNotExist) {
-		mfile, err := os.Create("app/templates/" + urltrimslash + ".html")
+	if _, err := os.Stat("../app/templates/" + urltrimslash + ".html"); errors.Is(err, os.ErrNotExist) {
+		mfile, err := os.Create("../app/templates/" + urltrimslash + ".html")
 		if err != nil {
 			fmt.Println("error -", err, mfile)
 		}

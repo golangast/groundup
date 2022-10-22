@@ -1,0 +1,99 @@
+
+{{define "appdb"}}
+<ul class="nav nav-tabs" id="myTab" role="tablist" style="background: #272470;">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link " id="showappdb-tab" data-bs-toggle="tab" data-bs-target="#showappdb" type="button"
+            role="tab" aria-controls="showappdb" aria-selected="true">Show App DB Data</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link " id="editappdb-tab" data-bs-toggle="tab" data-bs-target="#editappdb" type="button"
+            role="tab" aria-controls="editappdb" aria-selected="true">Edit Data</button>
+    </li>
+</ul>
+<div class="tab-pane fade" id="showappdb" role="tabpanel" aria-labelledby="showappdb-tab" tabindex="0">
+
+    <!-- what table do you want to edit -->
+    {{if $.Alltabledata}}
+    {{range $i , $FF := .Alltabledata}}
+    <button>Table {{index $FF.Name}} </button>
+
+    <!-- what data do you want to add? -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {{range $i , $Col := $FF.Columns}}
+                <th scope="col">{{$Col}}</th>
+                {{end}}
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {{range $i , $Val := $FF.Values}}
+                <th scope="row">{{$Val}}</th>
+                {{end}}
+
+            </tr>
+        </tbody>
+    </table>
+    {{end}}
+    {{end}}
+</div>
+
+<div class="tab-pane fade" id="editappdb" role="tabpanel" aria-labelledby="editappdb-tab" tabindex="0">
+    {{if $.Alltabledata}}
+    {{range $i , $FF := .Alltabledata}}
+    <button>Table {{index $FF.Name}} </button>
+
+    <!-- what data do you want to add? -->
+    <table class="table table-striped">
+        <thead>
+            
+            <tr>
+                {{range $i , $Col := $FF.Columns}}
+                <th scope="col">{{$Col}}</th>
+                {{end}}
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                {{range $i , $Val := $FF.Values}}
+
+                <th scope="row">{{$Val}}</th>
+
+                {{end}}
+
+            </tr>
+          
+        </tbody>
+       
+    </table>
+    <tr>
+        <th scope="col">
+            <form class="border border-1" action="/updateappdb" method="POST">
+                <div style="display: flex;gap: 20px;flex-direction: row;">
+
+                    {{range $i , $Name := $FF.Name}}
+                    <span>
+                        <label for="{{$Name}}">Table Name</label>
+                        <input  cope="col" type="text" id="{{$Name}}" name="{{$Name}}" value="{{$Name}}">
+                    </span>
+
+                        {{end}}
+                {{range $i , $Col := $FF.Columns}}
+                
+                    <span><label for="{{$Col}}">{{$Col}}</label>
+                    <input  cope="col" type="text" id="{{$Col}}" name="{{$Col}}"></span>
+                {{end}}
+            </div>
+                <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+            </form>
+        </th>
+    </tr>
+    {{end}}
+    {{end}}
+
+</div>
+
+{{end}}

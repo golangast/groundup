@@ -8,6 +8,7 @@ import (
 	"github.com/golangast/groundup/src/dashboard/handler/put/createcsslib"
 	. "github.com/golangast/groundup/src/dashboard/handler/put/updateappdb"
 
+	. "github.com/golangast/groundup/src/dashboard/handler/put/addtabletoappdb"
 	. "github.com/golangast/groundup/src/dashboard/handler/put/createdbdata"
 	"github.com/golangast/groundup/src/dashboard/handler/put/createpage"
 
@@ -21,7 +22,6 @@ func Routes(e *echo.Echo) {
 	e.GET("/:m/:titlev", home.Home)
 	e.GET("/:m/:libtagsv/:titlev", home.Home)
 	e.GET("/:m/remove/:table", home.Home)
-
 	e.GET("/d/:m/:titlev", home.Home)
 
 	// 	//create page
@@ -32,5 +32,6 @@ func Routes(e *echo.Echo) {
 	e.POST("/dbdata", Createdbdata)
 	e.POST("/addfooterlib", add.Addlibtofooter)
 	e.POST("/updateappdb", Updateappdb)
+	e.POST("/addtabletoapp/:table", AddTableToAppDB)
 
 }

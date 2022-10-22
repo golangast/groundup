@@ -1,226 +1,32 @@
 {{define "database"}}
 
 <div class="tab-pane fade " id="database" role="tabpanel" aria-labelledby="home-tab">
-
     <!-- database creation -->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="background: #262531;">
         <li class="nav-item" role="presentation">
-            <button class="nav-link " id="showeditor-tab" data-bs-toggle="tab" data-bs-target="#showeditor"
-                type="button" role="tab" aria-controls="showeditor" aria-selected="true">Show Editor</button>
+            <button class="nav-link " id="dashboarddb-tab" data-bs-toggle="tab" data-bs-target="#dashboarddb" type="button"
+                role="tab" aria-controls="dashboarddb" aria-selected="true">Dashboard DB</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link " id="showetable-tab" data-bs-toggle="tab" data-bs-target="#showetable"
-                type="button" role="tab" aria-controls="showetable" aria-selected="true">Show Tables</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link " id="showedata-tab" data-bs-toggle="tab" data-bs-target="#showedata" type="button"
-                role="tab" aria-controls="showedata" aria-selected="true">Show App DB Data</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link " id="editdata-tab" data-bs-toggle="tab" data-bs-target="#editdata" type="button"
-                role="tab" aria-controls="editdata" aria-selected="true">Edit Data</button>
+            <button class="nav-link " id="appdb-tab" data-bs-toggle="tab" data-bs-target="#appdb" type="button"
+                role="tab" aria-controls="appdb" aria-selected="true">App DB</button>
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-
-        <!-- show editor -->
-        <div class="tab-pane fade show active" id="showeditor" role="tabpanel" aria-labelledby="showeditor-tab"
-            tabindex="0">
-            <!-- what fields did you want? -->
-            <div class="fields">
-                <label for="fields">Fields:</label><br>
-                <input type="text" id="fa" name="fa" value="2"><br>
-                <button class="createform">Show fields</button>
-            </div>
-            <div class="row">
-                <form class="col s12" action="/dbdata" method="POST">
-                    <label for="table">Table:</label><br>
-                    <input type="text" id="stable" name="stable" value="user"><br><br><br>
-                    <div class="choosekind row"></div>
-                    <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
-                </form>
-            </div>
-            <script>
-                $(".createform").click(function () {
-                    //get value of fields
-                    var value = $("#fa").val();
-                    //if value is used then show next
-                    if (value > 0) {
-                        $(".fields").hide();
-                        $(".table").hide();
-                        $(".choosekind").show();
-                    }
-                    if (value > 10) {
-                        alert("cant be over 11!")
-                    }
-                    var i;
-                    for (i = 0; i < value; i++) {
-                        $(".choosekind").append(`<div class="input-field col s6">
-          <input  class="f` + i + `" name="f` + i + `" id="f` + i + `" type="text">
-          <label for="f` + i + `">Field</label><div class="input-field col s6">
-          <input  class="t` + i + `" name="t` + i + `" id="t` + i + `" type="text">
-          <label for="t` + i + `">Type</label>
-        </div>
-       
-      `);
-                    }
-                });
-
-            </script>
-        </div>
-
-        <!-- show table -->
-        <div class="tab-pane fade" id="showetable" role="tabpanel" aria-labelledby="showetable-tab" tabindex="0">
-            <!-- what fields did you want? -->
-            {{if $.F}}
-            {{range $i , $F := .F}}
-            <!-- show tables -->
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                            aria-controls="panelsStayOpen-collapseOne">
-                            <span>Table {{index $F.Stable}} </span>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                        aria-labelledby="panelsStayOpen-headingOne">
-                        <div class="accordion-body">
-                           <span> <a href="/removetable/remove/{{index $F.Stable}}">Drop Table</a>
-                            <a href="/removetable/remove/{{index $F.Stable}}">Add Table to App</a></span>
-
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Field1</th>
-                                        <th scope="col">Field2</th>
-                                        <th scope="col">Field3</th>
-                                        <th scope="col">Field4</th>
-                                        <th scope="col">Field5</th>
-                                        <th scope="col">Field6</th>
-                                        <th scope="col">Field7</th>
-                                        <th scope="col">Field8</th>
-                                        <th scope="col">Field9</th>
-                                        <th scope="col">Field10</th>
-                                        <th scope="col">Field11</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">{{$F.ID}}</th>
-                                        <td>{{$F.F0}}-{{$F.T0}}</td>
-                                        <td>{{$F.F1}}-{{$F.T1}}</td>
-                                        <td>{{$F.F2}}-{{$F.T2}}</td>
-                                        <td>{{$F.F3}}-{{$F.T3}}</td>
-                                        <td>{{$F.F4}}-{{$F.T4}}</td>
-                                        <td>{{$F.F5}}-{{$F.T5}}</td>
-                                        <td>{{$F.F6}}-{{$F.T6}}</td>
-                                        <td>{{$F.F7}}-{{$F.T7}}</td>
-                                        <td>{{$F.F8}}-{{$F.T8}}</td>
-                                        <td>{{$F.F9}}-{{$F.T9}}</td>
-                                        <td>{{$F.F10}}-{{$F.T10}}</td>
-                                        <td>{{$F.F11}}-{{$F.T11}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{end}}
-            {{end}}
-        </div>
-
-        <div class="tab-pane fade" id="showedata" role="tabpanel" aria-labelledby="showedata-tab" tabindex="0">
-
-            <!-- what table do you want to edit -->
-            {{if $.Alltabledata}}
-            {{range $i , $FF := .Alltabledata}}
-            <button>Table {{index $FF.Name}} </button>
-
-            <!-- what data do you want to add? -->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        {{range $i , $Col := $FF.Columns}}
-                        <th scope="col">{{$Col}}</th>
-                        {{end}}
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        {{range $i , $Val := $FF.Values}}
-                        <th scope="row">{{$Val}}</th>
-                        {{end}}
-
-                    </tr>
-                </tbody>
-            </table>
-            {{end}}
-            {{end}}
-        </div>
-
-        <div class="tab-pane fade" id="editdata" role="tabpanel" aria-labelledby="editdata-tab" tabindex="0">
-            {{if $.Alltabledata}}
-            {{range $i , $FF := .Alltabledata}}
-            <button>Table {{index $FF.Name}} </button>
-
-            <!-- what data do you want to add? -->
-            <table class="table table-striped">
-                <thead>
-                    
-                    <tr>
-                        {{range $i , $Col := $FF.Columns}}
-                        <th scope="col">{{$Col}}</th>
-                        {{end}}
-                    </tr>
-
-                </thead>
-                <tbody>
-                    <tr>
-                        {{range $i , $Val := $FF.Values}}
-
-                        <th scope="row">{{$Val}}</th>
-
-                        {{end}}
-
-                    </tr>
-                  
-                </tbody>
-               
-            </table>
-            <tr>
-                <th scope="col">
-                    <form class="border border-1" action="/updateappdb" method="POST">
-                        <div style="display: flex;gap: 20px;flex-direction: row;">
-
-                            {{range $i , $Name := $FF.Name}}
-                            <span>
-                                <label for="{{$Name}}">Table Name</label>
-                                <input  cope="col" type="text" id="{{$Name}}" name="{{$Name}}" value="{{$Name}}">
-                            </span>
-
-                                {{end}}
-                        {{range $i , $Col := $FF.Columns}}
-                        
-                            <span><label for="{{$Col}}">{{$Col}}</label>
-                            <input  cope="col" type="text" id="{{$Col}}" name="{{$Col}}"></span>
-                        {{end}}
-                    </div>
-                        <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
-                    </form>
-                </th>
-            </tr>
-            {{end}}
-            {{end}}
-
-        </div>
+    <div class="tab-pane fade" id="dashboarddb" role="tabpanel" aria-labelledby="dashboarddb-tab" tabindex="0">
+        {{ template "dashboarddb" . }}
+    </div>
+    <div class="tab-pane fade" id="appdb" role="tabpanel" aria-labelledby="appdb-tab" tabindex="0">
+        {{ template "appdb" . }}
     </div>
 </div>
-
+<style>
+    .fade:not(.show){
+        display:none;
+    }
+    .active{
+        display:block;
+    }
+</style>
 
 {{end}}
 
