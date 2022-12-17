@@ -3,7 +3,7 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Repositoryoverview](#repositoryoverview)
-
+* [Thanks](#thanks)
 
 
 
@@ -94,23 +94,9 @@ My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5
 
 
 Special thanks to the following groups/people.
--
-Go Team because they are gods. 
--
-gods - https://github.com/golang/go/graphs/contributors
--
-Creator of go echo - https://github.com/labstack/echo/v4
--
-members https://github.com/labstack/echo/graphs/contributors
--
-Creator of go Viper - https://github.com/spf13/viper 
--
-members https://github.com/spf13/viper/graphs/contributors
--
-Creator of sqlite and the go sqlite - https://modernc.org/sqlite 
--
-members - https://gitlab.com/cznic/sqlite/-/project_members
--
-Creator of go-ps - https://github.com/mitchellh/go-ps
--
-members - https://github.com/mitchellh/go-ps/graphs/contributors
+## Thanks
+* [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)
+* [Creators of go echo](https://github.com/labstack/echo/graphs/contributors)
+* [Creators of go Viper](https://github.com/spf13/viper/graphs/contributors)
+* [Creators of sqlite and the go sqlite](https://gitlab.com/cznic/sqlite/-/project_members)
+* [Creator of go-ps ](https://github.com/mitchellh/go-ps/graphs/contributors)
