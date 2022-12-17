@@ -1,10 +1,24 @@
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=golangast&label=Profile%20views&color=0e75b6&style=flat" alt="golangast" /> </p>
+
+
+![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/groundup) 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/groundup)
+![GitHub repo size](https://img.shields.io/github/repo-size/golangast/groundup)
+![GitHub](https://img.shields.io/github/license/golangast/groundup)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/golangast/groundup)
+![Go 100%](https://img.shields.io/badge/Go-100%25-blue)
+![status beta](https://img.shields.io/badge/Status-Beta-red)
+
+<h3 align="left">Languages and Tools:</h3>
+<p align="left"> <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://golang.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" alt="go" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> </p>
+
 ## GroundUP
 * [General info](#general-info)
 * [Why build this?](#why-build-this)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Repository overview](#repository-overview)
-* [Thanks](#thanks)
+* [Special thanks](#special-thanks)
 
 
 
@@ -40,9 +54,12 @@ To run this project, download it and run the following
 $ cd ../groundup
 $ go run *.go
 ```
-![dasbhoard](./static/dash.png)
-![db](./static/db.png)
-![db editor](./static/dbedit.png)
+* <h1 align="center">CMS</h1>
+*![dasbhoard](./static/dash.png)
+* <h1 align="center">Dashboard DB</h1>
+*![db](./static/db.png)
+* <h1 align="center">App DB</h1>
+*![db editor](./static/dbedit.png)
 
 ## Repository overview
 
@@ -83,6 +100,16 @@ Provide an overview of the directory structure and files, for example:
 │       └── show
 ```
 
+## Future wish list being worked on
+
+- [ ] Transfer dashboard db to app db (in progress)
+- [ ] Delete columns in app db
+- [ ] List of data avaiable to templates
+- [ ] Widgets
+- [ ] JWT
+- [ ] Autho
+
+
 My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5mUE)
 
 <h1 align="center">Hi 👋, I'm Zachary Endrulat</h1>
@@ -104,15 +131,13 @@ My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5
 
 - 💬 Ask me about **Golang**
 
-- 📫 How to reach me **zendrulat@gmail.com**
+- 📫 How to reach me https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white **zendrulat@gmail.com**
 
 
 - ⚡ Fun fact **I enjoy Go too much**
 
 ### Blogs posts
 <!-- BLOG-POST-LIST:START -->
-
-
 <h3 align="left">Connect with me:</h3>
 <p align="left">
 <a href="https://medium.com/@zachary endrulat" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/medium.svg" alt="@zachary endrulat" height="30" width="40" /></a>
@@ -128,8 +153,7 @@ My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5
 
 
 
-Special thanks to the following groups/people.
-## Thanks
+## Special thanks
 * [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)
 * [Creators of go echo](https://github.com/labstack/echo/graphs/contributors)
 * [Creators of go Viper](https://github.com/spf13/viper/graphs/contributors)
