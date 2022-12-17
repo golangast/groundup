@@ -8,6 +8,7 @@ import (
 	_ "net/http/pprof"
 	"os"
 	"path/filepath"
+	"strings"
 
 	. "github.com/golangast/groundup/internal/dbsql/createdb"
 	. "github.com/golangast/groundup/src/dashboard/routes"
@@ -34,7 +35,11 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 
 var err error
 
-//dashboard server runs
+func replace(input, from, to string) string {
+	return strings.Replace(input, from, to, -1)
+}
+
+// dashboard server runs
 func Serv() {
 	//generate tables
 	CreateDB()
@@ -45,8 +50,11 @@ func Serv() {
 	}
 
 	renderer := &TemplateRenderer{
-		templates: template.Must(t, err),
-	}
+		templates: template.Must(t, err).Funcs(template.FuncMap{
+			//https://stackoverflow.com/questions/72929883/golang-echo-labstack-how-to-call-a-function-method-in-a-template-view
+			"replace":   replace,
+			"tableflip": func() string { return "(╯°□°）╯︵ ┻━┻" },
+		})}
 
 	e.Renderer = renderer
 

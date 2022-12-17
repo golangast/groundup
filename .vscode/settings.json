@@ -9,5 +9,6 @@
             "database": "${workspaceFolder:groundup}/app/db/database.db"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "DockerRun.DisableAutoGenerateConfig": true
 }

@@ -10,7 +10,7 @@ import (
 	. "github.com/golangast/groundup/pkg/utility/generate"
 )
 
-//creates database and files in the app
+// creates database and files in the app
 func Gendatasave(icb *DBFields) {
 	//update the app's files with db connection
 	if !FindText("../app/app.go", "Createdb()") {
@@ -54,7 +54,7 @@ func Gendatasave(icb *DBFields) {
 
 }
 
-//creates database and files in the app
+// creates database and files in the app
 func Generatedatabasefields(icb *DBFields, name string) {
 	//update the app's files with db connection
 

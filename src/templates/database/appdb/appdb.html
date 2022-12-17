@@ -12,75 +12,74 @@
 </ul>
 <div class="tab-pane fade" id="showappdb" role="tabpanel" aria-labelledby="showappdb-tab" tabindex="0">
 
-    <!-- what table do you want to edit -->
     {{if $.Alltabledata}}
     {{range $i , $FF := .Alltabledata}}
-    <button>Table {{index $FF.Name}} </button>
-
-    <!-- what data do you want to add? -->
+    <div style="border:1px solid black;padding:1%;margin:1%;">Table {{RemoveBrackets $FF.Name}} </div>
     <table class="table table-striped">
         <thead>
             <tr>
-                {{range $i , $Col := $FF.Columns}}
-                <th scope="col">{{$Col}}</th>
+            {{range $FFa := $FF.Columns}}
+            <th scope="col"> {{$FFa }}</th>
                 {{end}}
-
+            
             </tr>
         </thead>
         <tbody>
+            {{ $length := len $FF.Columns}} 
+            {{ $myList := chunk $length $FF.Values}}
+            {{range $FF := $myList}}
             <tr>
-                {{range $i , $Val := $FF.Values}}
-                <th scope="row">{{$Val}}</th>
-                {{end}}
-
+            {{range $AA := $FF}}
+            <th scope="row">{{$AA}}</th>
+            {{end}}
             </tr>
-        </tbody>
-    </table>
+            {{end}}
+    </tbody>
+</table>  
     {{end}}
     {{end}}
 </div>
-
+<!-- https://www.practical-go-lessons.com/chap-32-templates -->
 <div class="tab-pane fade" id="editappdb" role="tabpanel" aria-labelledby="editappdb-tab" tabindex="0">
     {{if $.Alltabledata}}
     {{range $i , $FF := .Alltabledata}}
-    <button>Table {{index $FF.Name}} </button>
-
-    <!-- what data do you want to add? -->
+    <div style="border:1px solid black;padding:1%;margin:1%;">Table {{RemoveBrackets $FF.Name}} </div>
     <table class="table table-striped">
         <thead>
-            
             <tr>
-                {{range $i , $Col := $FF.Columns}}
-                <th scope="col">{{$Col}}</th>
+            {{range $FFa := $FF.Columns}}
+            <th scope="col"> {{$FFa }}</th>
                 {{end}}
+            
             </tr>
-
         </thead>
         <tbody>
+            {{ $length := len $FF.Columns}} 
+            {{ $myList := chunk $length $FF.Values}}
+            {{range $FF := $myList}}
             <tr>
-                {{range $i , $Val := $FF.Values}}
-
-                <th scope="row">{{$Val}}</th>
-
-                {{end}}
-
+              
+            {{range $tt, $AA := $FF}}
+            <th scope="row">{{$AA}}</th>
+            {{end}}
             </tr>
-          
-        </tbody>
-       
-    </table>
+            {{end}}
+    </tbody>
+</table>  
+ 
+
     <tr>
         <th scope="col">
-            <form class="border border-1" action="/updateappdb" method="POST">
+            <form class="border border-1" action="/updateappdb/{{$FF.Name}}" method="POST">
                 <div style="display: flex;gap: 20px;flex-direction: row;">
 
-                    {{range $i , $Name := $FF.Name}}
-                    <span>
+                    <!-- {{range $i , $Name := $FF.Name}} -->
+                    <!-- <span>
                         <label for="{{$Name}}">Table Name</label>
                         <input  cope="col" type="text" id="{{$Name}}" name="{{$Name}}" value="{{$Name}}">
-                    </span>
+                    </span> -->
 
-                        {{end}}
+                        <!-- {{end}} -->
                 {{range $i , $Col := $FF.Columns}}
                 
                     <span><label for="{{$Col}}">{{$Col}}</label>

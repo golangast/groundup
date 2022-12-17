@@ -20,9 +20,9 @@
             "mode": "auto",
             "program": "${workspaceFolder}/src",
             "env": {},
-            // "args": [
-            //     "go run main.go"
-            // ],
+            "args": [
+                "go run main.go"
+            ],
             "dlvLoadConfig": {
                 "followPointers": true,
                 "maxVariableRecurse": 1,

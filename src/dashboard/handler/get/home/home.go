@@ -36,6 +36,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+/*
+This is the routing of the pages.  (handlers are in src/dashboard/routes)
+I made some of the links have param variables because it needs to know
+what table you are referring to when doing a POST.
+*/
 func Home(c echo.Context) error {
 
 	var Stat Stats
@@ -56,7 +61,6 @@ func Home(c echo.Context) error {
 		Createservers()
 	case "production": //*run production
 		Startprod()
-
 	case "stop": //*stop app
 		if runtime.GOOS == "windows" {
 			KillProcessByName("app.exe")
@@ -89,7 +93,6 @@ func Home(c echo.Context) error {
 			AddLibtoFilebyTitle(lib, footer)
 		}
 	case "observe": //*observe app process
-
 		var exe string
 		var pid string
 		var ppid string
@@ -132,8 +135,8 @@ type Data struct {
 	C            []CSS           //css
 	F            []conn.DBFields //table fields
 	S            Stats           //pids for the program
-	tnames       []string
-	Alltabledata []TableData
+	tnames       []string        //table names
+	Alltabledata []TableData     //rest of the tables data for app database editor
 	//Alltabledata string
 }
 
@@ -143,6 +146,7 @@ type Stats struct {
 	Ppid string
 }
 
+// just used to make sure the urls in the db are in memory also.
 func file_db_referentialintegrity(u []Urls) {
 	for _, urls := range u {
 		urlstrim := strings.ReplaceAll(urls.Urls, "/", "")

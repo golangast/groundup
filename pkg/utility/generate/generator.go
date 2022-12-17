@@ -6,15 +6,16 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"reflect"
 	"strings"
 	"text/template"
 
 	//. "github.com/golangast/groundup/internal/dbsql/appdata/getapptables"
-	. "github.com/golangast/groundup/pkg/utility/general"
 	//. "github.com/golangast/groundup/internal/dbsql/conn"
+	. "github.com/golangast/groundup/pkg/utility/general"
 )
 
-//pulls down dependencies + installs echo
+// pulls down dependencies + installs echo
 func Pulldowneverything(p string) {
 	err, out, errout := Shellout("cd app && go mod init " + p + "&& go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
@@ -33,7 +34,7 @@ func Pulldowneverything(p string) {
 	fmt.Println(errouts)
 }
 
-//pulls down dependencies
+// pulls down dependencies
 func Pulldowneverythingbase(p string) {
 	err, out, errout := Shellout("cd app && go mod init " + p + " && go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
@@ -44,7 +45,7 @@ func Pulldowneverythingbase(p string) {
 	fmt.Println(errout)
 }
 
-//pulls down database dependencies
+// pulls down database dependencies
 func PullDowndb(p string) {
 	err, out, errout := Shellout("go get modernc.org/sqlite")
 	if err != nil {
@@ -62,7 +63,7 @@ type Data struct {
 	Fieldtypes []string
 }
 
-//write any template to file
+// write any template to file
 func Writetemplate(temp string, f *os.File, d map[string]string) {
 	dbmb := template.Must(template.New("queue").Parse(temp))
 	err := dbmb.Execute(f, d)
@@ -72,7 +73,7 @@ func Writetemplate(temp string, f *os.File, d map[string]string) {
 	}
 }
 
-//write any template to file
+// write any template to file
 func WritetemplateData(temp string, f *os.File, d Data) {
 	funcMap := template.FuncMap{
 		"Iterate": func(str []string) []string {
@@ -99,7 +100,7 @@ func WritetemplateData(temp string, f *os.File, d Data) {
 	}
 }
 
-//make any folder
+// make any folder
 func Makefolder(p string) {
 	if err := os.MkdirAll(p, os.ModeSticky|os.ModePerm); err != nil {
 		fmt.Println("~~~~could not create"+p, err)
@@ -108,7 +109,7 @@ func Makefolder(p string) {
 	}
 }
 
-//make any file
+// make any file
 func Makefile(p string) *os.File {
 	file, err := os.Create(p)
 	if IsError(err) {
@@ -117,7 +118,7 @@ func Makefile(p string) *os.File {
 	return file
 }
 
-//error checker
+// error checker
 func IsError(err error) bool {
 	if err != nil {
 		fmt.Println(err.Error())
@@ -126,7 +127,7 @@ func IsError(err error) bool {
 	return (err != nil)
 }
 
-//get all url and title from database
+// get all url and title from database
 func GetUrlTitle(prop []string) ([]string, []string) {
 	var title []string
 	var url []string
@@ -153,7 +154,7 @@ func TrimColanright(s string) string {
 	return s
 }
 
-//creates a template file for the app
+// creates a template file for the app
 func Createtemplatefile(f string) {
 	mfile, err := os.Create("templates/" + f)
 	if IsError(err) {
@@ -161,7 +162,7 @@ func Createtemplatefile(f string) {
 	}
 }
 
-//add connections from a database to a file
+// add connections from a database to a file
 func AddDB(path string, Grabdatatemp string) {
 	//create connection to database
 	Writefiles(path, "//#databaseconn", Grabdatatemp)
@@ -177,7 +178,7 @@ func AddDB(path string, Grabdatatemp string) {
 	}
 }
 
-//write to any file
+// write to any file
 func Writefiles(path, o, n string) {
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -193,7 +194,7 @@ func Writefiles(path, o, n string) {
 
 }
 
-//show data on html template file
+// show data on html template file
 func Showdata(path string) {
 	o := "<!-- ### -->"
 
@@ -214,31 +215,31 @@ func Showdata(path string) {
 
 }
 
-// func GetTableNameAppData(icb DBFields) Data {
-// 	//get tables
-// 	//tables := Getapptables()
+func GetTableNameAppData(icb any) Data {
+	//get tables
+	//tables := Getapptables()
 
-// 	//get all table's data
+	//get all table's data
 
-// 	//separate them
-// 	//https://go.dev/play/p/0HrA-jrPZqG
-// 	d := Data{}
-// 	s := reflect.ValueOf(icb).Elem()
-// 	//get table fields, types, and name
-// 	for i := 0; i < s.NumField(); i++ {
-// 		if s.Field(i).Interface() != "" {
-// 			switch s.Type().Field(i).Name[0:1] {
-// 			case "F": //fields
-// 				d.Fields = append(d.Fields, s.Field(i).Interface().(string))
-// 			case "T": //types
-// 				d.Types = append(d.Types, s.Field(i).Interface().(string))
-// 			case "S": //table name
-// 				d.Table = s.Field(i).Interface().(string)
-// 			}
-// 		}
-// 	}
+	//separate them
+	//https://go.dev/play/p/0HrA-jrPZqG
+	d := Data{}
+	s := reflect.ValueOf(icb).Elem()
+	//get table fields, types, and name
+	for i := 0; i < s.NumField(); i++ {
+		if s.Field(i).Interface() != "" {
+			switch s.Type().Field(i).Name[0:1] {
+			case "F": //fields
+				d.Fields = append(d.Fields, s.Field(i).Interface().(string))
+			case "T": //types
+				d.Types = append(d.Types, s.Field(i).Interface().(string))
+			case "S": //table name
+				d.Table = s.Field(i).Interface().(string)
+			}
+		}
+	}
 
-// 	//add them to frontend
-// 	return d
+	//add them to frontend
+	return d
 
-// }
+}

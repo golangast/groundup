@@ -1,8 +1,6 @@
 package main
 
 import (
-	. "app/db"
-	. "app/db/getdata"
 	"context"
 	"fmt"
 	"html/template"
@@ -13,10 +11,12 @@ import (
 	"path/filepath"
 	"strings"
 	_ "time"
+	//#import
 
-	. "app/db/createusersss"
+	. "app/db"
 	. "app/db/creategg"
-//#import
+	. "app/db/createusersss"
+	. "app/db/getdata"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -41,8 +41,9 @@ var err error
 
 func main() {
 	Createusersss()
-	Creategg() 
-//#createdb
+	Creategg()
+
+	//#createdb
 	e := echo.New()
 	t, err := ParseDirectory("templates/")
 	if err != nil {

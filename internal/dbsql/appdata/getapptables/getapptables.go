@@ -13,7 +13,6 @@ type TableData struct {
 }
 
 func Getapptables() []TableData {
-	//TODO get the apps database data
 
 	data, err := AppDbConnection()
 	ErrorCheck(err)
@@ -21,14 +20,9 @@ func Getapptables() []TableData {
 	var (
 		tables []string
 		i      int
-
-		types string
-		name  string
-		// tbl_name string
-		// rootpage string
-		// sql      string
-
-		TDS []TableData
+		types  string
+		name   string
+		TDS    []TableData
 	)
 
 	//SELECT type FROM sqlite_master where type='table'  AND name='urls
@@ -82,12 +76,12 @@ func Getapptables() []TableData {
 
 				fmt.Println(col+" --", v)
 
-				TD.Columns = append(TD.Columns, col)
 				TD.Values = append(TD.Values, fmt.Sprint(v))
 
 			}
 
 		}
+		TD.Columns = columns
 		TD.Name = append(TD.Name, table)
 		if values[0] == nil {
 
