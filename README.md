@@ -90,7 +90,6 @@ My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5
 
 - 📫 How to reach me **zendrulat@gmail.com**
 
-- 📄 Know about my experiences [https://bit.ly/3zY8SNw](https://bit.ly/3zY8SNw)
 
 - ⚡ Fun fact **I enjoy Go too much**
 
