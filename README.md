@@ -25,7 +25,7 @@ To run this project, download it and run the following
 $ cd ../groundup
 $ go run *.go
 ```
-![dasbhoard](./static/dashboard.png)
+![dasbhoard](./static/dash.png)
 ![db](./static/db.png)
 ![db editor](./static/dbedit.png)
 
