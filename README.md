@@ -33,20 +33,39 @@ $ go run *.go
 
 Provide an overview of the directory structure and files, for example:
 ```bash
-├── README.md
-├── app
+── cmd
+├── config
+├── db
+├── internal
+│   ├── dbsql
+│   │   ├── appdata
+│   │   ├── conn
+│   │   ├── createdb
+│   │   ├── datacreation
+│   │   ├── deletetable
+│   │   ├── gettabledata
+│   │   └── pagecreation
+│   └── generate
+│       ├── generators
+│       └── templates
+├── pkg
+│   └── utility
+│       ├── cli
+│       ├── general
+│       ├── generate
+│       └── handler
 ├── src
 │   ├── dashboard
+│   │   ├── handler
+│   │   └── routes
+│   ├── db
+│   ├── extra
+│   ├── funcmaps
+│   ├── img
 │   └── templates
-├── pkg/utility
-    ├── cli
-    ├── general
-    ├── generate
-    └── handler
-├── internal
-    ├── dbsql
-    └── generate
-└── cmd 
+│       ├── database
+│       ├── generate
+│       └── show
 ```
 My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5mUE).
 
