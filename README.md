@@ -69,7 +69,7 @@ Provide an overview of the directory structure and files, for example:
 ├── cmd
 ├── config
 ├── db
-├── internal
+├── internal (services)
 │   ├── dbsql
 │   │   ├── appdata
 │   │   ├── conn
@@ -81,19 +81,19 @@ Provide an overview of the directory structure and files, for example:
 │   └── generate
 │       ├── generators
 │       └── templates
-├── pkg
+├── pkg (utility functions)
 │   └── utility
 │       ├── cli
 │       ├── general
 │       ├── generate
 │       └── handler
-├── src
+├── src (frontend)
 │   ├── dashboard
 │   │   ├── handler
 │   │   └── routes
 │   ├── db
 │   ├── extra
-│   ├── funcmaps
+│   ├── funcmaps (template functions)
 │   ├── img
 │   └── templates
 │       ├── database
