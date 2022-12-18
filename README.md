@@ -38,6 +38,7 @@ This project is a dashboard that generates code for your app.
 * Because everything is in a binary that generates everything you won't need as much help
 * It is paralell with the schedular so the speed will scale with your code and hardware
 * It is all in Go without make files so it is easy to read
+*My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5mUE)
 
 ## Technologies
 Project is created with:
@@ -110,12 +111,10 @@ Provide an overview of the directory structure and files, for example:
 - [ ] Autho
 
 
-My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5mUE)
+
 
 <h1 align="center">Hi 👋, I'm Zachary Endrulat</h1>
 <h3 align="center">I love Go</h3>
-
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=golangast&label=Profile%20views&color=0e75b6&style=flat" alt="golangast" /> </p>
 
 - 🔭 I’m currently working on [groundup](https://github.com/golangast/groundup)
 
@@ -136,18 +135,13 @@ My walkthrough of the project [Youtube](https://www.youtube.com/watch?v=bwti-IZ5
 
 - ⚡ Fun fact **I enjoy Go too much**
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://medium.com/@zachary endrulat" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/medium.svg" alt="@zachary endrulat" height="30" width="40" /></a>
-<a href="https://www.youtube.com/c/https://www.youtube.com/channel/uchjlaqtcdln_bjux-1_cpmg" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="https://www.youtube.com/channel/uchjlaqtcdln_bjux-1_cpmg" height="30" width="40" /></a>
-</p>
-
-
+ [Resources](https://docs.google.com/document/d/1Zb9GCWPKeEJ4Dyn2TkT-O3wJ8AFc-IMxZzTugNCjr-8/edit?usp=sharing)
+ 
 <h3 align="left">Support:</h3>
 <p><a href="https://ko-fi.com/zacharyendrulat98451"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="zacharyendrulat98451" /></a></p><br><br>
 
- [Resources](https://docs.google.com/document/d/1Zb9GCWPKeEJ4Dyn2TkT-O3wJ8AFc-IMxZzTugNCjr-8/edit?usp=sharing)
-[Youtube Channel](https://www.youtube.com/channel/UCHJlAqTCdlN_bjUx-1_CPmg)
+
+
 
 ## Special thanks
 * [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)
