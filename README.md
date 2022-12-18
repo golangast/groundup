@@ -49,12 +49,20 @@ Project is created with:
 * [sprig](https://github.com/Masterminds/sprig) - template functions
 
 ## Setup
-To run this project, download it and run the following
+To run this project for development, download it and run the following
 
 ```
 $ cd ../groundup
 $ go run *.go
 ```
+If you just want the binaries.
+* MacOS binary - [binary](https://github.com/golangast/groundup/raw/main/src/bin/app-amd64-darwin)
+* linux binary - [binary](https://github.com/golangast/groundup/raw/main/src/bin/app-amd64-linux)
+* windows binary - [binary](https://github.com/golangast/groundup/raw/main/src/bin/app-amd64.exe)
+
+To run the binary in linux go into the folder of the binary and open a terminal and run chmod u+x ./testapi
+
+To run the binary in windows just double click it.
  <h1 align="center">CMS</h1>
  <p align="center">
 <img src="./static/dash.png" alt="Alt text" title="Optional title">
