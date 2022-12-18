@@ -40,10 +40,10 @@
             "request": "launch",
             // "debugAdapter": "dlv-dap",
             "mode": "auto",
-            "program": "${workspaceFolder}/cli.go",
+            "program": "${workspaceFolder}/src",
             "env": {},
             "args": [
-                "db"
+                "./src"
             ],
             "dlvLoadConfig": {
                 "followPointers": true,

@@ -1,9 +1,11 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"html/template"
 	"io"
+	"io/fs"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -34,25 +36,32 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+//go:embed templates
+var tmplMainGo embed.FS
+
 // dashboard server runs
 func main() {
 	//generate tables
 	CreateDB()
 	e := echo.New()
-	t, err := ParseDirectoryString("./templates/")
+
+	files, err := getAllFilenames(&tmplMainGo)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Print(err)
 	}
 
 	renderer := &TemplateRenderer{
 		templates: template.Must(template.New("t").Funcs(template.FuncMap{
 			"IndexCount":     IndexCount,
 			"RemoveBrackets": RemoveBrackets,
-		}).Funcs(sprig.FuncMap()).ParseFiles(t...)),
+		}).Funcs(sprig.FuncMap()).ParseFS(tmplMainGo, files...)),
 	}
 
 	e.Renderer = renderer
-
+	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{
+		Filesystem: getFileSystem(),
+		HTML5:      true,
+	}))
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
@@ -71,15 +80,18 @@ func main() {
 		HSTSMaxAge:            3600,
 		ContentSecurityPolicy: "",
 	}))
+
 	e.Use(middleware.BodyLimit("3M"))
 	e.IPExtractor = echo.ExtractIPDirect()
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
 		Level: 5,
 	}))
+
 	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(30)))
 	e.Static("/static", "static")
 	e.Logger.Fatal(e.Start(":5002"))
 }
+
 func GetAllFilePathsInDirectory(dirpath string) ([]string, error) {
 	var paths []string
 	err := filepath.Walk(dirpath, func(path string, info os.FileInfo, err error) error {
@@ -98,6 +110,16 @@ func GetAllFilePathsInDirectory(dirpath string) ([]string, error) {
 	return paths, nil
 }
 
+func getFileSystem() http.FileSystem {
+
+	log.Print("using embed mode")
+	fsys, err := fs.Sub(tmplMainGo, "templates")
+	if err != nil {
+		log.Print(err)
+	}
+
+	return http.FS(fsys)
+}
 func ParseDirectory(dirpath string) (*template.Template, error) {
 	paths, err := GetAllFilePathsInDirectory(dirpath)
 	if err != nil {
@@ -111,4 +133,21 @@ func ParseDirectoryString(dirpath string) ([]string, error) {
 		return nil, err
 	}
 	return paths, nil
+}
+
+// https://gist.github.com/clarkmcc/1fdab4472283bb68464d066d6b4169bc
+func getAllFilenames(efs *embed.FS) (files []string, err error) {
+	if err := fs.WalkDir(efs, ".", func(path string, d fs.DirEntry, err error) error {
+		if d.IsDir() {
+			return nil
+		}
+
+		files = append(files, path)
+
+		return nil
+	}); err != nil {
+		return nil, err
+	}
+
+	return files, nil
 }

@@ -69,8 +69,6 @@ $ go run *.go
 </p>
 
 ## Repository overview
-
-Provide an overview of the directory structure and files, for example:
 ```bash
 ├── cmd
 ├── config
@@ -109,7 +107,7 @@ Provide an overview of the directory structure and files, for example:
 
 ## Future wish list being worked on
 
-- [P] Transfer dashboard db to app db (in progress)
+- [ ] Transfer dashboard db to app db (in progress)
 - [ ] Delete columns in app db
 - [ ] List of data avaiable to templates
 - [ ] Widgets
@@ -138,10 +136,11 @@ Provide an overview of the directory structure and files, for example:
 
 - 📫 How to reach me **zendrulat@gmail.com**
 
+- Resources that I use [Resources](https://docs.google.com/document/d/1Zb9GCWPKeEJ4Dyn2TkT-O3wJ8AFc-IMxZzTugNCjr-8/edit?usp=sharing)
 
 - ⚡ Fun fact **I enjoy Go too much**
 
- [Resources](https://docs.google.com/document/d/1Zb9GCWPKeEJ4Dyn2TkT-O3wJ8AFc-IMxZzTugNCjr-8/edit?usp=sharing)
+ 
  
 <h3 align="left">Support:</h3>
 <p><a href="https://ko-fi.com/zacharyendrulat98451"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="zacharyendrulat98451" /></a></p><br><br>
