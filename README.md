@@ -55,12 +55,18 @@ To run this project, download it and run the following
 $ cd ../groundup
 $ go run *.go
 ```
-* <h1 align="center">CMS</h1>
-*![dasbhoard](./static/dash.png)
-* <h1 align="center">Dashboard DB</h1>
-*![db](./static/db.png)
-* <h1 align="center">App DB</h1>
-*![db editor](./static/dbedit.png)
+ <h1 align="center">CMS</h1>
+ <p align="center">
+<img src="./static/dash.png" alt="Alt text" title="Optional title">
+</p>
+<h1 align="center">Dashboard DB</h1>
+ <p align="center">
+<img src="./static/db.png" alt="Alt text" title="Optional title">
+</p>
+<h1 align="center">App DB</h1>
+ <p align="center">
+<img src="./static/dbedit.png" alt="Alt text" title="Optional title">
+</p>
 
 ## Repository overview
 
@@ -103,7 +109,7 @@ Provide an overview of the directory structure and files, for example:
 
 ## Future wish list being worked on
 
-- [ ] Transfer dashboard db to app db (in progress)
+- [P] Transfer dashboard db to app db (in progress)
 - [ ] Delete columns in app db
 - [ ] List of data avaiable to templates
 - [ ] Widgets
@@ -130,7 +136,7 @@ Provide an overview of the directory structure and files, for example:
 
 - 💬 Ask me about **Golang**
 
-- 📫 How to reach me https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white **zendrulat@gmail.com**
+- 📫 How to reach me **zendrulat@gmail.com**
 
 
 - ⚡ Fun fact **I enjoy Go too much**
