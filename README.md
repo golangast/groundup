@@ -60,7 +60,7 @@ If you just want the binaries.
 * linux binary - [binary](https://github.com/golangast/groundup/raw/main/src/bin/app-amd64-linux)
 * windows binary - [binary](https://github.com/golangast/groundup/raw/main/src/bin/app-amd64.exe)
 
-To run the binary in linux go into the folder of the binary and open a terminal and run chmod u+x ./testapi
+To run the binary in linux go into the folder of the binary and open a terminal and run chmod u+x ./app-amd64-linux
 
 To run the binary in windows just double click it.
  <h1 align="center">CMS</h1>
