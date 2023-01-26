@@ -1,4 +1,4 @@
-package generator
+package gettabledata
 
 import (
 	"bytes"
@@ -12,6 +12,7 @@ import (
 
 	//. "github.com/golangast/groundup/internal/dbsql/appdata/getapptables"
 	//. "github.com/golangast/groundup/internal/dbsql/conn"
+	"github.com/davecgh/go-spew/spew"
 	. "github.com/golangast/groundup/pkg/utility/general"
 )
 
@@ -75,6 +76,7 @@ func Writetemplate(temp string, f *os.File, d map[string]string) {
 
 // write any template to file
 func WritetemplateData(temp string, f *os.File, d Data) {
+	spew.Dump(d)
 	funcMap := template.FuncMap{
 		"Iterate": func(str []string) []string {
 			ls := len(str)
@@ -82,10 +84,13 @@ func WritetemplateData(temp string, f *os.File, d Data) {
 			var Items []string
 			for i = 0; i < (ls); i++ {
 				if i+1 == ls {
-					//Items = append(Items, str[i][0:len(str[i])-1])
 					Items = append(Items, str[i]+" NOT NULL ")
 				} else {
-					Items = append(Items, str[i]+" NOT NULL, ")
+					if strings.Contains(str[i], " id ") {
+						Items = append(Items, strings.Replace(str[i], "int", "INTEGER", 1)+" NOT NULL primary KEY AUTOINCREMENT, ")
+					} else {
+						Items = append(Items, str[i]+" NOT NULL, ")
+					}
 				}
 			}
 

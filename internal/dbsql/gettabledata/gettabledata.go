@@ -2,6 +2,7 @@ package gettabledata
 
 import (
 	"fmt"
+	"reflect"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
@@ -126,4 +127,31 @@ func GetOnetabledata(p string) DBFields {
 	defer data.Close()
 	return u
 
+}
+func GetTableAppData(icb DBFields) TableDatafields {
+	dd := TableDatafields{}
+	fmt.Print(icb)
+	for i := 0; i < reflect.ValueOf(&icb).Elem().NumField(); i++ {
+		//check if filed is empty
+		if reflect.ValueOf(&icb).Elem().Field(i).IsValid() {
+			//check the first letter of the field
+			switch reflect.ValueOf(&icb).Elem().Type().Field(i).Name[0:1] {
+			case "F": //fields
+				dd.Fields = append(dd.Fields, fmt.Sprint(reflect.ValueOf(&icb).Elem().Field(i).Interface()))
+			case "T": //types
+				dd.Types = append(dd.Types, fmt.Sprint(reflect.ValueOf(&icb).Elem().Field(i).Interface()))
+			case "S": //table name
+				dd.Table = fmt.Sprint(reflect.ValueOf(&icb).Elem().Field(i).Interface())
+			}
+		}
+	}
+	return dd
+
+}
+
+type TableDatafields struct {
+	Table      string
+	Fields     []string
+	Types      []string
+	Fieldtypes []string
 }

@@ -11,12 +11,15 @@ import (
 	"path/filepath"
 	"strings"
 	_ "time"
-	//#import
+
+	. "app/db/createuser"
+//#import
 
 	. "app/db"
 	. "app/db/creategg"
 	. "app/db/createusersss"
 	. "app/db/getdata"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -43,7 +46,8 @@ func main() {
 	Createusersss()
 	Creategg()
 
-	//#createdb
+	Createuser() 
+//#createdb
 	e := echo.New()
 	t, err := ParseDirectory("templates/")
 	if err != nil {

@@ -302,9 +302,10 @@ func FindText(p, str string) bool {
 	var text = make([]byte, 1024)
 	for {
 		_, err = file.Read(text)
-
 		if strings.Contains(string(text), str) {
+			fmt.Print("found text ", str)
 			return true
+
 		}
 		// Break if finally arrived at end of file
 		if err == io.EOF {
@@ -511,6 +512,7 @@ func ScanWords(f string, o string, n string) {
 	}
 }
 
+//f is for file, o is for old text, n is for new text
 func UpdateText(f string, o string, n string) {
 	fmt.Println(f, o, n)
 	input, err := ioutil.ReadFile(f)

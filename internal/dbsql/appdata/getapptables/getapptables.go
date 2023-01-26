@@ -43,7 +43,8 @@ func Getapptables() []TableData {
 		tables = append(tables, name)
 
 	}
-
+	//after table names have been appended
+	//grab their data.
 	for _, table := range tables {
 		TD := TableData{}
 		rows, _ := data.Query("SELECT * FROM " + table + ";")
@@ -51,20 +52,18 @@ func Getapptables() []TableData {
 		count := len(columns)
 		values := make([]any, count)
 		valuePtr := make([]any, count)
-
+		var v any
 		for rows.Next() {
-
+			//scan needs any type so turn columns into []any
 			for i, _ := range columns {
 				valuePtr[i] = &values[i]
 			}
 
 			rows.Scan(valuePtr...)
+			//go through the columns
+			for a, col := range columns {
 
-			for i, col := range columns {
-
-				var v any
-
-				val := values[i]
+				val := values[a]
 
 				b, ok := val.([]byte)
 
@@ -75,7 +74,7 @@ func Getapptables() []TableData {
 				}
 
 				fmt.Println(col+" --", v)
-
+				//put them into TD data
 				TD.Values = append(TD.Values, fmt.Sprint(v))
 
 			}

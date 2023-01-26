@@ -15,7 +15,7 @@ if err != nil {
 	fmt.Println(err)
 }
 
-statementsavedata, err := data.Exec("CREATE TABLE IF NOT EXISTS {{.Table}} (id integer NOT NULL primary KEY AUTOINCREMENT, {{- range $val := Iterate .Fieldtypes }} {{ $val }} {{- end }}); ")
+statementsavedata, err := data.Exec("CREATE TABLE IF NOT EXISTS {{.Table}} ({{- range $val := Iterate .Fieldtypes }} {{ $val }} {{- end }}); ")
 if err != nil{
 	fmt.Println(err)
 	}
