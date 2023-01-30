@@ -36,20 +36,21 @@ func AppendStringToFiles(path, text string) error {
 //creates the config folder/file
 func CreateConfig() {
 
-	if err := os.MkdirAll("config", os.ModeSticky|os.ModePerm); err != nil {
+	if err := os.MkdirAll("../config", os.ModeSticky|os.ModePerm); err != nil {
 		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
 	} else {
 		fmt.Println("Whoops, could not create directory(ies) because", err)
 	}
 
-	mfile, err := os.Create("config/persis.yaml")
+	mfile, err := os.Create("../config/persis.yaml")
 	if isError(err) {
 		fmt.Println("error -", err, mfile)
 	}
+	//use the ../ to make sure it gets out of /src
 	var Configbase = `
 app:
  app: "app.go"
- path: "app"
+ path: "../app"
  file: "home.html"
  script: "jquery"`
 	/* write to the files */
@@ -64,13 +65,13 @@ app:
 
 func DBcreate() {
 
-	if err := os.MkdirAll("databaseconfig", os.ModeSticky|os.ModePerm); err != nil {
+	if err := os.MkdirAll("../databaseconfig", os.ModeSticky|os.ModePerm); err != nil {
 		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
 	} else {
 		fmt.Println("Whoops, could not create directory(ies) because", err)
 	}
 
-	mfile, err := os.Create("databaseconfig/dbpersis.yaml")
+	mfile, err := os.Create("../databaseconfig/dbpersis.yaml")
 	if isError(err) {
 		fmt.Println("error -", err, mfile)
 	}
@@ -93,8 +94,8 @@ func Getfields() string {
 	viper.SetConfigName("dbpersis") // config file name without extension
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
-	viper.AddConfigPath("./databaseconfig/") // config file path
-	viper.AutomaticEnv()                     // read value ENV variable
+	viper.AddConfigPath("../databaseconfig/") // config file path
+	viper.AutomaticEnv()                      // read value ENV variable
 	err := viper.ReadInConfig()
 	if err != nil {
 		fmt.Println("fatal error config file: default \n", err)

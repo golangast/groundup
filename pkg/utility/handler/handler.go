@@ -366,22 +366,61 @@ func ProcessID(name string) (string, uint32, uint32, error) {
 }
 
 func Getpidstring(name string) (string, string, string, error) {
+
 	list, err := ps.Processes()
 	if err != nil {
 		panic(err)
 	}
-	for _, p := range list {
-		log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
+	//check for windows for the .exe
+	if runtime.GOOS == "windows" {
+		nameos := name + ".exe"
+		for _, p := range list {
+			//log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
 
-		if p.Executable() == name {
-			name := p.Executable()
-			pid := strconv.Itoa(p.Pid())
-			ppid := strconv.Itoa(p.PPid())
-			return name, pid, ppid, err
+			if p.Executable() == nameos {
+				name := p.Executable()
+				pid := strconv.Itoa(p.Pid())
+				ppid := strconv.Itoa(p.PPid())
+				return name, pid, ppid, err
+			}
 		}
-	}
-	return "", "", "", err
+		return "", "", "", err
+		//otherwise its linux
+	} else {
+		for _, p := range list {
+			//log.Printf("Process %s with PID %d and PPID %d", p.Executable(), p.Pid(), p.PPid())
 
+			if p.Executable() == name {
+				name := p.Executable()
+				pid := strconv.Itoa(p.Pid())
+				ppid := strconv.Itoa(p.PPid())
+				return name, pid, ppid, err
+			}
+		}
+		return "", "", "", err
+
+	}
+
+}
+
+func GetFiles(dir string) (files []string, err error) {
+	var fd *os.File
+	fd, err = os.Open(dir)
+	if err != nil {
+		return nil, err
+	}
+	defer fd.Close()
+	names, err := fd.Readdirnames(0)
+	if err != nil {
+		return nil, err
+	}
+	for _, name := range names {
+
+		fmt.Print(name)
+
+	}
+
+	return names, err
 }
 
 // func Observe() (string, string, string, string, string, string, string, string, string, string, string) {

@@ -18,7 +18,7 @@ import (
 
 // pulls down dependencies + installs echo
 func Pulldowneverything(p string) {
-	err, out, errout := Shellout("cd app && go mod init " + p + "&& go mod tidy && go mod vendor && go install && go build")
+	err, out, errout := Shellout("cd .. && cd app && go mod init " + p + "&& go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -26,7 +26,7 @@ func Pulldowneverything(p string) {
 	fmt.Println("--- errs ---")
 	fmt.Println(errout)
 
-	err, outs, errouts := Shellout("cd app && go install github.com/labstack/echo/v4 && go install github.com/labstack/echo/v4/middleware && go get github.com/labstack/gommon/log && go mod tidy && go mod vendor && go install && go build")
+	err, outs, errouts := Shellout("cd .. && cd app && go install github.com/labstack/echo/v4 && go install github.com/labstack/echo/v4/middleware && go get github.com/labstack/gommon/log && go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -37,7 +37,7 @@ func Pulldowneverything(p string) {
 
 // pulls down dependencies
 func Pulldowneverythingbase(p string) {
-	err, out, errout := Shellout("cd app && go mod init " + p + " && go mod tidy && go mod vendor && go install && go build")
+	err, out, errout := Shellout("cd .. && cd app && go mod init " + p + " && go mod tidy && go mod vendor && go install && go build")
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}
@@ -169,17 +169,18 @@ func Createtemplatefile(f string) {
 
 // add connections from a database to a file
 func AddDB(path string, Grabdatatemp string) {
+
 	//create connection to database
 	Writefiles(path, "//#databaseconn", Grabdatatemp)
 	//import the database file
 
-	b := FindText("app/app.go", `."app/db"`)
-	if b {
+	bbb := FindText("../app/app.go", `."app/db"`)
+	if !bbb {
 		Writefiles(path, "//#import", `."app/db"`+"\n"+"//#import")
 	}
-	bb := FindText("app/app.go", `."app/db/getdata"`)
-	if bb {
-		Writefiles(path, "//#import", `."app/db/getdata"`+"\n"+"//#import")
+	bbbb := FindText("../app/app.go", `."app/getdata"`)
+	if !bbbb {
+		Writefiles(path, "//#import", `."app/getdata"`+"\n"+"//#import")
 	}
 }
 

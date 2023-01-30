@@ -2,7 +2,6 @@ package addurltitle
 
 import (
 	"context"
-	"log"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
@@ -23,19 +22,19 @@ func AddUrlTitle(u Urls) {
 	ErrorCheck(err)
 
 	//actually make the execution of the query
-	res, err := stmt.Exec(u.Urls, u.Titles)
+	_, err = stmt.Exec(u.Urls, u.Titles)
 	ErrorCheck(err)
 
 	//get last id to double check
-	lastId, err := res.LastInsertId()
-	ErrorCheck(err)
+	// lastId, err := res.LastInsertId()
+	// ErrorCheck(err)
 
-	//get rows affected to double check
-	rowCnt, err := res.RowsAffected()
-	ErrorCheck(err)
+	// //get rows affected to double check
+	// rowCnt, err := res.RowsAffected()
+	// ErrorCheck(err)
 
-	//print out what you actually did
-	log.Printf("lastid = %d, affected = %d, titles = %d\n", lastId, rowCnt, u.Urls)
+	// //print out what you actually did
+	// log.Printf("lastid = %d, affected = %d, titles = %d\n", lastId, rowCnt, u.Urls)
 	defer data.Close()
 
 }

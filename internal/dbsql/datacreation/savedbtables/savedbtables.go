@@ -56,19 +56,19 @@ func SavedbtableToAppDB(dbf *DBFields) {
 	ErrorCheck(err)
 
 	//actually make the execution of the query
-	res, err := stmt.Exec(dbf.Stable, dbf.F0, dbf.F1, dbf.F2, dbf.F3, dbf.F4, dbf.F5, dbf.F6, dbf.F7, dbf.F8, dbf.F9, dbf.F10, dbf.F11, dbf.T0, dbf.T1, dbf.T2, dbf.T3, dbf.T4, dbf.T5, dbf.T6, dbf.T7, dbf.T8, dbf.T9, dbf.T10, dbf.T11)
+	_, err = stmt.Exec(dbf.Stable, dbf.F0, dbf.F1, dbf.F2, dbf.F3, dbf.F4, dbf.F5, dbf.F6, dbf.F7, dbf.F8, dbf.F9, dbf.F10, dbf.F11, dbf.T0, dbf.T1, dbf.T2, dbf.T3, dbf.T4, dbf.T5, dbf.T6, dbf.T7, dbf.T8, dbf.T9, dbf.T10, dbf.T11)
 	ErrorCheck(err)
 
 	//get last id to double check
-	lastId, err := res.LastInsertId()
-	ErrorCheck(err)
+	// lastId, err := res.LastInsertId()
+	// ErrorCheck(err)
 
-	//get rows affected to double check
-	rowCnt, err := res.RowsAffected()
-	ErrorCheck(err)
+	// //get rows affected to double check
+	// rowCnt, err := res.RowsAffected()
+	// ErrorCheck(err)
 
 	//print out what you actually did
-	log.Printf("lastid = %d, affected = %d, tables = %s\n", lastId, rowCnt, dbf.Stable)
+	//log.Printf("lastid = %d, affected = %d, tables = %s\n", lastId, rowCnt, dbf.Stable)
 	defer data.Close()
 
 }

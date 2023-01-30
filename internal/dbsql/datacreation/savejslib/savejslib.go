@@ -2,7 +2,6 @@ package savejslib
 
 import (
 	"context"
-	"log"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
@@ -21,19 +20,19 @@ func Addsavedata(lib, libtag string) {
 	ErrorCheck(err)
 
 	//actually make the execution of the query
-	res, err := stmt.Exec(lib, libtag)
+	_, err = stmt.Exec(lib, libtag)
 	ErrorCheck(err)
 
 	//get last id to double check
-	lastId, err := res.LastInsertId()
-	ErrorCheck(err)
+	// lastId, err := res.LastInsertId()
+	// ErrorCheck(err)
 
-	//get rows affected to double check
-	rowCnt, err := res.RowsAffected()
-	ErrorCheck(err)
+	// //get rows affected to double check
+	// rowCnt, err := res.RowsAffected()
+	// ErrorCheck(err)
 
 	//print out what you actually did
-	log.Printf("lastid = %d, affected = %d, titles = %s\n", lastId, rowCnt, lib)
+	//log.Printf("lastid = %d, affected = %d, titles = %s\n", lastId, rowCnt, lib)
 	defer data.Close()
 
 }

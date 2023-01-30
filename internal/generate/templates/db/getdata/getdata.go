@@ -86,5 +86,5 @@ var Grabdatatemp = `db, err := DbConnection()
 		fmt.Println(err)
 	}
 
-	data:=Getalldata(db)
+	data=Getalldata(db)
 	` + "\n"

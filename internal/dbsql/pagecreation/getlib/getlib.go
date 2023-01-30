@@ -16,7 +16,7 @@ func GetLib(Libtag string) string {
 	var (
 		lib string
 	)
-	i := 0 //used to get how many scans
+	//i := 0 //used to get how many scans
 
 	rows, err := data.Query("SELECT lib FROM library WHERE libtag = ?", Libtag)
 
@@ -31,9 +31,9 @@ func GetLib(Libtag string) string {
 		if err != nil {
 			log.Fatal(err)
 		}
-		i++
-		fmt.Println("scan ", i)
-		fmt.Printf("%v\n", lib)
+		// i++
+		// fmt.Println("scan ", i)
+		// fmt.Printf("%v\n", lib)
 	} else {
 
 		fmt.Println("No lib found")
@@ -57,7 +57,7 @@ func GetAllLib() []Library {
 		tag       string
 		libraries []Library
 	)
-	i := 0 //used to get how many scans
+	//i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from library")
@@ -68,8 +68,8 @@ func GetAllLib() []Library {
 		err := rows.Scan(&id, &lib, &tag)
 		ErrorCheck(err)
 
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 		L := Library{ID: id, Lib: lib, Tag: tag}
 		libraries = append(libraries, L)
 

@@ -1,8 +1,6 @@
 package getapptabledata
 
 import (
-	"fmt"
-
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
@@ -16,7 +14,7 @@ func Getapptabledata() []string {
 		tablenames []string
 		stable     string
 	)
-	i := 0 //used to get how many scans
+	//i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from savedtable")
@@ -27,8 +25,8 @@ func Getapptabledata() []string {
 		err := rows.Scan(&stable)
 		ErrorCheck(err)
 
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		u := DBFields{Stable: stable}

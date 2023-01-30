@@ -174,8 +174,8 @@
   <table class="table table-sm" style="width: 44%; float: left;">
     <thead>
       <tr>
-        <th scope=" col">Title</th>
-        <th scope=" col">Name</th>
+        <th scope="col">Title</th>
+        <th scope="col">Name</th>
         <th scope="col">Pid</th>
         <th scope="col">ParentPid</th>
         <th scope="col">Start</th>
@@ -201,13 +201,56 @@
         <td> <a class="badge bg-success" href="/production">Start</a></td>
         <td><a class="badge bg-danger" href="/stop">Stop</a></td>
       </tr>
-    </tbody>
+      <tr>
+        <th scope="row">Files</th>
+        <td>
+            <ul class="list-group">
+              {{range $F := .S.Files}}
+              {{if contains ".go" $F}}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">{{$F}}</div>
+                </div>
+                <span class="badge bg-info text-dark"><i class="far fa-file-code"></i></span>
+              </li>
 
+              {{else}}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">{{$F}}</div>
+                </div>
+                <span class="badge bg-dark"><i class="far fa-folder"></i></span>
+              </li>
+
+        
+              {{end}}
+              {{end}}
+            </ul>
+
+            
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Tables</th>
+        <td>
+            <ul class="list-group">
+              {{if $.Alltabledata}}
+              {{range $i , $FF := .Alltabledata}}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Table {{RemoveBrackets $FF.Name}} </div>
+                </div>
+                <span class="badge bg-info text-dark"><i class="fas fa-database"></i></span>
+              </li>
+              {{end}}
+              {{end}}
+            </ul>
+        </td>
+      </tr>
+    </tbody>
   </table>
   {{end}}
   <!-- https://go.dev/play/p/_N963_qF5v6 -->
 </div>
-
-
 {{end}}
 

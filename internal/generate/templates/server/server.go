@@ -6,7 +6,6 @@ package main
 
 	import (
 		"fmt"
-		"context"
 		"html/template"
 		"io"
 		"net/http"
@@ -14,6 +13,7 @@ package main
 		"os"
 		"path/filepath"
 		_"time"
+		"context"
 		"strings"
 		//#import
 		"github.com/labstack/echo/v4"
@@ -125,6 +125,7 @@ func Home(c echo.Context) error {
 }
 
 func List(c echo.Context) error {
+	var data []Data
 	routes := c.Param("routes")
 	nospaceroutes := strings.ReplaceAll(routes, " ", "")
 	nospaceroutesnoslash := strings.ReplaceAll(nospaceroutes, "/", "")

@@ -13,7 +13,7 @@ if err != nil {
 	fmt.Println(err)
 }
 
-statementsavedata, err := data.Exec("CREATE TABLE IF NOT EXISTS user (  id INTEGER  NOT NULL primary KEY AUTOINCREMENT,   name string  NOT NULL,   age int  NOT NULL ); ")
+statementsavedata, err := data.Exec("CREATE TABLE IF NOT EXISTS user (  name string  NOT NULL,   age int  NOT NULL ); ")
 if err != nil{
 	fmt.Println(err)
 	}

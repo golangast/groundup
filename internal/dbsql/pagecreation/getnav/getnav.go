@@ -1,8 +1,6 @@
 package getnav
 
 import (
-	"fmt"
-
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
@@ -34,8 +32,8 @@ func Getnav() []Nav {
 		err := rows.Scan(&id, &a, &b, &c, &d, &e, &f, &g, &h, &i, &j)
 		ErrorCheck(err)
 
-		ii++
-		fmt.Println("scan ", i)
+		// ii++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		n := Nav{ID: id, A: a, B: b, C: c, D: d, E: e, F: f, G: g, H: h, I: i, J: j}

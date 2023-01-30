@@ -31,19 +31,20 @@ func Createservers() {
 	fmt.Println(statementurls, statementlibrary, statementcss)
 
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./config") // config file path
-	viper.SetConfigName("persis")   // config file name without extension
-	viper.AutomaticEnv()            // read value ENV variable
+	viper.AddConfigPath("../config") // config file path
+	viper.SetConfigName("persis")    // config file name without extension
+	viper.AutomaticEnv()             // read value ENV variable
 	err = viper.ReadInConfig()
 	if err != nil {
 		fmt.Println("fatal error config file: default \n", err)
 		os.Exit(1)
 	}
-	conf := viper.ConfigFileUsed()
-	fmt.Println(conf)
+	// conf := viper.ConfigFileUsed()
+	// fmt.Println(conf)
 	// Declare var
-	g := viper.GetString("app.app")
-	p := viper.GetString("app.path")
+
+	g := viper.GetString("app.app")  //app name
+	p := viper.GetString("app.path") //app path
 	f := viper.GetString("app.file")
 	s := viper.GetString("app.script")
 	sp := fmt.Sprintf("%v", p)
@@ -80,11 +81,6 @@ func GenServer(p string, f string, s string, g string) {
 	/* create folders*/
 	Makefolder(p)
 	Makefolder(p + "/templates")
-	Makefolder(p + "db")
-	// Makefolder(p + "dbsql")
-	// Makefolder(p + "dbsql/nav")
-
-	// Makefolder(p + "/templates/nav")
 
 	/* create files*/
 	bfile := Makefile(p + "/templates/home.html")
@@ -92,14 +88,9 @@ func GenServer(p string, f string, s string, g string) {
 	ffile := Makefile(p + "/templates/footer.html")
 	sfile := Makefile(p + "/" + g)
 	dbfile := Makefile(p + "db/database.db")
-	// navfile := Makefile(p + "dbsql/nav/nav.go")
-	// fnav := Makefile("templates/nav/nav.html")
 
 	/* write to files*/
 	Writetemplate(Servertemp, sfile, nil)
-	/*fix */
-	// Writetemplate(Navtemp, navfile, nil)
-	// Writetemplate(Navtemp, fnav, nil)
 	Writetemplate(Headertemp, hfile, m)
 	Writetemplate(Footertemp, hfile, mf)
 	Writetemplate(Bodytemp, bfile, mb)
@@ -111,5 +102,4 @@ func GenServer(p string, f string, s string, g string) {
 	ffile.Close()
 	sfile.Close()
 	dbfile.Close()
-	// fnav.Close()
 }

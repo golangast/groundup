@@ -73,7 +73,7 @@ func Home(c echo.Context) error {
 	case "routesconfig": //*create config
 		Make("databaseconfig")
 	case "db": //*generate database tables
-		Gendatabase("../app/db")
+		Gendatabase("../app")
 	case "show": //*show routes
 	case "delete": //*delete routes
 		titletrim := strings.ReplaceAll(title, " ", "")
@@ -93,18 +93,13 @@ func Home(c echo.Context) error {
 			AddLibtoFilebyTitle(lib, footer)
 		}
 	case "observe": //*observe app process
-		var exe string
-		var pid string
-		var ppid string
-		if runtime.GOOS == "windows" {
-			exe, pid, ppid, err = Getpidstring("app.exe")
-			ErrorCheck(err)
-			Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid}
-		} else {
-			exe, pid, ppid, err = Getpidstring("app")
-			ErrorCheck(err)
-			Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid}
-		}
+
+		exe, pid, ppid, err := Getpidstring("app")
+		ErrorCheck(err)
+		files, err := GetFiles("../app")
+		ErrorCheck(err)
+		Stat = Stats{Exe: exe, Pid: pid, Ppid: ppid, Files: files}
+
 	case "removetable": //*remove table process
 		err := Deletetable(table)
 		if err != nil {
@@ -141,9 +136,10 @@ type Data struct {
 }
 
 type Stats struct {
-	Exe  string
-	Pid  string
-	Ppid string
+	Exe   string
+	Pid   string
+	Ppid  string
+	Files []string
 }
 
 // just used to make sure the urls in the db are in memory also.

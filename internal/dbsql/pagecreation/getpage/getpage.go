@@ -1,7 +1,6 @@
 package getpage
 
 import (
-	"fmt"
 	"log"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
@@ -19,7 +18,7 @@ func GetPage() ([]string, []string) {
 		Urls   []string
 		Titles []string
 	)
-	i := 0 //used to get how many scans
+	//i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from urls")
@@ -30,8 +29,8 @@ func GetPage() ([]string, []string) {
 		err := rows.Scan(&url, &title)
 		ErrorCheck(err)
 
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		Urls = append(Urls, url)
@@ -54,7 +53,7 @@ func GetPageFile(title string) string {
 	var (
 		filename string
 	)
-	i := 0 //used to get how many scans
+	//i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select filename from urls where titles ==" + title + ";")
@@ -64,8 +63,8 @@ func GetPageFile(title string) string {
 	for rows.Next() {
 		err := rows.Scan(&filename)
 		ErrorCheck(err)
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		defer rows.Close()
@@ -85,7 +84,7 @@ func GetPagetitle(urls string) string {
 	var (
 		titles string
 	)
-	i := 0 //used to get how many scans
+	// i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("SELECT titles FROM urls WHERE urls = ?", urls)
@@ -97,8 +96,8 @@ func GetPagetitle(urls string) string {
 	for rows.Next() {
 		err := rows.Scan(&titles)
 		ErrorCheck(err)
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		defer rows.Close()

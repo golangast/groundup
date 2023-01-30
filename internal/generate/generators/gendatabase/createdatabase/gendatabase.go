@@ -19,10 +19,11 @@ func Gendatabase(p string) {
 	//make file/database
 	Makefile(p + "/database.db")
 	gdatafile := Makefile(p + "/getdata/getdata.go")
-	dbfile := Makefile(p + "/db.go")
+	dbfile := Makefile(p + "/db/db.go")
 
 	//add database connections to server file
-	AddDB("app/app.go", Grabdatatemp)
+
+	AddDB(p+"/app.go", Grabdatatemp)
 
 	//show data on html template file
 	//Showdata("app/templates/newpage.html")
@@ -34,7 +35,7 @@ func Gendatabase(p string) {
 	//pull down dependencies
 	PullDowndb("app")
 	Pulldowneverythingbase("app")
-	err, out, errout := Shellout(`cd app && go mod tidy && go mod vendor`)
+	err, out, errout := Shellout(`cd .. && cd app && go mod tidy && go mod vendor`)
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}

@@ -1,8 +1,6 @@
 package geturls
 
 import (
-	"fmt"
-
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
@@ -23,7 +21,7 @@ func GetUrls() []Urls {
 		filename string
 		urlss    []Urls //used to store all users
 	)
-	i := 0 //used to get how many scans
+	//i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from urls")
@@ -34,8 +32,8 @@ func GetUrls() []Urls {
 		err := rows.Scan(&id, &urls, &titles, &lib, &libtag, &css, &csstag, &filename)
 		ErrorCheck(err)
 
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		u := Urls{ID: id, Urls: urls, Titles: titles, Lib: lib, Libtag: libtag, Css: css, Csstag: csstag, Filename: filename}

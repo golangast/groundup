@@ -73,8 +73,9 @@
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
                     aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
-                        <span> <a href="/addtabletoapp/{{index $F.Stable}}">Drop Table</a>
-                            <a href="/addtabletoapp/{{index $F.Stable}}">Add Table to App</a></span>
+                        
+                        <span> <a class="badge bg-danger" href="/removetable/remove/{{index $F.Stable}}">Drop Table</a>
+                            <a class="badge bg-success"  href="/addtabletoapp/{{index $F.Stable}}">Add Table to App</a></span>
 
                         <table class="table table-striped">
                             <thead>

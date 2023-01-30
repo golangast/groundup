@@ -19,10 +19,10 @@ func Getapptables() []TableData {
 
 	var (
 		tables []string
-		i      int
-		types  string
-		name   string
-		TDS    []TableData
+		//i      int
+		types string
+		name  string
+		TDS   []TableData
 	)
 
 	//SELECT type FROM sqlite_master where type='table'  AND name='urls
@@ -36,8 +36,8 @@ func Getapptables() []TableData {
 		err := rows.Scan(&types, &name)
 		ErrorCheck(err)
 
-		i++
-		fmt.Println("scan ", i, types, name)
+		// i++
+		// fmt.Println("scan ", i, types, name)
 
 		//store into memory
 		tables = append(tables, name)
@@ -53,30 +53,35 @@ func Getapptables() []TableData {
 		values := make([]any, count)
 		valuePtr := make([]any, count)
 		var v any
+		var prevtable string
 		for rows.Next() {
-			//scan needs any type so turn columns into []any
-			for i, _ := range columns {
-				valuePtr[i] = &values[i]
-			}
 
-			rows.Scan(valuePtr...)
-			//go through the columns
-			for a, col := range columns {
-
-				val := values[a]
-
-				b, ok := val.([]byte)
-
-				if ok {
-					v = string(b)
-				} else {
-					v = val
+			if prevtable != table {
+				//fmt.Print(" table:", table, " columns:", columns)
+				//scan needs any type so turn columns into []any
+				for i, _ := range columns {
+					valuePtr[i] = &values[i]
 				}
+				prevtable = table
+				rows.Scan(valuePtr...)
+				//go through the columns
+				for a, _ := range columns {
 
-				fmt.Println(col+" --", v)
-				//put them into TD data
-				TD.Values = append(TD.Values, fmt.Sprint(v))
+					val := values[a]
 
+					b, ok := val.([]byte)
+
+					if ok {
+						v = string(b)
+					} else {
+						v = val
+					}
+
+					//fmt.Println(col+" --", v)
+					//put them into TD data
+					TD.Values = append(TD.Values, fmt.Sprint(v))
+
+				}
 			}
 
 		}
@@ -84,7 +89,7 @@ func Getapptables() []TableData {
 		TD.Name = append(TD.Name, table)
 		if values[0] == nil {
 
-			TD.Columns = append(TD.Columns, columns...)
+			//TD.Columns = append(TD.Columns, columns...)
 		}
 		TDS = append(TDS, TD)
 
