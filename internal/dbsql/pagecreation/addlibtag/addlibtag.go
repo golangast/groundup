@@ -2,7 +2,6 @@ package addurltitle
 
 import (
 	"context"
-	"fmt"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
@@ -17,13 +16,13 @@ func UpdateUrls(lib, tag, titles string) {
 	ErrorCheck(err)
 
 	//execute qeury
-	res, err := stmt.Exec(lib, tag, titles)
+	_, err = stmt.Exec(lib, tag, titles)
 	ErrorCheck(err)
 
 	//used to print rows
-	a, err := res.RowsAffected()
-	ErrorCheck(err)
-	fmt.Println(a, lib)
+	// a, err := res.RowsAffected()
+	// ErrorCheck(err)
+	// fmt.Println(a, lib)
 
 }
 

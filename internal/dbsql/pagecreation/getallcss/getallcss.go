@@ -1,8 +1,6 @@
 package getallcss
 
 import (
-	"fmt"
-
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
@@ -18,7 +16,7 @@ func Getallcss() []CSS {
 		csstag string
 		CSSS   []CSS //used to store all users
 	)
-	i := 0 //used to get how many scans
+	// i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from csstable")
@@ -29,8 +27,8 @@ func Getallcss() []CSS {
 		err := rows.Scan(&id, &css, &csstag)
 		ErrorCheck(err)
 
-		i++
-		fmt.Println("scan ", i)
+		// i++
+		// fmt.Println("scan ", i)
 
 		//store into memory
 		u := CSS{ID: id, Css: css, Csstag: csstag}
@@ -38,8 +36,8 @@ func Getallcss() []CSS {
 
 	}
 	//close everything
-	defer rows.Close()
-	defer data.Close()
+	rows.Close()
+	data.Close()
 	return CSSS
 
 }

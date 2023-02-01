@@ -229,8 +229,7 @@
 
             
         </td>
-      </tr>
-      <tr>
+     
         <th scope="row">Tables</th>
         <td>
             <ul class="list-group">
@@ -238,7 +237,7 @@
               {{range $i , $FF := .Alltabledata}}
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">Table {{RemoveBrackets $FF.Name}} </div>
+                  <div class="fw-bold">{{RemoveBrackets $FF.Name}} </div>
                 </div>
                 <span class="badge bg-info text-dark"><i class="fas fa-database"></i></span>
               </li>

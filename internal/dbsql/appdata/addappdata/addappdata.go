@@ -19,7 +19,7 @@ type formdata struct {
 func Dbinsert(table string, fields []string, values []string) {
 	t := strings.Replace(table, "[", "", -1)
 	tt := strings.Replace(t, "]", "", -1)
-	fmt.Println("table:", table, " fields:", fields, " values:", values)
+	// fmt.Println("table:", table, " fields:", fields, " values:", values)
 	//build the query
 	query := fmt.Sprintf("insert into %s(%s) values (%s)",
 		tt,

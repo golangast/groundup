@@ -14,7 +14,7 @@ import (
 //makes config file for my new format
 func Make(dir string) {
 	if err := os.MkdirAll(dir, os.ModeSticky|os.ModePerm); err != nil {
-		fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
+		// fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
 	} else {
 		fmt.Println("Whoops, could not create directory(ies) because", err)
 	}
@@ -82,7 +82,7 @@ func AppendStringToFile(path, text string) error {
 	return nil
 }
 func UpdateTexts(f string, o string, n string) {
-	fmt.Println(f, o, n)
+	// fmt.Println(f, o, n)
 	input, err := ioutil.ReadFile(f)
 	if err != nil {
 		fmt.Println(err)

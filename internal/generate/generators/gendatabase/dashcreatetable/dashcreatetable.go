@@ -1,6 +1,7 @@
 package dashcreatetable
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"reflect"
@@ -74,10 +75,21 @@ func Generatedatabasefields(icb *DBFields, name string) string {
 	}
 	var ct *os.File
 	//make the files and folders
-	if _, err := os.Stat("../app/db/create" + name); os.IsNotExist(err) {
+	if _, err := os.Stat("../app/db/create" + name); errors.Is(err, os.ErrNotExist) {
+		fmt.Println("file not exist")
 		Makefolder("../app/db/create" + name)
 		ct = Makefile("../app/db/create" + name + "/create" + name + ".go")
+
+	} else {
+		fmt.Println("file exists")
+
 	}
+	// if _, err := os.Stat("../app/db/create" + name); os.IsNotExist(err) {
+	// 	if err != nil {
+	// 		fmt.Print(err)
+	// 	}
+
+	// }
 
 	//https://go.dev/play/p/0HrA-jrPZqG
 	d := Data{}

@@ -335,7 +335,7 @@ func FindTextNReturn(p, str string) string {
 	toplevel := TrimDot(str)
 	property := TrimDotright(str)
 	strs := strings.Replace(property, ".", " ", 1)
-	fmt.Println(str)
+	// fmt.Println(str)
 	// Read file, line by line
 	var text = make([]byte, 1024)
 	for {
@@ -359,7 +359,7 @@ func FindTextNReturn(p, str string) string {
 		}
 	}
 
-	fmt.Println("Reading from file.")
+	// fmt.Println("Reading from file.")
 	fmt.Println(string(text))
 
 	return ""

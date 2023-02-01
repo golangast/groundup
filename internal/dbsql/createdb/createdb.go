@@ -15,7 +15,7 @@ func CreateDB() {
 
 	if !exists {
 		if err := os.MkdirAll("db", os.ModeSticky|os.ModePerm); err != nil {
-			fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
+			// fmt.Println("Directory(ies) successfully created with sticky bits and full permissions")
 		} else {
 			fmt.Println("Whoops, could not create directory(ies) because", err)
 		}
@@ -34,13 +34,13 @@ func CreateDB() {
 	// 	fmt.Println(err)
 	// }
 
-	statementsavetable, err := data.Exec("CREATE TABLE IF NOT EXISTS savedtable (id integer NOT NULL primary KEY AUTOINCREMENT,stable string NOT NULL,f0 string NOT NULL,f1 string NOT NULL,f2 string NOT NULL,f3 string NOT NULL,f4 string NOT NULL,f5 string NOT NULL,f6 string NOT NULL,f7 string NOT NULL,f8 string NOT NULL,f9 string NOT NULL,f10 string NOT NULL,f11 string NOT NULL, t0 string NOT NULL,t1 string NOT NULL,t2 string NOT NULL,t3 string NOT NULL,t4 string NOT NULL,t5 string NOT NULL,t6 string NOT NULL,t7 string NOT NULL,t8 string NOT NULL,t9 string NOT NULL,t10 string NOT NULL,t11 string NOT NULL); ")
+	_, err = data.Exec("CREATE TABLE IF NOT EXISTS savedtable (id integer NOT NULL primary KEY AUTOINCREMENT,stable string NOT NULL,f0 string NOT NULL,f1 string NOT NULL,f2 string NOT NULL,f3 string NOT NULL,f4 string NOT NULL,f5 string NOT NULL,f6 string NOT NULL,f7 string NOT NULL,f8 string NOT NULL,f9 string NOT NULL,f10 string NOT NULL,f11 string NOT NULL, t0 string NOT NULL,t1 string NOT NULL,t2 string NOT NULL,t3 string NOT NULL,t4 string NOT NULL,t5 string NOT NULL,t6 string NOT NULL,t7 string NOT NULL,t8 string NOT NULL,t9 string NOT NULL,t10 string NOT NULL,t11 string NOT NULL); ")
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	data.Close()
-	fmt.Println(statementsavetable)
+	// fmt.Println(statementsavetable)
 }
 func Exists(path string) (bool, error) {
 	_, err := os.Stat(path)
