@@ -1,6 +1,8 @@
 package geturls
 
 import (
+	"fmt"
+
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
@@ -19,9 +21,10 @@ func GetUrls() []Urls {
 		css      string
 		csstag   string
 		filename string
+		datavars string
 		urlss    []Urls //used to store all users
 	)
-	//i := 0 //used to get how many scans
+	i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from urls")
@@ -29,20 +32,20 @@ func GetUrls() []Urls {
 
 	//cycle through the rows to collect all the data
 	for rows.Next() {
-		err := rows.Scan(&id, &urls, &titles, &lib, &libtag, &css, &csstag, &filename)
+		err := rows.Scan(&id, &urls, &titles, &lib, &libtag, &css, &csstag, &filename, &datavars)
 		ErrorCheck(err)
 
-		// i++
-		// fmt.Println("scan ", i)
+		i++
+		fmt.Println("scan ", i)
 
 		//store into memory
-		u := Urls{ID: id, Urls: urls, Titles: titles, Lib: lib, Libtag: libtag, Css: css, Csstag: csstag, Filename: filename}
+		u := Urls{ID: id, Urls: urls, Titles: titles, Lib: lib, Libtag: libtag, Css: css, Csstag: csstag, Filename: filename, Datavars: datavars}
 		urlss = append(urlss, u)
 
 	}
 	//close everything
-	defer rows.Close()
-	defer data.Close()
+	rows.Close()
+	data.Close()
 	return urlss
 
 }
@@ -56,4 +59,5 @@ type Urls struct {
 	Css      string `param:"css" query:"css" form:"css"`
 	Csstag   string `param:"csstag" query:"csstag" form:"csstag"`
 	Filename string `param:"filename" query:"filename" form:"filename"`
+	Datavars string `param:"datavars" query:"datavars" form:"datavars"`
 }

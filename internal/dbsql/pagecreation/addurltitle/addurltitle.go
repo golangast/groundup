@@ -2,6 +2,7 @@ package addurltitle
 
 import (
 	"context"
+	"log"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
@@ -9,33 +10,28 @@ import (
 func AddUrlTitle(u Urls) {
 
 	data, err := DbConnection() //create db instance
-	var exists bool             //used for checking
+	ErrorCheck(err)
+	var exists bool //used for checking
 
 	//create a context query so that you can know if it exists already.
-	//if it does then you can stop the context of the request.
+	//if it does then you can stop the context of the request.u.Urls, u.Titles
 	stmts := data.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM urls WHERE urls=?)", u.Urls)
 	err = stmts.Scan(&exists)
 	ErrorCheck(err)
+	if !exists {
+		query := "INSERT INTO `urls` (`urls`, `titles`) VALUES (?, ?)"
+		insertResult, err := data.ExecContext(context.Background(), query, u.Urls, u.Titles)
+		if err != nil {
+			log.Fatalf("impossible insert : %s", err)
+		}
+		ids, err := insertResult.LastInsertId()
+		if err != nil {
+			log.Fatalf("impossible to retrieve last inserted id: %s", err)
+		}
+		log.Printf("inserted id: %d", ids)
+	}
 
-	//prepare the statement to ensure no sql injection
-	stmt, err := data.Prepare("INSERT INTO urls(urls, titles) VALUES(?, ?)")
-	ErrorCheck(err)
-
-	//actually make the execution of the query
-	_, err = stmt.Exec(u.Urls, u.Titles)
-	ErrorCheck(err)
-
-	//get last id to double check
-	// lastId, err := res.LastInsertId()
-	// ErrorCheck(err)
-
-	// //get rows affected to double check
-	// rowCnt, err := res.RowsAffected()
-	// ErrorCheck(err)
-
-	// //print out what you actually did
-	// log.Printf("lastid = %d, affected = %d, titles = %d\n", lastId, rowCnt, u.Urls)
-	defer data.Close()
+	data.Close()
 
 }
 

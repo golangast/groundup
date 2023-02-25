@@ -2,6 +2,7 @@ package addurltitle
 
 import (
 	"context"
+	"log"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
@@ -19,11 +20,6 @@ func UpdateUrls(lib, tag, titles string) {
 	_, err = stmt.Exec(lib, tag, titles)
 	ErrorCheck(err)
 
-	//used to print rows
-	// a, err := res.RowsAffected()
-	// ErrorCheck(err)
-	// fmt.Println(a, lib)
-
 }
 
 func Addlib(lib, libtag string) {
@@ -35,25 +31,20 @@ func Addlib(lib, libtag string) {
 	err = stmts.Scan(&exists)
 	ErrorCheck(err)
 
-	//prepare the statement to ensure no sql injection
-	stmt, err := data.Prepare("INSERT INTO library(lib, libtag) VALUES(?, ?)")
-	ErrorCheck(err)
+	if !exists {
+		query := "INSERT INTO `library` (`lib`, `libtag`) VALUES (?, ?)"
+		insertResult, err := data.ExecContext(context.Background(), query, lib, libtag)
+		if err != nil {
+			log.Fatalf("impossible insert : %s", err)
+		}
+		ids, err := insertResult.LastInsertId()
+		if err != nil {
+			log.Fatalf("impossible to retrieve last inserted id: %s", err)
+		}
+		log.Printf("inserted id: %d", ids)
+	}
 
-	//actually make the execution of the query
-	_, err = stmt.Exec(lib, libtag)
-	ErrorCheck(err)
-
-	//get last id to double check
-	// lastId, err := res.LastInsertId()
-	// ErrorCheck(err)
-
-	// //get rows affected to double check
-	// rowCnt, err := res.RowsAffected()
-	// ErrorCheck(err)
-
-	// //print out what you actually did
-	// log.Printf("lastid = %d, affected = %d, titles = %s\n", lastId, rowCnt, lib)
-	defer data.Close()
+	data.Close()
 
 }
 func AddCSSlib(css, csstag string) {
@@ -65,24 +56,19 @@ func AddCSSlib(css, csstag string) {
 	err = stmts.Scan(&exists)
 	ErrorCheck(err)
 
-	//prepare the statement to ensure no sql injection
-	stmt, err := data.Prepare("INSERT INTO csstable(css, csstag) VALUES(?, ?)")
-	ErrorCheck(err)
+	if !exists {
+		query := "INSERT INTO `csstable` (`css`, `csstag`) VALUES (?, ?)"
+		insertResult, err := data.ExecContext(context.Background(), query, css, csstag)
+		if err != nil {
+			log.Fatalf("impossible insert : %s", err)
+		}
+		ids, err := insertResult.LastInsertId()
+		if err != nil {
+			log.Fatalf("impossible to retrieve last inserted id: %s", err)
+		}
+		log.Printf("inserted id: %d", ids)
+	}
 
-	//actually make the execution of the query
-	_, err = stmt.Exec(css, csstag)
-	ErrorCheck(err)
-
-	// //get last id to double check
-	// lastId, err := res.LastInsertId()
-	// ErrorCheck(err)
-
-	// //get rows affected to double check
-	// rowCnt, err := res.RowsAffected()
-	// ErrorCheck(err)
-
-	// //print out what you actually did
-	// log.Printf("lastid = %d, affected = %d, titles = %s\n", lastId, rowCnt, css)
 	defer data.Close()
 
 }

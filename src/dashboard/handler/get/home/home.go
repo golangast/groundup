@@ -75,6 +75,7 @@ func Home(c echo.Context) error {
 	case "db": //*generate database tables
 		Gendatabase("../app")
 	case "show": //*show routes
+
 	case "delete": //*delete routes
 		titletrim := strings.ReplaceAll(title, " ", "")
 		titles := GetPagetitle("/" + titletrim)

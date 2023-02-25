@@ -115,7 +115,7 @@ package main
 func Routes(e *echo.Echo) {
 	e.GET("/", Home)
 	e.GET("/route/:routes", List)
-	
+	//#routes
 }
 
 func Home(c echo.Context) error {
@@ -123,7 +123,7 @@ func Home(c echo.Context) error {
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{})
 
 }
-
+//#handler
 func List(c echo.Context) error {
 	var data []Data
 	routes := c.Param("routes")

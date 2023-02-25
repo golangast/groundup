@@ -16,10 +16,14 @@ import (
 	"strings"
 	_ "time"
 
+	. "app/db/createhere"
+	. "app/db/createsaleuser"
+	. "app/db/createserviceuser"
+	. "app/db/createuserh"
 	. "app/db/createuserss"
-. "app/db/createuserssss"
-. "app/db/createuserh"
-//#import
+	. "app/db/createuserssss"
+
+	//#import
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -45,10 +49,13 @@ var err error
 func main() {
 	Createuser()
 	Createusers()
-	Createuserss() 
-Createuserssss() 
-Createuserh() 
-//#createdb
+	Createuserss()
+	Createuserssss()
+	Createuserh()
+	Createhere()
+	Createserviceuser()
+	Createsaleuser()
+	//#createdb
 	e := echo.New()
 	t, err := ParseDirectory("templates/")
 	if err != nil {
@@ -118,7 +125,9 @@ func ParseDirectory(dirpath string) (*template.Template, error) {
 func Routes(e *echo.Echo) {
 	e.GET("/", Home)
 	e.GET("/route/:routes", List)
-
+	e.GET("/d/:users", users)
+	e.GET("/d/:userss", userss)
+//#routes
 }
 
 func Home(c echo.Context) error {
@@ -127,6 +136,7 @@ func Home(c echo.Context) error {
 
 }
 
+//#handler
 func List(c echo.Context) error {
 	var data []Data
 	routes := c.Param("routes")

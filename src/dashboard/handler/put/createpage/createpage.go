@@ -16,11 +16,11 @@ import (
 func CreatePage(c echo.Context) error {
 	url := c.FormValue("url")
 	title := c.FormValue("title")
-	u := Urls{Urls: url, Titles: title}
-	AddUrlTitle(u)
-
 	urltrim := strings.ReplaceAll(url, " ", "")
 	urltrimslash := strings.ReplaceAll(urltrim, "/", "")
+	u := Urls{Urls: urltrimslash, Titles: title}
+
+	AddUrlTitle(u)
 	if _, err := os.Stat("../app/templates/" + urltrimslash + ".html"); errors.Is(err, os.ErrNotExist) {
 		mfile, err := os.Create("../app/templates/" + urltrimslash + ".html")
 		if err != nil {

@@ -1,0 +1,85 @@
+{{define "datavars"}}
+<div class="tab-pane fade" id="datavars" role="tabpanel" aria-labelledby="datavars-tab">
+  <div class="card" style="width: 100%;float: left;">
+    <div class="card-body">
+      <h6 for="">Set your Data Vars here</h6>
+
+      <table class="table table-sm" style="width: 100%; float: left;">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;">
+              <h6 for="">Add data var to a page. On the page they are used in {\{.xxx}}</h6>
+              <form class="border border-1" action="/adddatavar" method="POST">
+                <label for="datavar">Select the data var</label>
+                <div class=" col s6">
+                  <select class="form-select" id="datavar" name="datavar" type="text">
+                    {{if $.F}}
+                    {{range $i , $F := .F}}
+                    <option value="{{index $F.Stable}}">{{index $F.Stable}}</option>
+                    {{end}}
+                    {{end}}
+                  </select>
+                </div>
+                <label for="urls">Select the urls</label>
+                <div class=" col s6">
+                  <select class="form-select" id="urls" name="urls" type="text">
+                    {{ if .U}}
+                    {{range $i , $U := .U}}
+                    <option value="{{index $U.Urls}}">{{index $U.Urls}}</option>
+                    {{end}}
+                    {{end}}
+                  </select>
+                </div>
+                <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
+              </form>
+
+            </td>
+
+          </tr>
+          <td>
+
+            {{if $.F}}
+            {{range $i , $F := .F}}
+            <ul class="list-group" style="width: 25%; float: left;">
+              <li class="list-group-item active" aria-current="true">{{index $F.Stable}}<br><span
+                  class="badge bg-info text-dark"><i class="fas fa-database"></i></span></li>
+              {{if $F.F0}} <li class="list-group-item" style="float:left">{{$F.F0}}</li>{{end}}
+              {{if $F.F1}}<li class="list-group-item">{{$F.F1}}</li>{{end}}
+              {{if $F.F2}} <li class="list-group-item">{{$F.F2}}</li>{{end}}
+              {{if $F.F3}}<li class="list-group-item">{{$F.F3}}</li>{{end}}
+              {{if $F.F4}}<li class="list-group-item">{{$F.F4}}</li>{{end}}
+              {{if $F.F5}}<li class="list-group-item">{{$F.F5}}</li>{{end}}
+              {{if $F.F6}}<li class="list-group-item">{{$F.F6}}</li>{{end}}
+              {{if $F.F7}}<li class="list-group-item">{{$F.F7}}</li>{{end}}
+              {{if $F.F8}}<li class="list-group-item">{{$F.F8}}</li>{{end}}
+              {{if $F.F9}}<li class="list-group-item">{{$F.F9}}</li>{{end}}
+              {{if $F.F10}}<li class="list-group-item">{{$F.F10}}</li>{{end}}
+              {{if $F.F11}}<li class="list-group-item">{{$F.F11}}</li>{{end}}
+            </ul>
+            {{end}}
+            {{end}}
+          </td>
+          <td style="    vertical-align: top;">
+
+            <ol class="lists collection list-group list-group-numbered">
+              {{ if .U}}
+              {{range $i , $U := .U}}
+              <li class="list-group-item">
+                <span>{{$U.Titles}}-<a href="http://localhost:3000/route/{{index $U.Urls}}" target="_blank">
+                    {{index $U.Urls}}</a></span>
+                <span>
+                  <a class="waves-effect waves-teal btn-flat" href="/d/delete{{index $U.Urls}}">Delete</a>
+                </span>
+              </li>
+              {{end}}
+              {{end}}
+            </ol>
+          </td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{{end}}

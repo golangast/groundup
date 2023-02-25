@@ -8,6 +8,7 @@ import (
 	adds "github.com/golangast/groundup/src/dashboard/handler/put/addlibtopage"
 
 	. "github.com/golangast/groundup/src/dashboard/handler/get/tables/addtabletoappdb"
+	. "github.com/golangast/groundup/src/dashboard/handler/put/adddatavar"
 	"github.com/golangast/groundup/src/dashboard/handler/put/createcsslib"
 	. "github.com/golangast/groundup/src/dashboard/handler/put/createdbdata"
 	"github.com/golangast/groundup/src/dashboard/handler/put/createlib"
@@ -34,5 +35,7 @@ func Routes(e *echo.Echo) {
 	e.POST("/dbdata", Createdbdata)
 	e.POST("/addfooterlib", add.Addlibtofooter)
 	e.POST("/updateappdb/:table", Updateappdb)
+	e.POST("/adddatavar", Adddatavar)
+	//adddatavar
 
 }

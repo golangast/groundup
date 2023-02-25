@@ -38,9 +38,12 @@ func CreateDB() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	_, err = data.Exec("CREATE TABLE IF NOT EXISTS urls (id integer NOT NULL primary KEY AUTOINCREMENT,urls string NOT NULL, titles string NOT NULL); ")
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	data.Close()
-	// fmt.Println(statementsavetable)
 }
 func Exists(path string) (bool, error) {
 	_, err := os.Stat(path)

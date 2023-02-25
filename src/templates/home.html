@@ -2,15 +2,19 @@
 <ul class="nav nav-tabs" id="toptab" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link " id="generate-tab" data-bs-toggle="tab" data-bs-target="#generate" type="button" role="tab"
-      aria-controls="generate" aria-selected="false">Generate</button>
+      aria-controls="generate" aria-selected="true">Generate</button>
   </li>
-  <li class="nav-item active" role="presentation">
+  <li class="nav-item" role="presentation">
     <button class="nav-link" id="show-tab" data-bs-toggle="tab" data-bs-target="#show" type="button" role="tab"
-      aria-controls="show" aria-selected="false">Show</button>
+      aria-controls="show" aria-selected="true">Show</button>
   </li>
-  <li class="nav-item active" role="presentation">
-    <button class="nav-link" id="show-tab" data-bs-toggle="tab" data-bs-target="#database" type="button" role="tab"
+  <li class="nav-item " role="presentation">
+    <button class="nav-link" id="database-tab" data-bs-toggle="tab" data-bs-target="#database" type="button" role="tab"
       aria-controls="database" aria-selected="true">Database</button>
+  </li>
+  <li class="nav-item " role="presentation">
+    <button class="nav-link" id="datavars-tab" data-bs-toggle="tab" data-bs-target="#datavars" type="button" role="tab"
+      aria-controls="datavars" aria-selected="true">Data Vars</button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -19,7 +23,7 @@
   {{ template "generate" . }}
   {{ template "database" . }}
   {{ template "show" . }}
-
+  {{ template "datavars" . }}
 
 </div>
 

@@ -160,14 +160,13 @@
         <span>{{$U.Titles}}-<a href="http://localhost:3000/route/{{index $U.Urls}}" target="_blank">
             {{index $U.Urls}}</a></span>
         <span>
-          <a class="waves-effect waves-teal btn-flat" href="/d/delete{{index $U.Urls}}">Delete</a>
+          <a class="waves-effect waves-teal btn-flat" href="/d/delete/{{index $U.Urls}}">Delete</a>
         </span>
         <span class="alert-success">Library-{{index $U.Libtag}}</span>
       </li>
       {{end}}
       {{end}}
     </ol>
-  </div>
 
 
   {{ if $.S.Exe}}
@@ -251,5 +250,6 @@
   {{end}}
   <!-- https://go.dev/play/p/_N963_qF5v6 -->
 </div>
+
 {{end}}
 
