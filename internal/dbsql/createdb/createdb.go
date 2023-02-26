@@ -29,16 +29,24 @@ func CreateDB() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	// statementsavedata, err := data.Exec("CREATE TABLE IF NOT EXISTS savedb (id integer NOT NULL primary KEY(id AUTOINCREMENT,table string NOT NULL,fields string NOT NULL,types string NOT NULL) ")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
 
 	_, err = data.Exec("CREATE TABLE IF NOT EXISTS savedtable (id integer NOT NULL primary KEY AUTOINCREMENT,stable string NOT NULL,f0 string NOT NULL,f1 string NOT NULL,f2 string NOT NULL,f3 string NOT NULL,f4 string NOT NULL,f5 string NOT NULL,f6 string NOT NULL,f7 string NOT NULL,f8 string NOT NULL,f9 string NOT NULL,f10 string NOT NULL,f11 string NOT NULL, t0 string NOT NULL,t1 string NOT NULL,t2 string NOT NULL,t3 string NOT NULL,t4 string NOT NULL,t5 string NOT NULL,t6 string NOT NULL,t7 string NOT NULL,t8 string NOT NULL,t9 string NOT NULL,t10 string NOT NULL,t11 string NOT NULL); ")
 	if err != nil {
 		fmt.Println(err)
 	}
-	_, err = data.Exec("CREATE TABLE IF NOT EXISTS urls (id integer NOT NULL primary KEY AUTOINCREMENT,urls string NOT NULL, titles string NOT NULL); ")
+	_, err = data.Exec("CREATE TABLE IF NOT EXISTS urls (id integer NOT NULL primary KEY AUTOINCREMENT,urls string NOT NULL, titles string NOT NULL, lib string NOT NULL, libtag string NOT NULL, css string NOT NULL, csstag string NOT NULL, filename string NOT NULL, datavars string NOT NULL); ")
+	if err != nil {
+		fmt.Println(err)
+	}
+	_, err = data.Exec("CREATE TABLE IF NOT EXISTS csstable (id integer NOT NULL primary KEY AUTOINCREMENT,css string NOT NULL, csstag string NOT NULL); ")
+	if err != nil {
+		fmt.Println(err)
+	}
+	_, err = data.Exec("CREATE TABLE IF NOT EXISTS library (id integer NOT NULL primary KEY AUTOINCREMENT,lib string NOT NULL, libtag string NOT NULL); ")
+	if err != nil {
+		fmt.Println(err)
+	}
+	_, err = data.Exec("CREATE TABLE IF NOT EXISTS librarys (id integer NOT NULL primary KEY AUTOINCREMENT,lib string NOT NULL, libtag string NOT NULL); ")
 	if err != nil {
 		fmt.Println(err)
 	}

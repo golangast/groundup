@@ -1,8 +1,6 @@
 package geturls
 
 import (
-	"fmt"
-
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
@@ -24,7 +22,6 @@ func GetUrls() []Urls {
 		datavars string
 		urlss    []Urls //used to store all users
 	)
-	i := 0 //used to get how many scans
 
 	//get from database
 	rows, err := data.Query("select * from urls")
@@ -34,9 +31,6 @@ func GetUrls() []Urls {
 	for rows.Next() {
 		err := rows.Scan(&id, &urls, &titles, &lib, &libtag, &css, &csstag, &filename, &datavars)
 		ErrorCheck(err)
-
-		i++
-		fmt.Println("scan ", i)
 
 		//store into memory
 		u := Urls{ID: id, Urls: urls, Titles: titles, Lib: lib, Libtag: libtag, Css: css, Csstag: csstag, Filename: filename, Datavars: datavars}
@@ -51,13 +45,13 @@ func GetUrls() []Urls {
 }
 
 type Urls struct {
-	ID       string `param:"id" query:"id" form:"id"`
-	Urls     string `param:"urls" query:"urls" form:"urls"`
-	Titles   string `param:"titles" query:"titles" form:"titles"`
-	Lib      string `param:"lib" query:"lib" form:"lib"`
-	Libtag   string `param:"libtag" query:"libtag" form:"libtag"`
-	Css      string `param:"css" query:"css" form:"css"`
-	Csstag   string `param:"csstag" query:"csstag" form:"csstag"`
-	Filename string `param:"filename" query:"filename" form:"filename"`
-	Datavars string `param:"datavars" query:"datavars" form:"datavars"`
+	ID       string `param:"id" query:"id,omitempty" form:"id"`
+	Urls     string `param:"urls" query:"urls,omitempty" form:"urls,omitempty"`
+	Titles   string `param:"titles" query:"titles,omitempty" form:"titles,omitempty"`
+	Lib      string `param:"lib" query:"lib,omitempty" form:"lib,omitempty"`
+	Libtag   string `param:"libtag" query:"libtag,omitempty" form:"libtag,omitempty"`
+	Css      string `param:"css" query:"css,omitempty" form:"css,omitempty"`
+	Csstag   string `param:"csstag" query:"csstag,omitempty" form:"csstag,omitempty"`
+	Filename string `param:"filename" query:"filename,omitempty" form:"filename,omitempty"`
+	Datavars string `param:"datavars" query:"datavars,omitempty" form:"datavars,omitempty"`
 }

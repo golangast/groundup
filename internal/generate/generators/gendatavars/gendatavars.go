@@ -32,13 +32,16 @@ func Gendatavars(p, urls, datavar string) {
 	nospaceroutes := strings.ReplaceAll(urls, " ", "")
 	nospaceroutesnoslash := strings.ReplaceAll(nospaceroutes, "/", "")
 	//make the handler
-	if !FindText("../app/app.go", `func `+strings.ToUpper(urls)+`(c echo.Context)`) {
+	fmt.Println(`#getdatavar` + datavar)
+	if !FindText("../app/app.go", `func `+strings.ToUpper(urls)) {
 		UpdateText("../app/app.go", "//#handler", `func `+strings.ToUpper(datavar)+`(c echo.Context) error {
-
+			
+			`+datavar+`:=Getvardata(`+datavar+`)
 			//#getdatavar`+datavar+`
-
+			
 			return c.Render(http.StatusOK, "`+nospaceroutesnoslash+`.html", map[string]interface{}{
-				"data":data,
+				`+`"`+datavar+`"`+`:`+datavar+`,
+				//#getdatavardata`+datavar+`
 			})
 		
 		}`+"\n"+`//#handler`)
@@ -47,7 +50,7 @@ func Gendatavars(p, urls, datavar string) {
 	//pull down dependencies
 	PullDowndb("app")
 	Pulldowneverythingbase("app")
-	err, out, errout := Shellout(`cd .. && cd app && go mod tidy && go mod vendor`)
+	err, out, errout := Shellout(`cd .. && cd app && go mod tidy && go mod vendor && go build`)
 	if err != nil {
 		log.Printf("error: %v\n", err)
 	}

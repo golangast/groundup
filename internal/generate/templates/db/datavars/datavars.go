@@ -8,23 +8,23 @@ import (
 	"fmt"
 )
 
-https://go.dev/play/p/uYjz_77wX9w
+https://go.dev/play/p/eGwHh4RR1JD
 type DBFields struct {
-	ID     int   ` + "`" + `param:"id" query:"id" header:"id" form:"id" json:"id" xml:"id" ` + "`"
-	Done string  ` + "`" +`param:"done" query:"done" header:"done" form:"done" json:"done" xml:"done"`
-	Dtwo     string `param:"dtwo" query:"dtwo" header:"dtwo" form:"dtwo" json:"dtwo" xml:"dtwo"`
-	Dthree     string `param:"dthree" query:"dthree" header:"dthree" form:"dthree" json:"dthree" xml:"dthree"`
-	Dfour     string `param:"dfour" query:"dfour" header:"dfour" form:"dfour" json:"dfour" xml:"dfour"`
-	Dfive     string `param:"dfive" query:"dfive" header:"dfive" form:"dfive" json:"dfive" xml:"dfive"`
-	Dsix     string `param:"dsix" query:"dsix" header:"dsix" form:"dsix" json:"dsix" xml:"dsix"`
-	Dseven     string `param:"dseven" query:"dseven" header:"dseven" form:"dseven" json:"dseven" xml:"dseven"`
-	Deight     string `param:"deight" query:"deight" header:"deight" form:"deight" json:"deight" xml:"deight"`
-	Dnine     string `param:"dnine" query:"dnine" header:"dnine" form:"dnine" json:"dnine" xml:"dnine"`
-	Dten     string `param:"dten" query:"dten" header:"dten" form:"dten" json:"dten" xml:"dten"`
-	Deleven     string `param:"deleven" query:"deleven" header:"deleven" form:"deleven" json:"deleven" xml:"deleven"`
-}
+	ID     int   ` + "`" + `param:"id" query:"id" header:"id" form:"id" json:"id" xml:"id" ` + "`" + `
+	Done string  ` + "`" + `param:"done" query:"done" header:"done" form:"done" json:"done" xml:"done" ` + "`" + `
+	Dtwo     string ` + "`" + `param:"dtwo" query:"dtwo" header:"dtwo" form:"dtwo" json:"dtwo" xml:"dtwo"` + "`" + `
+	Dthree     string  ` + "`" + `param:"dthree" query:"dthree" header:"dthree" form:"dthree" json:"dthree" xml:"dthree"` + "`" + `
+	Dfour     string  ` + "`" + `param:"dfour" query:"dfour" header:"dfour" form:"dfour" json:"dfour" xml:"dfour"` + "`" + `
+	Dfive     string  ` + "`" + `param:"dfive" query:"dfive" header:"dfive" form:"dfive" json:"dfive" xml:"dfive"` + "`" + `
+	Dsix     string  ` + "`" + `param:"dsix" query:"dsix" header:"dsix" form:"dsix" json:"dsix" xml:"dsix"` + "`" + `
+	Dseven     string  ` + "`" + `param:"dseven" query:"dseven" header:"dseven" form:"dseven" json:"dseven" xml:"dseven"` + "`" + `
+	Deight     string  ` + "`" + `param:"deight" query:"deight" header:"deight" form:"deight" json:"deight" xml:"deight"` + "`" + `
+	Dnine     string  ` + "`" + `param:"dnine" query:"dnine" header:"dnine" form:"dnine" json:"dnine" xml:"dnine"` + "`" + `
+	Dten     string  ` + "`" + `param:"dten" query:"dten" header:"dten" form:"dten" json:"dten" xml:"dten"` + "`" + `
+	Deleven     string  ` + "`" + `param:"deleven" query:"deleven" header:"deleven" form:"deleven" json:"deleven" xml:"deleven"` + "`" + `
+	}
 
-func Getvardata() []Data {
+func Getvardata(table string) []Data {
 //variables used to store data from the query
 var (
 	done   string
@@ -42,7 +42,7 @@ var (
 )
 
 //get from database
-rows, err := data.Query("select * from {{.t}}")
+rows, err := data.Query("select * from "+table+")
 if err != nil {
 	fmt.Println(err)
 }

@@ -23,11 +23,9 @@ func Routes(e *echo.Echo) {
 	e.GET("/:m/:libtagsv/:titlev", home.Home)
 	e.GET("/:m/remove/:table", home.Home)
 	e.GET("/d/:m/:titlev", home.Home)
+	e.GET("/addtabletoapp/:table", AddTableToAppDB) //table editing has to be get for params
 
-	//table editing has to be get for params
-	e.GET("/addtabletoapp/:table", AddTableToAppDB)
-
-	// 	//create page
+	//create page
 	e.POST("/page", createpage.CreatePage)
 	e.POST("/lib", createlib.CreateLib)
 	e.POST("/libcss", createcsslib.CreateCSSLib)
@@ -36,6 +34,5 @@ func Routes(e *echo.Echo) {
 	e.POST("/addfooterlib", add.Addlibtofooter)
 	e.POST("/updateappdb/:table", Updateappdb)
 	e.POST("/adddatavar", Adddatavar)
-	//adddatavar
 
 }

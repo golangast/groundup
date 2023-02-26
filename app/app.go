@@ -125,14 +125,25 @@ func ParseDirectory(dirpath string) (*template.Template, error) {
 func Routes(e *echo.Echo) {
 	e.GET("/", Home)
 	e.GET("/route/:routes", List)
-	e.GET("/d/:users", users)
-	e.GET("/d/:userss", userss)
+
+	e.GET("/d/:newpage", newpage)
+	e.GET("/d/:newpage", newpage)
 //#routes
 }
 
 func Home(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{})
+
+}
+
+func USERS(c echo.Context) error {
+
+	//#getdatavarusers
+
+	return c.Render(http.StatusOK, "newpage.html", map[string]interface{}{
+		"data": data,
+	})
 
 }
 
