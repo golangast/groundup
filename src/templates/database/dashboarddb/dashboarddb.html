@@ -14,20 +14,22 @@
     <div class="tab-pane fade show active" id="showeditor" role="tabpanel" aria-labelledby="showeditor-tab"tabindex="0">
         <!-- what fields did you want? -->
         <div class="fields">
-            <label for="fields">Fields:</label><br>
+            <label for="fields">How many fields?:</label><br>
             <input type="text" id="fa" name="fa" value="2"><br>
-            <button class="createform">Show fields</button>
+            <button class="createform">Create table</button>
         </div>
         <div class="row">
-            <form class="col s12" action="/dbdata" method="POST">
+            <form class="col s12 forms" action="/dbdata" method="POST">
                 <label for="table">Table:</label><br>
-                <input type="text" id="stable" name="stable" value="user"><br><br><br>
-                <div class="choosekind row"></div>
+                <input type="text" id="stable" name="stable" value=""><br><br><br>
+                <div class="choosekind"></div>
                 <input class="waves-effect waves-teal btn-flat" type="submit" value="Submit">
             </form>
         </div>
         <script>
+            $(".forms").hide();
             $(".createform").click(function () {
+                $(".forms").show();
                 //get value of fields
                 var value = $("#fa").val();
                 //if value is used then show next
@@ -41,17 +43,22 @@
                 }
                 var i;
                 for (i = 0; i < value; i++) {
-                    $(".choosekind").append(`<div class="input-field col s6">
+                    $(".choosekind").append(`<div class=" col s6">
+                        <label class="col-sm-2 col-form-label" for="f` + i + `">Field</label>
       <input  class="f` + i + `" name="f` + i + `" id="f` + i + `" type="text">
-      <label for="f` + i + `">Field</label><div class="input-field col s6">
-      <input  class="t` + i + `" name="t` + i + `" id="t` + i + `" type="text">
-      <label for="t` + i + `">Type</label>
-    </div>
-   
+      <label class="col-sm-2 col-form-label" for="t` + i + `">Type</label>
+      <select class="form-select t` + i + `" name="t` + i + `" id="t` + i + `" aria-label="Default select example">
+        <option value="" disabled selected>Choose your type</option>
+            <option value="int">int</option>
+            <option value="string">string</option>
+            <option value="blob">blob</option>
+            <option value="real">real</option>
+            <option value="numeric">numeric</option>
+      </select>
   `);
                 }
             });
-
+            
         </script>
     </div>
 
@@ -120,4 +127,18 @@
         {{end}}
     </div>
 </div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, options);
+      });
+    
+      // Or with jQuery
+    
+      $(document).ready(function(){
+        $('select').formSelect();
+      });
+</script>
     {{end}}

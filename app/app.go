@@ -2,8 +2,6 @@ package main
 
 import (
 	. "app/db"
-	. "app/db/createuser"
-	. "app/db/createusers"
 	. "app/getdata"
 	"context"
 	"fmt"
@@ -16,12 +14,8 @@ import (
 	"strings"
 	_ "time"
 
-	. "app/db/createhere"
-	. "app/db/createsaleuser"
-	. "app/db/createserviceuser"
-	. "app/db/createuserh"
-	. "app/db/createuserss"
-	. "app/db/createuserssss"
+	. "app/db/create/createggg"
+	. "app/db/create/createuser"
 
 	//#import
 	"github.com/labstack/echo/v4"
@@ -47,14 +41,8 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 var err error
 
 func main() {
-	Createuser()
-	Createusers()
-	Createuserss()
-	Createuserssss()
-	Createuserh()
-	Createhere()
-	Createserviceuser()
-	Createsaleuser()
+
+	Createggg()
 	//#createdb
 	e := echo.New()
 	t, err := ParseDirectory("templates/")
@@ -126,9 +114,8 @@ func Routes(e *echo.Echo) {
 	e.GET("/", Home)
 	e.GET("/route/:routes", List)
 
-	e.GET("/d/:newpage", newpage)
-	e.GET("/d/:newpage", newpage)
-//#routes
+	e.GET("/d/:newpage", NEWPAGE)
+	//#routes
 }
 
 func Home(c echo.Context) error {
@@ -137,12 +124,14 @@ func Home(c echo.Context) error {
 
 }
 
-func USERS(c echo.Context) error {
+func NEWPAGE(c echo.Context) error {
 
-	//#getdatavarusers
+	user := Getvardata("user")
+	//#getdatavar
 
 	return c.Render(http.StatusOK, "newpage.html", map[string]interface{}{
-		"data": data,
+		"user": user,
+		//#getdatavardata
 	})
 
 }

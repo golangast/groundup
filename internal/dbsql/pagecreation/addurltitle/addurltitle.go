@@ -3,11 +3,12 @@ package addurltitle
 import (
 	"context"
 	"log"
+	"time"
 
 	. "github.com/golangast/groundup/internal/dbsql/conn"
 )
 
-func AddUrlTitle(u Urls) {
+func AddUrlTitle(u Urls) error {
 
 	data, err := DbConnection() //create db instance
 	ErrorCheck(err)
@@ -19,20 +20,43 @@ func AddUrlTitle(u Urls) {
 	err = stmts.Scan(&exists)
 	ErrorCheck(err)
 	if !exists {
-		query := "INSERT INTO `urls` (`urls`, `titles`) VALUES (?, ?)"
-		insertResult, err := data.ExecContext(context.Background(), query, u.Urls, u.Titles)
+		query := "INSERT INTO `urls` (`urls`, `titles`, `lib`, `libtag`,`css`,`csstag`,`filename`,`datavars`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+		ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancelfunc()
+		stmt, err := data.PrepareContext(ctx, query)
 		if err != nil {
-			log.Fatalf("impossible insert : %s", err)
+			log.Printf("Error %s when preparing SQL statement", err)
+			return err
 		}
-		ids, err := insertResult.LastInsertId()
+		defer stmt.Close()
+		res, err := stmt.ExecContext(ctx, u.Urls, u.Titles, "", "", "", "", "", "")
 		if err != nil {
-			log.Fatalf("impossible to retrieve last inserted id: %s", err)
+			log.Printf("Error %s when inserting row into products table", err)
+			return err
 		}
-		log.Printf("inserted id: %d", ids)
+		rows, err := res.RowsAffected()
+		if err != nil {
+			log.Printf("Error %s when finding rows affected", err)
+			return err
+		}
+		log.Printf("%d products created ", rows)
+		return nil
+
 	}
 
 	data.Close()
 
+	// insertResult, err := data.ExecContext(context.Background())
+	// if err != nil {
+	// 	fmt.Println("impossible insert :", err)
+
+	// }
+	// ids, err := insertResult.LastInsertId()
+	// if err != nil {
+	// 	fmt.Println("impossible to retrieve last inserted id:", err)
+	// }
+	// log.Printf("inserted id: %d", ids)
+	return nil
 }
 
 type Urls struct {
